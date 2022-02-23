@@ -97,8 +97,9 @@ public class JoinUser extends AppCompatActivity {
                     if(status)
                     {
                         Toast.makeText(JoinUser.this, "회원가입이 완료되었습니다.",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(JoinUser.this, MainActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(JoinUser.this, MainActivity.class);
+//                        startActivity(intent);
+                        finish();
                     }
                     else
                     {

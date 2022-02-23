@@ -72,7 +72,7 @@ public class findId extends AppCompatActivity {
 
             }
         });
-
+        // ============== 비밀번호 찾으러 가기 ===================
         findID_findPw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

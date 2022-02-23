@@ -63,6 +63,7 @@ public class JoinPhone extends AppCompatActivity {
             public void onClick(View v) {
                 String phoneNumber = phone_number.getText().toString().trim();
 
+
                 // 유효성 검사
                 if (certCk == false) {
                     Toast.makeText(getApplicationContext(), "휴대폰 인증을 진행해주세요", Toast.LENGTH_SHORT).show();
