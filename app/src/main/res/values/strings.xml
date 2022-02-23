@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WayOut_ver_0.1</string>
+    <string name="tab_home">홈</string>
+    <string name="tab_search">검색</string>
+    <string name="tab_community">커뮤니티</string>
+    <string name="tab_chat">채팅</string>
+    <string name="tab_myPage">마이페이지</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
