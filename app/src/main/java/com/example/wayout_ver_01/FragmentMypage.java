@@ -39,6 +39,8 @@ import retrofit2.Response;
 
 public class FragmentMypage extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete;
     private ImageView myPage_reset;
     private CircleImageView myPage_profile;
@@ -172,7 +174,7 @@ public class FragmentMypage extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
-                        Log.e("test", "result : " + result);
+                        Log.e(TAG, "result : " + result);
                         Intent intent = result.getData();
                         Log.e("test", "intent : " + intent);
                         Uri uri = intent.getData();
