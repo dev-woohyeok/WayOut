@@ -3,6 +3,10 @@ package com.example.wayout_ver_01;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
+
 public class User {
 
     @Expose
@@ -38,12 +42,26 @@ public class User {
     private String codeIndex;
 
     @Expose
+    @SerializedName("files")
+    private List<MultipartBody.Part> files;
+
+
+
+    @Expose
     @SerializedName("status")
     private Boolean status;
 
     @Expose
     @SerializedName("message")
     private String message;
+
+    public List<MultipartBody.Part> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<MultipartBody.Part> files) {
+        this.files = files;
+    }
 
     public String getCodeIndex() {
         return codeIndex;

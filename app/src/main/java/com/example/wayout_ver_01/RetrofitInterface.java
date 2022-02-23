@@ -1,5 +1,6 @@
 package com.example.wayout_ver_01;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -69,6 +70,11 @@ public interface RetrofitInterface
     );
 
     @Multipart
-    @POST("")
+    @POST("userProfile.php")
+    Call<User> userProfile(
+            @Part List<MultipartBody.Part> files,
+            @Part ("userId") String userId,
+            @Part ("userIndex") Integer userIndex
+    );
 
 }
