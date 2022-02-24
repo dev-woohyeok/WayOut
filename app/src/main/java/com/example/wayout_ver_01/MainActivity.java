@@ -49,15 +49,23 @@ public class MainActivity extends AppCompatActivity {
         Login_Auto = findViewById(R.id.Login_Auto);
 
 
+        //동적퍼미션 작업
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
 
+            int permissionResult= checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-
+            if(permissionResult== PackageManager.PERMISSION_DENIED){
+                String[] permissions= new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions,10);
+            }
+        }else{
+            //cv.setVisibility(View.VISIBLE);
+        }
 
         // permission확인 절차
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             Log.d("test", "=== sms전송을 위한 퍼미션 확인 ===" );
-
             // For device above MarshMallow
             boolean permission = getWritePermission();
             if(permission) {
@@ -70,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             // Send Your SMS. You don't need Run time permission
             Log.d("test", "=== 퍼미션 필요 없는 버전임 ===" );
         }
-
 
         if(PreferenceManager.getBoolean(mContext,"autoLogin"))
         {

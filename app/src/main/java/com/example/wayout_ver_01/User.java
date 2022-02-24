@@ -43,7 +43,7 @@ public class User {
 
     @Expose
     @SerializedName("files")
-    private List<MultipartBody.Part> files;
+    private MultipartBody.Part files;
 
     @Expose
     @SerializedName("status")
@@ -53,11 +53,23 @@ public class User {
     @SerializedName("message")
     private String message;
 
-    public List<MultipartBody.Part> getFiles() {
+    @Expose
+    @SerializedName("userProfile")
+    private String userProfile;
+
+    public String getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public MultipartBody.Part getFiles() {
         return files;
     }
 
-    public void setFiles(List<MultipartBody.Part> files) {
+    public void setFiles(MultipartBody.Part files) {
         this.files = files;
     }
 

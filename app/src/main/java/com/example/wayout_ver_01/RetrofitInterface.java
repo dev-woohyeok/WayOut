@@ -75,9 +75,8 @@ public interface RetrofitInterface
     @Multipart
     @POST("userProfile.php")
     Call<User> userProfile(
-            @Part List<MultipartBody.Part> files,
-            @Part ("userId") String userId,
-            @Part ("userIndex") Integer userIndex
+            @Part MultipartBody.Part files,
+            @Part ("userId") String userId
     );
 
 }

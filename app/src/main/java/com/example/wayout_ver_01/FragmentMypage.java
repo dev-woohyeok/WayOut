@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.loader.content.CursorLoader;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,11 +30,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,8 +52,10 @@ public class FragmentMypage extends Fragment {
     private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete;
     private ImageView myPage_reset;
     private CircleImageView myPage_profile;
-    private  ArrayList<Uri> imageSaveList;
+    private ArrayList<Uri> imageSaveList;
     private static final int REQUEST_CODE = 0;
+    private static final int GALLEY_CODE = 10;
+    private String imageUri = "";
 
 
     @Override
@@ -104,17 +113,12 @@ public class FragmentMypage extends Fragment {
                     String selectedText = items[pos];
                     switch (selectedText) {
                         case "앨범에서 선택":
-                            Intent intent = new Intent();
-                            intent.setType("image/*");
-                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-//                            launcher.launch(intent);
-//                            Intent intent = new Intent(Intent.ACTION_PICK);
-//                            intent.setType("image/*");
-//                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-//                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(intent, REQUEST_CODE);
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            Log.e(TAG, "내용 : 앨범 선택시 intent :"+ intent);
+                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                            Log.e(TAG, "내용 : 앨범 선택시 Intent2 : " + intent);
+                            startActivityForResult(intent, GALLEY_CODE);
+
 
                             break;
                         case "프로필 사진 삭제":
@@ -158,28 +162,77 @@ public class FragmentMypage extends Fragment {
         return view;
     }
 
-    public void CreateListDialog() {
-//        final List<String> ListItems = new ArrayList<>();
-//        ListItems.add("앨범에서 선택");
-//        ListItems.add("프로필 사진 삭제");
+    // 절대 경로 가져오기 !!!!!
+    private String getRealPathFromUri(Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Log.e(TAG, "내용 : String[] proj : " + proj);
+        CursorLoader cursorLoader = new CursorLoader(getContext(), uri, proj, null, null, null);
+        Log.e(TAG, "내용 : CursorLoader : " + cursorLoader);
+        Cursor cursor = cursorLoader.loadInBackground();
+        Log.e(TAG, "내용 :  Cursor : " + cursor);
+
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        Log.e(TAG, "내용 : columnIndex : " + columnIndex);
+        cursor.moveToFirst();
+        String url = cursor.getString(columnIndex);
+        Log.e(TAG, "내용 : url : " + url);
+        cursor.close();
+        return url;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLEY_CODE && data != null) {
+
+            imageUri = getRealPathFromUri(data.getData());
+            Log.e(TAG, "내용 : 이미지 절대 경로 : " + imageUri);
+            RequestOptions cropOptions = new RequestOptions();
+
+            Uri uri = data.getData();
+            Log.e(TAG, "내용 상대경로 : " + uri);
+            Glide.with(getContext())
+                    .load(imageUri)
+                    .apply(cropOptions.optionalCircleCrop())
+                    .into(myPage_profile);
+
+            File file = new File(imageUri);
+            Log.e(TAG, "내용 : file : " + file);
+            ArrayList<MultipartBody.Part> files = new ArrayList<>();
+            Log.e(TAG, "내용 : ArrayList<MultipartBody.Part> : "+ files);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            Log.e(TAG, "내용 : requestFile : " + requestFile );
+            MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", "",requestFile);
+            Log.e(TAG, "내용 : MultipartBody.Part : " + body);
+            files.add(body);
+            Log.e(TAG, "내용 : files : " +files);
+            String Id = PreferenceManager.getString(getContext(),"autoId");
+            Log.e(TAG, "내용 보낼 아이디 : " + Id);
+
+//            RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+//            Call<User> call = retrofitInterface.userProfile(files,Id);
+//            call.enqueue(new Callback<User>() {
+//                @Override
+//                public void onResponse(Call<User> call, Response<User> response) {
+//                    if(response.isSuccessful() && response.body() != null )
+//                    {
 //
-//        // String 배열 Items 에 ListItems 를 string[ListItems.size()] 형태로 생성한다.
-//        final String[] items = ListItems.toArray(new String[ListItems.size()]);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setItems(items, (dialog, pos) -> {
-//            String selectedText = items[pos];
-//            switch (selectedText) {
-//                case "앨범에서 선택":
-//                    Intent intent = new Intent();
-//                    intent.setType("image/*");
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    launcher.launch(intent);
-//            }
-//        });
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<User> call, Throwable t) {
+//
+//                }
+//            });
+        }
+    }
+
+    private void uploadImage () {
 
     }
 
-//    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    //    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
 //            new ActivityResultCallback<ActivityResult>() {
 //                @Override
 //                public void onActivityResult(ActivityResult result) {
@@ -197,25 +250,6 @@ public class FragmentMypage extends Fragment {
 //                }
 //            });
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE)
-        {
-            if (data != null)
-            {
-                Uri fildPath = data.getData();
-                Log.e(TAG, "내용 : " + fildPath );
-                imageSaveList.add(fildPath);
-                myPage_profile.setImageURI(fildPath);
-                Glide.with(FragmentMypage.this)
-                        .load(fildPath)
-                        .into(myPage_profile);
-
-            }
-        }
-    }
 
     @Override
     public void onResume() {
