@@ -45,8 +45,6 @@ public class User {
     @SerializedName("files")
     private List<MultipartBody.Part> files;
 
-
-
     @Expose
     @SerializedName("status")
     private Boolean status;

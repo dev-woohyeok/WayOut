@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class FragmentMypage extends Fragment {
     private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete;
     private ImageView myPage_reset;
     private CircleImageView myPage_profile;
+    private  ArrayList<Uri> imageSaveList;
     private static final int REQUEST_CODE = 0;
 
 
@@ -104,8 +106,16 @@ public class FragmentMypage extends Fragment {
                         case "앨범에서 선택":
                             Intent intent = new Intent();
                             intent.setType("image/*");
+                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             intent.setAction(Intent.ACTION_GET_CONTENT);
-                            launcher.launch(intent);
+//                            launcher.launch(intent);
+//                            Intent intent = new Intent(Intent.ACTION_PICK);
+//                            intent.setType("image/*");
+//                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+//                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, REQUEST_CODE);
+
                             break;
                         case "프로필 사진 삭제":
                             Toast.makeText(getContext(), "이미지 버튼 삭제", Toast.LENGTH_SHORT).show();
@@ -169,24 +179,43 @@ public class FragmentMypage extends Fragment {
 
     }
 
-    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Log.e(TAG, "result : " + result);
-                        Intent intent = result.getData();
-                        Log.e("test", "intent : " + intent);
-                        Uri uri = intent.getData();
-                        Log.e("test", "uri : " + uri);
-//                        imageview.setImageURI(uri);
-                        Glide.with(FragmentMypage.this)
-                                .load(uri)
-                                .into(myPage_profile);
-                    }
-                }
-            });
+//    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//            new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    if (result.getResultCode() == RESULT_OK) {
+//                        Log.e(TAG, "result : " + result);
+//                        Intent intent = result.getData();
+//                        Log.e("test", "intent : " + intent);
+//                        Uri uri = intent.getData();
+//                        Log.e("test", "uri : " + uri);
+////                        imageview.setImageURI(uri);
+//                        Glide.with(FragmentMypage.this)
+//                                .load(uri)
+//                                .into(myPage_profile);
+//                    }
+//                }
+//            });
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE)
+        {
+            if (data != null)
+            {
+                Uri fildPath = data.getData();
+                Log.e(TAG, "내용 : " + fildPath );
+                imageSaveList.add(fildPath);
+                myPage_profile.setImageURI(fildPath);
+                Glide.with(FragmentMypage.this)
+                        .load(fildPath)
+                        .into(myPage_profile);
+
+            }
+        }
+    }
 
     @Override
     public void onResume() {
