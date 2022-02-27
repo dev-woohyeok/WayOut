@@ -126,7 +126,8 @@ public class findId extends AppCompatActivity {
                     findID_submit.setEnabled(false);
                     findID_reset.setClickable(false);
                     findID_reset.setFocusable(false);
-//                    findID_submit.setTextColor(Color.parseColor("#000000"));
+                    findID_numberCk.setEnabled(false);
+                    findID_reset.setTextColor(Color.parseColor("#000000"));
                     findID_reset.setText("인증이 완료 되었습니다.");
 
                     // 가입아이디 다시 보내기

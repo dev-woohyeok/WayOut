@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
@@ -112,12 +113,14 @@ public class findPw extends AppCompatActivity {
                 // 입력한 인증번호랑 같으면
                 if (findPW_numberCk.getText().toString().equals(PreferenceManager.getString(getApplicationContext(), "phoneNum"))) {
                     // 버튼 이용 불가 설정
+                    findPW_numberCk.setEnabled(false);
                     findPW_number.setEnabled(false);
                     findPW_submit.setEnabled(false);
                     findPW_reset.setClickable(false);
                     findPW_reset.setFocusable(false);
-//                    findID_submit.setTextColor(Color.parseColor("#000000"));
+                    findPW_reset.setTextColor(Color.parseColor("#000000"));
                     findPW_reset.setText("인증이 완료 되었습니다.");
+
 
 //                    // 가입아이디 다시 보내기
 //                    try {

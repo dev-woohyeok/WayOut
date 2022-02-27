@@ -42,8 +42,8 @@ public class User {
     private String codeIndex;
 
     @Expose
-    @SerializedName("files")
-    private MultipartBody.Part files;
+    @SerializedName("file")
+    private MultipartBody.Part file;
 
     @Expose
     @SerializedName("status")
@@ -61,16 +61,12 @@ public class User {
         return userProfile;
     }
 
-    public void setUserProfile(String userProfile) {
-        this.userProfile = userProfile;
+    public MultipartBody.Part getFile() {
+        return file;
     }
 
-    public MultipartBody.Part getFiles() {
-        return files;
-    }
-
-    public void setFiles(MultipartBody.Part files) {
-        this.files = files;
+    public void setFile(MultipartBody.Part file) {
+        this.file = file;
     }
 
     public String getCodeIndex() {

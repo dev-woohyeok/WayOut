@@ -77,6 +77,31 @@ public class FragmentMypage extends Fragment {
         myPage_profile = view.findViewById(R.id.myPage_profile);
         myPage_Nick = view.findViewById(R.id.myPage_Nick);
 
+//        Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
+//        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+//        Call<User> call = retrofitInterface.getUserProfile(userIndex);
+//        call.enqueue(new Callback<User>() {
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                if(response.isSuccessful() && response.body() != null)
+//                {
+//                    if(response.body().getUserProfile().length() > 3) {
+//                        Glide.with(getContext())
+//                                .load(response.body().getUserProfile())
+//                                .into(myPage_profile);
+//                    }
+//
+//
+//                    Log.e(TAG, "내용 : 프로필 경로 : "+response.body().getUserProfile() );
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable t) {
+//
+//            }
+//        });
+
 
         myPage_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +139,7 @@ public class FragmentMypage extends Fragment {
                     switch (selectedText) {
                         case "앨범에서 선택":
                             Intent intent = new Intent(Intent.ACTION_PICK);
-                            Log.e(TAG, "내용 : 앨범 선택시 intent :"+ intent);
+                            Log.e(TAG, "내용 : 앨범 선택시 intent :" + intent);
                             intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                             Log.e(TAG, "내용 : 앨범 선택시 Intent2 : " + intent);
                             startActivityForResult(intent, GALLEY_CODE);
@@ -122,7 +147,7 @@ public class FragmentMypage extends Fragment {
 
                             break;
                         case "프로필 사진 삭제":
-                            Toast.makeText(getContext(), "이미지 버튼 삭제", Toast.LENGTH_SHORT).show();
+                            deleteUserProfile(PreferenceManager.getInt(getContext(),"autoIndex"));
                             break;
                     }
                 });
@@ -170,69 +195,17 @@ public class FragmentMypage extends Fragment {
         Log.e(TAG, "내용 : CursorLoader : " + cursorLoader);
         Cursor cursor = cursorLoader.loadInBackground();
         Log.e(TAG, "내용 :  Cursor : " + cursor);
-
         int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         Log.e(TAG, "내용 : columnIndex : " + columnIndex);
         cursor.moveToFirst();
+        Log.e(TAG, "내용 :  Cursor.moveToFirst : " + cursor.moveToFirst());
         String url = cursor.getString(columnIndex);
         Log.e(TAG, "내용 : url : " + url);
         cursor.close();
         return url;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLEY_CODE && data != null) {
-
-            imageUri = getRealPathFromUri(data.getData());
-            Log.e(TAG, "내용 : 이미지 절대 경로 : " + imageUri);
-            RequestOptions cropOptions = new RequestOptions();
-
-            Uri uri = data.getData();
-            Log.e(TAG, "내용 상대경로 : " + uri);
-            Glide.with(getContext())
-                    .load(imageUri)
-                    .apply(cropOptions.optionalCircleCrop())
-                    .into(myPage_profile);
-
-            File file = new File(imageUri);
-            Log.e(TAG, "내용 : file : " + file);
-            ArrayList<MultipartBody.Part> files = new ArrayList<>();
-            Log.e(TAG, "내용 : ArrayList<MultipartBody.Part> : "+ files);
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            Log.e(TAG, "내용 : requestFile : " + requestFile );
-            MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", "",requestFile);
-            Log.e(TAG, "내용 : MultipartBody.Part : " + body);
-            files.add(body);
-            Log.e(TAG, "내용 : files : " +files);
-            String Id = PreferenceManager.getString(getContext(),"autoId");
-            Log.e(TAG, "내용 보낼 아이디 : " + Id);
-
-//            RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-//            Call<User> call = retrofitInterface.userProfile(files,Id);
-//            call.enqueue(new Callback<User>() {
-//                @Override
-//                public void onResponse(Call<User> call, Response<User> response) {
-//                    if(response.isSuccessful() && response.body() != null )
-//                    {
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<User> call, Throwable t) {
-//
-//                }
-//            });
-        }
-    }
-
-    private void uploadImage () {
-
-    }
-
-    //    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
 //            new ActivityResultCallback<ActivityResult>() {
 //                @Override
 //                public void onActivityResult(ActivityResult result) {
@@ -250,13 +223,123 @@ public class FragmentMypage extends Fragment {
 //                }
 //            });
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLEY_CODE && data != null) {
+
+            imageUri = getRealPathFromUri(data.getData());
+            Log.e(TAG, "내용 : 이미지 절대 경로 : " + imageUri);
+            // 이미지 둥글게 처리하기 : Glide 에서 설정
+            RequestOptions cropOptions = new RequestOptions();
+            Log.e(TAG, "내용 : cropOptions : " + cropOptions);
+
+            File file = new File(imageUri);
+            Log.e(TAG, "내용 : file : " + file);
+            ArrayList<MultipartBody.Part> files = new ArrayList<>();
+            Log.e(TAG, "내용 : ArrayList<MultipartBody.Part> : " + files);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            Log.e(TAG, "내용 : requestFile : " + requestFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", "1234", requestFile);
+            Log.e(TAG, "내용 : MultipartBody.Part : " + body);
+//            files.add(body);
+//            Log.e(TAG, "내용 : files : " + files);
+            Integer Index = PreferenceManager.getInt(getContext(), "autoIndex");
+            Log.e(TAG, "내용 보낼 유저 인덱스 : " + Index);
+
+
+            RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+            Log.e(TAG, "내용 retrofitInterface : " + retrofitInterface);
+            Call<User> call = retrofitInterface.userProfile(body, Index);
+            Log.e(TAG, "내용 : call : " + call);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if(response.isSuccessful() && response.body() != null)
+                    {
+                        Log.e(TAG, "내용 : === 프로필 파일 서버 업로드 : 성공 ===");
+                        Glide.with(FragmentMypage.this)
+                                .load(response.body().getUserProfile())
+                                .into(myPage_profile);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Log.e(TAG, "내용 error message : " + t);
+
+                }
+            });
+        }
+    }
+
+    private void deleteUserProfile(Integer userIndex){
+        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+        Call<User> call = retrofitInterface.deleteUserProfile(userIndex);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful() && response.body() != null)
+                {
+                    Log.e(TAG, "내용 : === 프로필 파일 삭제 : 성공 ===");
+                    Glide.with(getContext())
+                            .load(response.body().getUserProfile())
+                            .into(myPage_profile);
+                    Log.e(TAG, "내용 : userProfile : " + response.body().getUserProfile());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "내용 : === 프로필 파일 삭제 : 실패 // error message : " + t);
+            }
+        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e(TAG, "내용 : ===========onSTOP================================");
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         String Nick = PreferenceManager.getString(getContext(), "autoNick");
         myPage_Nick.setText(Nick);
+
+        Log.e(TAG, "내용 : ===== onResume ======================");
+
+        Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
+        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+        Call<User> call = retrofitInterface.getUserProfile(userIndex);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful() && response.body() != null)
+                {
+
+                    Log.e(TAG, "내용 : onResume 프로필 경로 : "+response.body().getUserProfile() );
+                    Log.e(TAG, "내용 : 이미지 가져오기 성공 ================");
+                    Log.e(TAG, "내용 : 이미지 경로 : " + response.body().getUserProfile());
+                        Glide.with(FragmentMypage.this)
+                                .load(response.body().getUserProfile())
+                                .into(myPage_profile);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "내용 : onResume 유저 프로필 에러 : "+t );
+
+            }
+        });
+
     }
+
 
     private void userDelete(Integer userIndex) {
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);

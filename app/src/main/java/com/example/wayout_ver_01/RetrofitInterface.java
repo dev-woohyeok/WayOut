@@ -12,8 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 
-public interface RetrofitInterface
-{
+public interface RetrofitInterface {
     // 서버에 보내고 받을 인터페이스 설정
     // 인터페이스 설정시 retrofit 이 자동으로 처리해줌
     // @POST : HTTP 통신 방식 // test.php 서버측 URL 경로
@@ -38,10 +37,10 @@ public interface RetrofitInterface
     @FormUrlEncoded
     @POST("userUpdate.php")
     Call<User> userReset(
-        @Field("userId") String userId,
-        @Field("userPw") String userPw,
-        @Field("userNick") String userNick,
-        @Field("userIndex") Integer userIndex
+            @Field("userId") String userId,
+            @Field("userPw") String userPw,
+            @Field("userNick") String userNick,
+            @Field("userIndex") Integer userIndex
     );
 
     @FormUrlEncoded
@@ -68,15 +67,27 @@ public interface RetrofitInterface
     @FormUrlEncoded
     @POST("findResetPw.php")
     Call<User> findResetPw(
-        @Field("userPw") String userPw,
-        @Field("userPhone") String userPhone
+            @Field("userPw") String userPw,
+            @Field("userPhone") String userPhone
     );
 
     @Multipart
-    @POST("userProfile.php")
+    @POST("updateUserProfile.php")
     Call<User> userProfile(
-            @Part MultipartBody.Part files,
-            @Part ("userId") String userId
+            @Part MultipartBody.Part file,
+            @Part("userIndex") Integer userIndex
+    );
+
+    @FormUrlEncoded
+    @POST("getUserProfile.php")
+    Call<User> getUserProfile(
+            @Field("userIndex") Integer userIndex
+    );
+
+    @FormUrlEncoded
+    @POST("deleteUserProfile.php")
+    Call<User> deleteUserProfile(
+            @Field("userIndex") Integer userIndex
     );
 
 }
