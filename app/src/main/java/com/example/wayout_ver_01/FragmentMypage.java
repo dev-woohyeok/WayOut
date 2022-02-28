@@ -234,6 +234,8 @@ public class FragmentMypage extends Fragment {
             RequestOptions cropOptions = new RequestOptions();
             Log.e(TAG, "내용 : cropOptions : " + cropOptions);
 
+
+
             File file = new File(imageUri);
             Log.e(TAG, "내용 : file : " + file);
             ArrayList<MultipartBody.Part> files = new ArrayList<>();

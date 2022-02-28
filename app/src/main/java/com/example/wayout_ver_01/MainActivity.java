@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView Login_FindId;
     private TextView Login_FindPw;
     private Context mContext = this;
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,37 +51,36 @@ public class MainActivity extends AppCompatActivity {
 
 
         //동적퍼미션 작업
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            int permissionResult= checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int permissionResult = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-            if(permissionResult== PackageManager.PERMISSION_DENIED){
-                String[] permissions= new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                requestPermissions(permissions,10);
+            if (permissionResult == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions, 10);
             }
-        }else{
-            //cv.setVisibility(View.VISIBLE);
+        } else {
+
         }
+
+        requirePermission();
 
         // permission확인 절차
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            Log.d("test", "=== sms전송을 위한 퍼미션 확인 ===" );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Log.d("test", "=== sms전송을 위한 퍼미션 확인 ===");
             // For device above MarshMallow
             boolean permission = getWritePermission();
-            if(permission) {
+            if (permission) {
                 // If permission Already Granted
                 // Send You SMS here
-                Log.d("test", "=== 퍼미션 허용 ===" );
+                Log.d("test", "=== 퍼미션 허용 ===");
             }
-        }
-        else{
+        } else {
             // Send Your SMS. You don't need Run time permission
-            Log.d("test", "=== 퍼미션 필요 없는 버전임 ===" );
+            Log.d("test", "=== 퍼미션 필요 없는 버전임 ===");
         }
 
-        if(PreferenceManager.getBoolean(mContext,"autoLogin"))
-        {
+        if (PreferenceManager.getBoolean(mContext, "autoLogin")) {
             Intent intent = new Intent(this, Home.class);
             startActivity(intent);
             finish();
@@ -115,75 +115,66 @@ public class MainActivity extends AppCompatActivity {
         Login_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String ID = Login_Id.getText().toString().trim();
-               String PW = Login_Pw.getText().toString().trim();
+                String ID = Login_Id.getText().toString().trim();
+                String PW = Login_Pw.getText().toString().trim();
 
-                if(Login_Auto.isChecked())
-                {
+                if (Login_Auto.isChecked()) {
                     // 오토 로그인 성공시 로그인 저장
-                    PreferenceManager.setBoolean(mContext,"autoLogin",true);
-                }
-                else
-                {
+                    PreferenceManager.setBoolean(mContext, "autoLogin", true);
+                } else {
                     PreferenceManager.setBoolean(mContext, "autoLogin", false);
                 }
 
-                if(Login_Id.getText().toString().length() == 0)
-                {
+                if (Login_Id.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
                     Login_Id.requestFocus();
                     return;
                 }
-                if(Login_Pw.getText().toString().length() == 0)
-                {
+                if (Login_Pw.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                     Login_Pw.requestFocus();
                     return;
                 }
 
 
-                selectJoin(ID,PW);
+                selectJoin(ID, PW);
             }
         });
 
 
-
     }
 
-    private void selectJoin (String userId, String userPw){
+    private void selectJoin(String userId, String userPw) {
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<JoinRequest> call = retrofitInterface.selectJoin(userId,userPw);
+        Call<JoinRequest> call = retrofitInterface.selectJoin(userId, userPw);
         call.enqueue(new Callback<JoinRequest>() {
             @Override
             public void onResponse(Call<JoinRequest> call, Response<JoinRequest> response) {
                 //통신 성공시
-                if(response.isSuccessful() && response.body() != null)
-                {
+                if (response.isSuccessful() && response.body() != null) {
                     // 로그인 성공시
                     Boolean status = response.body().getStatus();
-                    if(status)
-                    {
-                        Intent intent = new Intent(MainActivity.this,Home.class);
+                    if (status) {
+                        Intent intent = new Intent(MainActivity.this, Home.class);
                         startActivity(intent);
                         //회원정보 저장
                         PreferenceManager.setString(mContext, "autoId", response.body().getUserId());
-                        PreferenceManager.setInt(mContext,"autoIndex", response.body().getUserIndex());
-                        PreferenceManager.setString(mContext,"autoNick",""+ response.body().getUserNick());
-                        PreferenceManager.setString(mContext,"autoPhone",""+ response.body().getUserPhone());
+                        PreferenceManager.setInt(mContext, "autoIndex", response.body().getUserIndex());
+                        PreferenceManager.setString(mContext, "autoNick", "" + response.body().getUserNick());
+                        PreferenceManager.setString(mContext, "autoPhone", "" + response.body().getUserPhone());
 
                         Log.e("Test", "Activity :MainActivity // 로그인 성공 후 // 저장된 ID : " + response.body().getUserId());
                         Log.e("Test", "Activity :MainActivity // 로그인 성공 후 // 저장된 인덱스 : " + response.body().getUserIndex());
                         Log.e("Test", "Activity :MainActivity // 로그인 성공 후 // 저장된 닉네임 : " + response.body().getUserNick());
                         Log.e("Test", "Activity :MainActivity // 로그인 성공 후 // 저장된 폰번호 : " + response.body().getUserPhone());
                         finish();
-                        Toast.makeText(MainActivity.this,  response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
+                        Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<JoinRequest> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "예기치 못한 오류가 발생하였습니다.\\n 고객센터에 문의바랍니다.", Toast.LENGTH_SHORT).show();
@@ -192,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean getWritePermission(){
+    public boolean getWritePermission() {
         boolean hasPermission = (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED);
         if (!hasPermission) {
@@ -201,14 +192,34 @@ public class MainActivity extends AppCompatActivity {
         return hasPermission;
     }
 
+    private void requirePermission()
+    {
+        // 마쉬멜로우 버전보다 버전이 높은지 확인
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            // 어떤 권한을 가져올지
+            String[] Permission = {Manifest.permission.RECEIVE_SMS};
+            Log.e(TAG, "내용 : ");
+            // 현재 권한을 상태 가져온다.
+            int PermissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
+            // 현재 권한이 없으면, 권한 요청 한다.
+            if(PermissionCheck == PackageManager.PERMISSION_DENIED)
+            {
+                ActivityCompat.requestPermissions(this, Permission,1);
+            }
+        }
+        else
+        {
+            Log.e(TAG, "내용 : 퍼미션 권한 필요없는 버전");
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case 10: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission is Granted
                     // Send Your SMS here
                 }
