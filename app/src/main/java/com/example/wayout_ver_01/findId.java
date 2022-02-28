@@ -108,7 +108,9 @@ public class findId extends AppCompatActivity {
                 }
                 if(!mTimerRunning) {
                     sendSMS();
-
+                    // 인증번호 발송 위치 액티비티 알려주기
+                    // 회원가입 = 0, 아이디 찾기 = 1, 비밀번호 찾기 = 2
+                    PreferenceManager.setInt(getApplicationContext(),"submitAct", 1);
 //                    startTimer();
                 }
             }
@@ -166,6 +168,13 @@ public class findId extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String smsNum = intent.getStringExtra("smsNum");
+        findID_numberCk.setText(smsNum);
     }
 
 

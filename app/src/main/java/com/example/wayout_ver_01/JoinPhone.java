@@ -38,6 +38,8 @@ public class JoinPhone extends AppCompatActivity {
     private Boolean certCk = false;
     private Boolean submitCk = false;
     private boolean changeActivity = false;
+    private SMSReceiver smsReceiver;
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class JoinPhone extends AppCompatActivity {
         phone_ck = findViewById(R.id.Phone_ck);
         phone_reset = findViewById(R.id.Phone_reset);
         phone_timer = findViewById(R.id.Phone_timer);
+        smsReceiver = new SMSReceiver();
 
         // 인증 확인을 체크 위한 boolean
 //        PreferenceManager.setBoolean(getApplicationContext(), "phoneCk", false);
@@ -89,7 +92,7 @@ public class JoinPhone extends AppCompatActivity {
         // 4. 인증번호 확인 버튼 => 인증번호 확인 통과시 boolean cert = true //
         // 5. 다음 버튼 클릭 => boolean cert = true 일때 진행 => 진행 완료 후 cert false 로 전환
 
-        // 1~ 3번 작성성
+        // 인증번호 발송 =============================================
         phone_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,9 +109,14 @@ public class JoinPhone extends AppCompatActivity {
                     phone_number.requestFocus();
                     return;
                 }
+
                 if(!mTimerRunning) {
                     sendSMS();
-//                    startTimer();
+                    Log.e(TAG, "내용 : === 타이머 시작 ===");
+                    // 인증번호 발송 위치 액티비티 알려주기
+                    // 회원가입 = 0, 아이디 찾기 = 1, 비밀번호 찾기 = 2
+                    PreferenceManager.setInt(getApplicationContext(),"submitAct", 0);
+
                 }
             }
         });
@@ -148,11 +156,18 @@ public class JoinPhone extends AppCompatActivity {
             public void onClick(View v) {
                 sendSMS();
                 resetTimer();
+
             }
         });
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String smsNum = intent.getStringExtra("smsNum");
+        phone_numberCk.setText(smsNum);
+    }
 
     private void startTimer() {
         // 카운트 다운 시간 설정 ( 총 진행 시간 , 줄이는 단위 1초 )

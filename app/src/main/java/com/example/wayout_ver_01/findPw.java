@@ -81,7 +81,7 @@ public class findPw extends AppCompatActivity {
         // 4. 인증번호 확인 버튼 => 인증번호 확인 통과시 boolean cert = true //
         // 5. 다음 버튼 클릭 => boolean cert = true 일때 진행 => 진행 완료 후 cert false 로 전환
 
-        // 1~ 3번 작성성
+        // 인증 번호 발송 =====================================
         findPW_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +100,14 @@ public class findPw extends AppCompatActivity {
                 }
                 if(!mTimerRunning) {
                     sendSMS();
-//                    startTimer();
+//                  // 인증번호 발송 위치 액티비티 알려주기
+//                  // 회원가입 = 0, 아이디 찾기 = 1, 비밀번호 찾기 = 2
+                    PreferenceManager.setInt(getApplicationContext(),"submitAct", 2);
                 }
             }
         });
+
+
 
         // 인증 번호 입력 후 다음 인증 확인 버튼
         findPW_ck.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +166,12 @@ public class findPw extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String smsNum = intent.getStringExtra("smsNum");
+        findPW_numberCk.setText(smsNum);
+    }
 
     private void startTimer() {
         // 카운트 다운 시간 설정 ( 총 진행 시간 , 줄이는 단위 1초 )
