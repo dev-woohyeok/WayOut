@@ -46,6 +46,7 @@ public class SMSReceiver extends BroadcastReceiver {
             PreferenceManager.setString(context, "smsNum", smsNum);
             Log.e(TAG, "내용 : 인증번호 PreferenceManager 에 등록 : " + PreferenceManager.getString(context, "smsNum"));
 
+
 //          문자 발송된 화면
 //          회원가입 : 0 // 아이디 찾기 : 1 // 비밀번호 찾기 : 2
             int submitAct = PreferenceManager.getInt(context, "submitAct");

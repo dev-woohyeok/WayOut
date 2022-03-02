@@ -65,6 +65,21 @@ public class MainActivity extends AppCompatActivity {
 
         requirePermission();
 
+        // 마시멜로우 버전 이후라면 권한을 요청해라
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED )
+            {
+                Log.e(TAG, "내용 : 권한 설정 완료");
+            }
+            else
+            {
+                String [] permission = {Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                ActivityCompat.requestPermissions(this, permission ,1);
+            }
+        }
+
         // permission확인 절차
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("test", "=== sms전송을 위한 퍼미션 확인 ===");

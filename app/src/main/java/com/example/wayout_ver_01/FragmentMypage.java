@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,10 +17,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.CursorLoader;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +36,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,7 +61,12 @@ public class FragmentMypage extends Fragment {
     private ArrayList<Uri> imageSaveList;
     private static final int REQUEST_CODE = 0;
     private static final int GALLEY_CODE = 10;
+    private static final int TAKE_PICTURE = 1;
+    private final static int REQUEST_TAKE_PHOTO = 1;
     private String imageUri = "";
+    private String imageFilePath;
+    private Uri photoUri;
+    String mCurrentPath;
 
 
     @Override
@@ -128,8 +139,10 @@ public class FragmentMypage extends Fragment {
             @Override
             public void onClick(View v) {
                 final List<String> ListItems = new ArrayList<>();
+                ListItems.add("카메라로 직접 촬영");
                 ListItems.add("앨범에서 선택");
                 ListItems.add("프로필 사진 삭제");
+
 
                 // String 배열 Items 에 ListItems 를 string[ListItems.size()] 형태로 생성한다.
                 final String[] items = ListItems.toArray(new String[ListItems.size()]);
@@ -137,14 +150,15 @@ public class FragmentMypage extends Fragment {
                 builder.setItems(items, (dialog, pos) -> {
                     String selectedText = items[pos];
                     switch (selectedText) {
+                        case "카메라로 직접 촬영":
+                            dispatchTakePictureIntent();
+                            break;
                         case "앨범에서 선택":
                             Intent intent = new Intent(Intent.ACTION_PICK);
                             Log.e(TAG, "내용 : 앨범 선택시 intent :" + intent);
                             intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                             Log.e(TAG, "내용 : 앨범 선택시 Intent2 : " + intent);
                             startActivityForResult(intent, GALLEY_CODE);
-
-
                             break;
                         case "프로필 사진 삭제":
                             deleteUserProfile(PreferenceManager.getInt(getContext(),"autoIndex"));
@@ -193,7 +207,7 @@ public class FragmentMypage extends Fragment {
         Log.e(TAG, "내용 : String[] proj : " + proj);
         CursorLoader cursorLoader = new CursorLoader(getContext(), uri, proj, null, null, null);
         Log.e(TAG, "내용 : CursorLoader : " + cursorLoader);
-        Cursor cursor = cursorLoader.loadInBackground();
+        Cursor cursor = cursorLoader. loadInBackground();
         Log.e(TAG, "내용 :  Cursor : " + cursor);
         int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         Log.e(TAG, "내용 : columnIndex : " + columnIndex);
@@ -226,20 +240,24 @@ public class FragmentMypage extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLEY_CODE && data != null) {
+        if (resultCode == RESULT_OK && data != null)
+        {
 
-            imageUri = getRealPathFromUri(data.getData());
-            Log.e(TAG, "내용 : 이미지 절대 경로 : " + imageUri);
-            // 이미지 둥글게 처리하기 : Glide 에서 설정
-            RequestOptions cropOptions = new RequestOptions();
-            Log.e(TAG, "내용 : cropOptions : " + cropOptions);
-
-
-
+            switch (requestCode) {
+                case GALLEY_CODE:
+                    imageUri = getRealPathFromUri(data.getData());
+                    Log.e(TAG, "내용 : 갤러리 이미지 절대 경로 : " + imageUri);
+                    break;
+                case REQUEST_TAKE_PHOTO:
+                    imageUri = mCurrentPath;
+                    Log.e(TAG, "내용 : 카메라 촬영 이미지 절대 경로 : " + imageUri);
+                    break;
+            }
+            // 절대 경로를 파일을 만들어서 레트로핏에 request body 에 multipart 형식으로 담아서 보냄
             File file = new File(imageUri);
             Log.e(TAG, "내용 : file : " + file);
-            ArrayList<MultipartBody.Part> files = new ArrayList<>();
-            Log.e(TAG, "내용 : ArrayList<MultipartBody.Part> : " + files);
+//                    ArrayList<MultipartBody.Part> files = new ArrayList<>();
+//                    Log.e(TAG, "내용 : ArrayList<MultipartBody.Part> : " + files);
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             Log.e(TAG, "내용 : requestFile : " + requestFile);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", "1234", requestFile);
@@ -273,6 +291,7 @@ public class FragmentMypage extends Fragment {
 
                 }
             });
+
         }
     }
 
@@ -304,6 +323,42 @@ public class FragmentMypage extends Fragment {
     public void onStop() {
         super.onStop();
         Log.e(TAG, "내용 : ===========onSTOP================================");
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if(takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null )
+//        {
+            File photoFile = null;
+            try
+            {
+             photoFile = createImageFile();
+            }catch (Exception e) { e.printStackTrace(); }
+            if(photoFile != null)
+            {
+//                Uri photoURI = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.example.wayout_ver_01", photoFile);
+////                Log.e(TAG, "내용 : photoUri : " + photoURI);
+//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+//        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        // 파일을 저장할 외부 저장소의 위치를 가져옴
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        Log.e(TAG, "내용 : 파일을 저장할 경로 storageDir : " + storageDir);
+        // 외부 저장소에 파일을 저장함
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.e(TAG, "내용 : 외부 저장소에 이미지파일을 , jpg 형식으로 저장함 image : " + image);
+        // 파일 절대 경로
+        mCurrentPath = image.getAbsolutePath();
+        // 경로가 사진 찍기 전에 이미 고정됨 -> 고정된 경로로
+        Log.e(TAG, "내용 : 사진 절대 경로 : " + mCurrentPath);
+
+        return image;
     }
 
     @Override
