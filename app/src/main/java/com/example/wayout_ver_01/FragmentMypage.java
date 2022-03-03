@@ -336,9 +336,9 @@ public class FragmentMypage extends Fragment {
             }catch (Exception e) { e.printStackTrace(); }
             if(photoFile != null)
             {
-//                Uri photoURI = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.example.wayout_ver_01", photoFile);
-////                Log.e(TAG, "내용 : photoUri : " + photoURI);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                Uri photoURI = FileProvider.getUriForFile(getContext(), "com.example.wayout_ver_01", photoFile);
+//                Log.e(TAG, "내용 : photoUri : " + photoURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
 //        }

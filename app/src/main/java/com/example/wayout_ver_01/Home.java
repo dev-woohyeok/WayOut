@@ -2,6 +2,9 @@ package com.example.wayout_ver_01;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,44 +40,40 @@ public class Home extends AppCompatActivity {
         fragmentChatting = new FragmentChatting();
         fragmentMypage = new FragmentMypage();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentHome).commit();
+        replaceFragment(fragmentHome);
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentHome).commit();
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home_tab:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentHome).commit();
+                        replaceFragment(fragmentHome);
                         return true;
                     case R.id.search_tab:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentSearch).commit();
+                        replaceFragment(fragmentSearch);
                         return true;
                     case R.id.community_tab:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentCommunity).commit();
+                        replaceFragment(fragmentCommunity);
                         return true;
                     case R.id.chat_tab:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentChatting).commit();
+                        replaceFragment(fragmentChatting);
                         return true;
                     case R.id.myPage_tab:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, fragmentMypage).commit();
+                        replaceFragment(fragmentMypage);
                         return true;
                 }
                 return false;
             }
         });
-
-//        home_Out = findViewById(R.id.home_out);
-//
-//        home_Out.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PreferenceManager.setString(mContext, "autoId", "");
-//                PreferenceManager.setString(mContext, "autoPw", "");
-//                Intent intent = new Intent(Home.this, MainActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
+    }
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,R.anim.left_to_right,R.anim.right_to_left);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.containers, fragment);
+        fragmentTransaction.commit();
     }
 }
