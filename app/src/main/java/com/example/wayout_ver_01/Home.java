@@ -29,6 +29,7 @@ public class Home extends AppCompatActivity {
     FragmentMypage fragmentMypage;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +69,11 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,R.anim.left_to_right,R.anim.right_to_left);
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,R.anim.right_to_left,R.anim.left_to_right);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.containers, fragment);
         fragmentTransaction.commit();

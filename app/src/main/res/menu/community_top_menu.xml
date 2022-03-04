@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/freeBoard"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="자유 게시판" />
+
+    <item
+        android:id="@+id/galleryBoard"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="보드판 갤러리" />
+
+    <item
+        android:id="@+id/chatBoard"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="일행 구하기" />
+</menu>

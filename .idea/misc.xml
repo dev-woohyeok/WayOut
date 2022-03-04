@@ -20,7 +20,10 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_reset.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_reset_pw.xml" value="0.22864583333333333" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_chatting.xml" value="0.4" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_community.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__chat_board.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__free_borad.xml" value="0.11770833333333333" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__gallery_borad.xml" value="0.11770833333333333" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_community.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_mypage.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search.xml" value="0.264" />
@@ -28,6 +31,8 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/test.xml" value="0.22864583333333333" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/bottom_menu.xml" value="0.1" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/com_top_menu.xml" value="0.42864583333333334" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/community_top_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/search_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/search_top_menu.xml" value="0.42864583333333334" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/xml/file_paths.xml" value="0.15885416666666666" />
         <entry key="..\:/Users/WooH/Wayout/app/src/main/res/drawable/text_cursor.xml" value="0.24791666666666667" />

@@ -32,14 +32,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exit" />
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/topTab_community"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:elevation="1dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
-        android:id="@+id/search_containers"
+        android:id="@+id/community_containers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:layout_editor_absoluteX="0dp">
+
+
     </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
