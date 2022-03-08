@@ -384,6 +384,7 @@ public class FragmentMypage extends Fragment {
                         Glide.with(FragmentMypage.this)
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);
+                        Log.e(TAG, "내용 : 이미지 경로 : " +response.body().getUserProfile());
 
                 }
             }

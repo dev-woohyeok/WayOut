@@ -21,7 +21,7 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_reset_pw.xml" value="0.22864583333333333" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_chatting.xml" value="0.4" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__chat_board.xml" value="0.264" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__free_borad.xml" value="0.11770833333333333" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__free_borad.xml" value="0.4" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__gallery_borad.xml" value="0.11770833333333333" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_community.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_home.xml" value="0.264" />
@@ -29,6 +29,7 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search__cafe.xml" value="0.1" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search__theme.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/freeboard.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/login.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/test.xml" value="0.22864583333333333" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/menu/bottom_menu.xml" value="0.1" />
