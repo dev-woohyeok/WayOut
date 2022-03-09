@@ -74,7 +74,8 @@ public class Home extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,R.anim.right_to_left,R.anim.left_to_right);
-        fragmentTransaction.addToBackStack(null);
+        // back 스택에 저장
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.containers, fragment);
         fragmentTransaction.commit();
     }

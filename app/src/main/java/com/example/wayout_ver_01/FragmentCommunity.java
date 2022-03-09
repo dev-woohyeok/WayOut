@@ -41,6 +41,7 @@ public class FragmentCommunity extends Fragment {
         tabs.addTab(tabs.newTab().setText("자유 게시판"));
         tabs.addTab(tabs.newTab().setText("갤러리 게시판"));
         tabs.addTab(tabs.newTab().setText("인원 구하기"));
+
         // 자유 게시판 기본 세팅
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -91,7 +92,7 @@ public class FragmentCommunity extends Fragment {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.left_to_right, R.anim.right_to_left);
-        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.community_containers, fragment);
         fragmentTransaction.commit();
     }

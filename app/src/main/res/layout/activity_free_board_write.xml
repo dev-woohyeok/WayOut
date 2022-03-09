@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FreeBoard_write">
+
+
+    <EditText
+        android:id="@+id/freeWrite_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/borderlinetop"
+        android:ems="10"
+        android:hint="제목 (30자)"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <ImageView
+        android:id="@+id/freeWrite_img1"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/borderline"
+        android:gravity="center"
+        android:padding="20dp"
+        android:src="@drawable/camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freeWrite_content" />
+
+    <EditText
+        android:id="@+id/freeWrite_content"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+
+        android:background="@drawable/borderlinetop"
+        android:ems="10"
+        android:hint="제목 (1000자)"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freeWrite_title" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="411dp"
+        android:layout_height="50dp"
+        android:background="#46C88F8F"
+        android:gravity="center"
+        android:text="자유게시판"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="0/3"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/freeWrite_img1"
+        app:layout_constraintTop_toBottomOf="@+id/freeWrite_img1" />
+
+    <TextView
+        android:id="@+id/freeWrite_btn"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="작성"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/freeWrite_rv"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/freeWrite_img1"
+        app:layout_constraintTop_toTopOf="@+id/freeWrite_img1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,22 +3,16 @@
     package="com.example.wayout_ver_01">
 
     <!-- 권한 추가 -->
-<!--    카메라 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-<!--    외부 저장소-->
+    <!-- 카메라 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 외부 저장소 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!--    인터넷-->
-    <uses-permission android:name="android.permission.INTERNET" />
-<!--    문자 받을 수 있는 권한-->
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-<!--    문자 전송 할 수 있는 권한-->
-    <uses-permission android:name="android.permission.SEND_SMS" />
-<!--    문자를 읽을 수 있는 권한-->
-    <uses-permission android:name="android.permission.READ_SMS" />
-<!--    유저 단말기 정보를 가져 오기 위한 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 인터넷 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 문자 받을 수 있는 권한 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" /> <!-- 문자 전송 할 수 있는 권한 -->
+    <uses-permission android:name="android.permission.SEND_SMS" /> <!-- 문자를 읽을 수 있는 권한 -->
+    <uses-permission android:name="android.permission.READ_SMS" /> <!-- 유저 단말기 정보를 가져 오기 위한 권한 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-feature android:name="android.hardware.camera" /> <!-- 구글 플레이에 카메라 있는 애들한테만 검색 -->
 
     <application
         android:allowBackup="true"
@@ -28,6 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".FreeBoard_write"
+            android:exported="false" />
+
         <receiver
             android:name=".SMSReceiver"
             android:enabled="true"
@@ -38,14 +36,15 @@
         </receiver>
 
         <provider
-            android:authorities="com.example.wayout_ver_01"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.wayout_ver_01"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".findResetPw"
             android:exported="false" />

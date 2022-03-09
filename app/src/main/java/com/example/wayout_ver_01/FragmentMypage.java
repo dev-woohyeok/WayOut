@@ -2,6 +2,7 @@ package com.example.wayout_ver_01;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,7 +68,7 @@ public class FragmentMypage extends Fragment {
     private String imageFilePath;
     private Uri photoUri;
     String mCurrentPath;
-
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +88,8 @@ public class FragmentMypage extends Fragment {
         myPage_reset = view.findViewById(R.id.myPage_reset);
         myPage_profile = view.findViewById(R.id.myPage_profile);
         myPage_Nick = view.findViewById(R.id.myPage_Nick);
+
+
 
 //        Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
 //        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
@@ -367,6 +370,11 @@ public class FragmentMypage extends Fragment {
         String Nick = PreferenceManager.getString(getContext(), "autoNick");
         myPage_Nick.setText(Nick);
 
+
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+
         Log.e(TAG, "내용 : ===== onResume ======================");
 
         Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
@@ -377,22 +385,22 @@ public class FragmentMypage extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful() && response.body() != null)
                 {
-
                     Log.e(TAG, "내용 : onResume 프로필 경로 : "+response.body().getUserProfile() );
                     Log.e(TAG, "내용 : 이미지 가져오기 성공 ================");
                     Log.e(TAG, "내용 : 이미지 경로 : " + response.body().getUserProfile());
                         Glide.with(FragmentMypage.this)
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);
-                        Log.e(TAG, "내용 : 이미지 경로 : " +response.body().getUserProfile());
 
+                        progressDialog.dismiss();
+                        Log.e(TAG, "내용 : 이미지 경로 : " +response.body().getUserProfile());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, "내용 : onResume 유저 프로필 에러 : "+t );
-
+                progressDialog.dismiss();
             }
         });
 
