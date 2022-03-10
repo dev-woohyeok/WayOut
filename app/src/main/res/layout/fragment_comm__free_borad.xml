@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentComm_FreeBorad">
+    tools:context=".Fragment.FragmentComm_FreeBorad">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/free_search"
+            android:id="@+id/freeBoard_search"
             android:layout_width="350dp"
             android:layout_height="35dp"
             android:layout_margin="5dp"
@@ -28,26 +28,24 @@
             app:layout_constraintVertical_bias="0.022" />
 
         <ImageView
-            android:id="@+id/free_search_btn"
+            android:id="@+id/freeBoard_search_btn"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:padding="5dp"
             android:src="@drawable/search"
-            app:layout_constraintStart_toEndOf="@+id/free_search"
-            app:layout_constraintTop_toTopOf="@+id/free_search" />
+            app:layout_constraintStart_toEndOf="@+id/freeBoard_search"
+            app:layout_constraintTop_toTopOf="@+id/freeBoard_search" />
 
         <Button
-            android:id="@+id/free_write_btn"
+            android:id="@+id/freeBoard_write_btn"
             android:layout_width="60dp"
             android:layout_height="35dp"
-            android:layout_marginTop="15dp"
             android:text="글쓰기"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="@+id/free_search_btn"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/free_search_btn" />
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/freeBoard_search_btn"
+            app:layout_constraintTop_toBottomOf="@+id/freeBoard_search_btn" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/free_rv"

@@ -3,10 +3,14 @@ package com.example.wayout_ver_01;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
+
+import com.example.wayout_ver_01.Activity.JoinPhone;
+import com.example.wayout_ver_01.Activity.findId;
+import com.example.wayout_ver_01.Activity.findPw;
+import com.example.wayout_ver_01.Class.PreferenceManager;
 
 import java.util.Date;
 

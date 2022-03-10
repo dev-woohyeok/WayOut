@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FreeBoard_write">
+    tools:context=".Activity.FreeBoard_write">
 
 
     <EditText
@@ -14,15 +14,19 @@
         android:layout_marginTop="36dp"
         android:background="@drawable/borderlinetop"
         android:ems="10"
+        android:paddingLeft="10dp"
         android:hint="제목 (30자)"
-        android:inputType="textPersonName"
+        android:inputType="text"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:ellipsize="start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <ImageView
-        android:id="@+id/freeWrite_img1"
+        android:id="@+id/freeWrite_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
@@ -37,13 +41,15 @@
     <EditText
         android:id="@+id/freeWrite_content"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-
+        android:layout_height="wrap_content"
         android:background="@drawable/borderlinetop"
         android:ems="10"
-        android:hint="제목 (1000자)"
-        android:inputType="textPersonName"
-        android:padding="10dp"
+        android:hint="제목 (300자)"
+        android:inputType="textMultiLine"
+        android:paddingLeft="10dp"
+        android:minLines="11"
+        android:maxLength="300"
+        android:scrollHorizontally="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +74,8 @@
         android:gravity="center"
         android:text="0/3"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/freeWrite_img1"
-        app:layout_constraintTop_toBottomOf="@+id/freeWrite_img1" />
+        app:layout_constraintStart_toStartOf="@+id/freeWrite_img"
+        app:layout_constraintTop_toBottomOf="@+id/freeWrite_img" />
 
     <TextView
         android:id="@+id/freeWrite_btn"
@@ -86,10 +92,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/freeWrite_rv"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/freeWrite_img1"
-        app:layout_constraintTop_toTopOf="@+id/freeWrite_img1" />
+        app:layout_constraintStart_toEndOf="@+id/freeWrite_img"
+        app:layout_constraintTop_toTopOf="@+id/freeWrite_img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

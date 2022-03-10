@@ -23,7 +23,7 @@
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FreeBoard_write"
+            android:name=".Activity.FreeBoard_write"
             android:exported="false" />
 
         <receiver
@@ -46,35 +46,35 @@
         </provider>
 
         <activity
-            android:name=".findResetPw"
+            android:name=".Activity.findResetPw"
             android:exported="false" />
         <activity
-            android:name=".findPw"
+            android:name=".Activity.findPw"
             android:exported="false" />
         <activity
-            android:name=".findId"
+            android:name=".Activity.findId"
             android:exported="false" />
         <activity
-            android:name=".UserResetPw"
+            android:name=".Activity.UserResetPw"
             android:exported="false"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Activity.Home" />
         <activity
-            android:name=".UserReset"
+            android:name=".Activity.UserReset"
             android:exported="false"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Activity.Home" />
         <activity
-            android:name=".Home"
+            android:name=".Activity.Home"
             android:exported="false" />
         <activity
-            android:name=".JoinPhone"
+            android:name=".Activity.JoinPhone"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".Activity.MainActivity" />
         <activity
-            android:name=".JoinUser"
+            android:name=".Activity.JoinUser"
             android:exported="true"
-            android:parentActivityName=".JoinPhone" />
+            android:parentActivityName=".Activity.JoinPhone" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

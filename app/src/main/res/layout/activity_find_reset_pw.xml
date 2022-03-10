@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".findResetPw">
+    tools:context=".Activity.findResetPw">
 
     <EditText
         android:id="@+id/findReset_new_pw"
