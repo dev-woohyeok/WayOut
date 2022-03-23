@@ -46,7 +46,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
     // Gson 라이브러리, Gson 사용시
     implementation 'com.google.code.gson:gson:2.8.6'
-    //
+
+    implementation 'com.werb.pickphotoview:pickphotoview:0.4.8'
 
 
     implementation 'androidx.appcompat:appcompat:1.4.1'

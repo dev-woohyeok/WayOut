@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.FreeBoard_reply">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="5dp"
+        android:background="@drawable/borderline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <TextView
+            android:id="@+id/freeRead_comment_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:text="작성자 닉네임"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/freeRead_comment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:text="2022-02-03 오후 12시 12분"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/freeRead_comment_content"
+            app:layout_constraintTop_toBottomOf="@+id/freeRead_comment_content" />
+
+        <TextView
+            android:id="@+id/freeRead_comment_number"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="40dp"
+            android:gravity="end"
+            android:text="답글 111개"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/freeRead_comment_content"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/freeRead_comment_date"
+            app:layout_constraintTop_toTopOf="@+id/freeRead_comment_date" />
+
+        <TextView
+            android:id="@+id/freeRead_comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="댓글내용dkdkdkdkdkdkdkdkdkdkdkdkdkdkdkddkdkdkdkdkdkdkdddd"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintStart_toStartOf="@+id/freeRead_comment_writer"
+            app:layout_constraintTop_toBottomOf="@+id/freeRead_comment_writer"
+            app:layout_constraintWidth_max="375dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#46C88F8F"
+        android:gravity="center"
+        android:text="자유게시판"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/freeRead_comment_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/freeRead_etComment_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="80dp" />
+
+    <EditText
+        android:id="@+id/freeRead_etComment_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borderline"
+        android:gravity="center_vertical"
+        android:hint="내용을 입력해주세요"
+        android:inputType="textMultiLine"
+        android:maxLength="80"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/freeRead_comment_commit"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/freeRead_comment_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/borderline"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="입력"
+        android:textColor="#FABC41"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/freeRead_etComment_content" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

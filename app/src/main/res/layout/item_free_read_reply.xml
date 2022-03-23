@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#F3FBF9"
+        app:cardCornerRadius="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            >
+
+            <ImageView
+                android:id="@+id/freeRead_reply_menu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="7dp"
+                android:src="@drawable/menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/freeRead_reply_writer"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:text="작성자 닉네임"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/freeRead_reply_date"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:text="2022-02-03 오후 12시 12분"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/freeRead_reply_content"
+                app:layout_constraintTop_toBottomOf="@+id/freeRead_reply_content" />
+
+            <TextView
+                android:id="@+id/freeRead_ToReply"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="답글 달기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/freeRead_reply_content" />
+
+            <TextView
+                android:id="@+id/freeRead_reply_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintWidth_max="375dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:text="댓글내용dkdkdkdkdkdkdkdkdkdkdkdkdkdkdkddkdkdkdkdkdkdkdddd"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.027"
+                app:layout_constraintStart_toStartOf="@+id/freeRead_reply_writer"
+                app:layout_constraintTop_toBottomOf="@+id/freeRead_reply_writer" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

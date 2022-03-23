@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.Adapter;
+package com.example.wayout_ver_01.RecyclerView;
 
 public class FreeBoard {
 
@@ -7,7 +7,7 @@ public class FreeBoard {
     private String writer;
     private String content;
     private String date;
-    private String reply;
+    private int reply;
 
     public String getBoard_num() {
         return board_num;
@@ -59,20 +59,20 @@ public class FreeBoard {
         this.date = date;
     }
 
-    public String getReply() {
+    public int getReply() {
         return reply;
     }
 
-    public void setReply(String reply) {
+    public void setReply(int reply) {
         this.reply = reply;
     }
 
-    public FreeBoard(String title, String writer, String date, String board_num) { //String reply,
+    public FreeBoard(String title, String writer, String date, String board_num, int reply) { //String reply,
         this.title = title;
         this.writer = writer;
         this.date = date;
-//        this.reply = reply;
         this.board_num = board_num;
+        this.reply = reply;
     }
 
 

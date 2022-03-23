@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wayout_ver_01">
-
     <!-- 권한 추가 -->
     <!-- 카메라 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 외부 저장소 -->
@@ -12,7 +11,8 @@
     <uses-permission android:name="android.permission.SEND_SMS" /> <!-- 문자를 읽을 수 있는 권한 -->
     <uses-permission android:name="android.permission.READ_SMS" /> <!-- 유저 단말기 정보를 가져 오기 위한 권한 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-feature android:name="android.hardware.camera" /> <!-- 구글 플레이에 카메라 있는 애들한테만 검색 -->
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Activity.FreeBoard_reply"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.FreeBoard_update"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.FreeBoard_read"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Activity.FreeBoard_write"
             android:exported="false" />
@@ -35,6 +45,15 @@
             </intent-filter>
         </receiver>
 
+        <provider
+            android:name="com.werb.pickphotoview.provider.PickProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/pick_file_paths" />
+        </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.wayout_ver_01"

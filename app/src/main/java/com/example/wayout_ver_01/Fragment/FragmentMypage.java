@@ -254,6 +254,10 @@ public class FragmentMypage extends Fragment {
                     Log.e(TAG, "내용 : 카메라 촬영 이미지 절대 경로 : " + imageUri);
                     break;
             }
+            ProgressDialog progressDialog = new ProgressDialog(requireContext());
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+
             // 절대 경로를 파일을 만들어서 레트로핏에 request body 에 multipart 형식으로 담아서 보냄
             File file = new File(imageUri);
             Log.e(TAG, "내용 : file : " + file);
@@ -282,14 +286,14 @@ public class FragmentMypage extends Fragment {
                         Glide.with(FragmentMypage.this)
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);
+                     progressDialog.dismiss();
                     }
-
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     Log.e(TAG, "내용 error message : " + t);
-
+                    progressDialog.dismiss();
                 }
             });
 

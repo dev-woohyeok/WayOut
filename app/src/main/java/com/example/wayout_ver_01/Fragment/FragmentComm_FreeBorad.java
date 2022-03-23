@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wayout_ver_01.Adapter.FreeBoard;
-import com.example.wayout_ver_01.Adapter.FreeBoard_adapter;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard_adapter;
 import com.example.wayout_ver_01.Activity.FreeBoard_write;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.DTO_board;
@@ -37,6 +37,7 @@ public class FragmentComm_FreeBorad extends Fragment {
     Button freeBoard_write;
     EditText freeBoard_search;
     ImageView freeBoard_search_btn;
+    ImageView freeBoard_reply;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,17 +45,10 @@ public class FragmentComm_FreeBorad extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comm__free_borad, container, false);
 
-//        ProgressDialog progressDialog = new ProgressDialog(requireActivity());
-//        progressDialog.setMessage("Loading...");
-//        progressDialog.show();
 
         freeBoard_write = view.findViewById(R.id.freeBoard_write_btn);
         freeBoard_search = view.findViewById(R.id.freeBoard_search);
         freeBoard_search_btn = view.findViewById(R.id.freeBoard);
-
-
-
-
 
 
 
@@ -102,8 +96,7 @@ public class FragmentComm_FreeBorad extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ArrayList<DTO_board>> call, @NonNull Response<ArrayList<DTO_board>> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    Log.e(TAG, "내용 : ResponseBody" + response.body());
-                    Log.e(TAG, "내용 : List 길이 : " + response.body().size() );
+
                     for (int i = 0; i < response.body().size(); i++) {
                         Log.e(TAG, "내용 : 레트로핏 통신 성공");
                         adapter.add_item(new FreeBoard
@@ -111,12 +104,16 @@ public class FragmentComm_FreeBorad extends Fragment {
                                         response.body().get(i).getTitle(),
                                         response.body().get(i).getWriter(),
                                         response.body().get(i).getDate(),
-                                        response.body().get(i).getBoardNum()
+                                        response.body().get(i).getBoardNum(),
+                                        response.body().get(i).getReply_number()
                                 ));
-                        Log.e(TAG, "내용 : title : " + i + response.body().get(i).getTitle());
-                        Log.e(TAG, "내용 : writer : "+ i + response.body().get(i).getWriter());
-                        Log.e(TAG, "내용 : date : " + i + response.body().get(i).getDate());
-                        Log.e(TAG, "내용 : BoardNum : "+ i + response.body().get(i).getBoardNum());
+
+//                        Log.e(TAG, "내용 : ResponseBody" + response.body());
+//                        Log.e(TAG, "내용 : List 길이 : " + response.body().size() );
+//                        Log.e(TAG, "내용 : title : " + i + response.body().get(i).getTitle());
+//                        Log.e(TAG, "내용 : writer : "+ i + response.body().get(i).getWriter());
+//                        Log.e(TAG, "내용 : date : " + i + response.body().get(i).getDate());
+//                        Log.e(TAG, "내용 : BoardNum : "+ i + response.body().get(i).getBoardNum());
 
                         adapter.notifyItemChanged(i);
                         recyclerView.setAdapter(adapter);
