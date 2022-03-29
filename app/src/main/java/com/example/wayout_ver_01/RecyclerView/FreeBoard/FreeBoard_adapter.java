@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.RecyclerView;
+package com.example.wayout_ver_01.RecyclerView.FreeBoard;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wayout_ver_01.Activity.FreeBoard_read;
+import com.example.wayout_ver_01.Activity.FreeBoard.FreeBoard_read;
 import com.example.wayout_ver_01.Class.DateConverter;
 import com.example.wayout_ver_01.R;
 
@@ -87,7 +87,7 @@ public class FreeBoard_adapter extends RecyclerView.Adapter<FreeBoard_adapter.Cu
             }
 
         try {
-            String date = DateConverter.resultDateToString(item.getDate(),"MM월 dd일 a h:mm");
+            String date = DateConverter.resultDateToString(item.getDate(),"M월 d일 a h:mm");
             holder.free_date.setText(date);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -125,7 +125,8 @@ public class FreeBoard_adapter extends RecyclerView.Adapter<FreeBoard_adapter.Cu
 
                     // board 번호에 해당하는 게시글, 이미지, 댓글 불러오기
                     Intent intent = new Intent(v.getContext() , FreeBoard_read.class);
-                    intent.putExtra("board_num", boardNum);
+                    intent.putExtra("board_number", boardNum);
+                    intent.putExtra("writer", free_writer.getText().toString());
                     v.getContext().startActivity(intent);
                 }
             });

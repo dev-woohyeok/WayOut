@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.Activity;
+package com.example.wayout_ver_01.Activity.FreeBoard;
 
 
 import androidx.annotation.NonNull;
@@ -27,8 +27,8 @@ import android.widget.Toast;
 import com.example.wayout_ver_01.Class.DateConverter;
 
 import com.example.wayout_ver_01.R;
-import com.example.wayout_ver_01.RecyclerView.FreeWrite_Adapter;
-import com.example.wayout_ver_01.RecyclerView.ItemTouchHelperCallback;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeWrite_Adapter;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.ItemTouchHelperCallback;
 
 import com.example.wayout_ver_01.Retrofit.DTO_board;
 import com.example.wayout_ver_01.Retrofit.DTO_img;
@@ -157,6 +157,8 @@ public class FreeBoard_update extends AppCompatActivity {
         writer = intent.getStringExtra("writer");
         // 이미지 Uri 경로 받아 오기
         arrayList = intent.getStringArrayListExtra("imgList");
+
+        Log.e(TAG, "내용 : 보드 번호" + board_number);
     }
 
     private String setDate() {
@@ -245,7 +247,8 @@ public class FreeBoard_update extends AppCompatActivity {
                 {
                     freeUpdate_adapter.clearBitmaps();
                     Intent intent = new Intent(FreeBoard_update.this,FreeBoard_read.class);
-                    intent.putExtra("board_num", board_number);
+                    intent.putExtra("board_number", board_number);
+                    intent.putExtra("writer", writer);
                     startActivity(intent);
                     finish();
                 }

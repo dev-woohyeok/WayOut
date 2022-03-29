@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.RecyclerView;
+package com.example.wayout_ver_01.RecyclerView.FreeBoard;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;

@@ -23,17 +23,19 @@
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.FreeBoard_reply"
+            android:name=".Activity.FreeBoard.FreeBoard_reply"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
+            android:name=".Activity.FreeBoard.FreeBoard_update"
             android:exported="false" />
         <activity
-            android:name=".Activity.FreeBoard_update"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.FreeBoard_read"
+            android:name=".Activity.FreeBoard.FreeBoard_read"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activity.FreeBoard_write"
+            android:name=".Activity.FreeBoard.FreeBoard_write"
             android:exported="false" />
 
         <receiver

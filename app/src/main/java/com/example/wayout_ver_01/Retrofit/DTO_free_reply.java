@@ -22,6 +22,16 @@ public class DTO_free_reply {
     @SerializedName("success") private Boolean success;
     @Expose
     @SerializedName("message") private String message;
+    @Expose
+    @SerializedName("total") private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public String getReply_index() {
         return reply_index;

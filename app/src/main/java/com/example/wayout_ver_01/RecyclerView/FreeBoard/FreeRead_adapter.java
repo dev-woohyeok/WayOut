@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.RecyclerView;
+package com.example.wayout_ver_01.RecyclerView.FreeBoard;
 
 import android.content.Context;
 import android.util.Log;
@@ -27,7 +27,7 @@ public class FreeRead_adapter extends RecyclerView.Adapter<FreeRead_adapter.view
 
     public void add_item(FreeRead_image item){
         items.add(item);
-        Log.e(TAG, "내용 : items : " + items.get(0).getImage_uri());
+//        Log.e(TAG, "내용 : items : " + items.get(0).getImage_uri());
     }
 
     public ArrayList<FreeRead_image> getItems(){
@@ -50,7 +50,7 @@ public class FreeRead_adapter extends RecyclerView.Adapter<FreeRead_adapter.view
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         FreeRead_image item = items.get(position);
 
-        Log.e(TAG, "내용 : item_uri : " + item.getImage_uri());
+//        Log.e(TAG, "내용 : item_uri : " + item.getImage_uri());
         Glide.with(context)
                 .load(item.getImage_uri())
                 .skipMemoryCache(true)

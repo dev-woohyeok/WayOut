@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.RecyclerView;
+package com.example.wayout_ver_01.RecyclerView.FreeBoard;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,7 +21,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.DTO_img;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class FreeWrite_Adapter extends RecyclerView.Adapter<FreeWrite_Adapter.ViewHolder> implements ItemTouchHelperListener {

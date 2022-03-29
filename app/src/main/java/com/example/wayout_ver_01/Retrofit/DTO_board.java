@@ -36,6 +36,26 @@ public class DTO_board {
     @SerializedName("images_uri") private List<DTO_image> images_uri;
     @Expose
     @SerializedName("free_reply") private List<DTO_free_reply> free_reply;
+    @Expose
+    @SerializedName("page") private int page;
+    @Expose
+    @SerializedName("total_reply") private String total_reply;
+
+    public String getTotal_reply() {
+        return total_reply;
+    }
+
+    public void setTotal_reply(String total_reply) {
+        this.total_reply = total_reply;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 
     public String getBoard_number() {
         return board_number;

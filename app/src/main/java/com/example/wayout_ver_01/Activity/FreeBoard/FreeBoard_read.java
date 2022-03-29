@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.Activity;
+package com.example.wayout_ver_01.Activity.FreeBoard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -13,18 +14,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wayout_ver_01.Class.PreferenceManager;
-import com.example.wayout_ver_01.RecyclerView.FreeRead_adapter;
-import com.example.wayout_ver_01.RecyclerView.FreeRead_image;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeRead_adapter;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeRead_image;
 import com.example.wayout_ver_01.Class.DateConverter;
 import com.example.wayout_ver_01.R;
-import com.example.wayout_ver_01.RecyclerView.FreeRead_reply;
-import com.example.wayout_ver_01.RecyclerView.FreeRead_reply_adapter;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeRead_reply;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeRead_reply_adapter;
 import com.example.wayout_ver_01.Retrofit.DTO_board;
 import com.example.wayout_ver_01.Retrofit.DTO_free_reply;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
@@ -49,8 +51,12 @@ public class FreeBoard_read extends AppCompatActivity {
     ProgressDialog progressDialog;
     FreeRead_reply_adapter freeRead_reply_adapter;
     NestedScrollView nestedScrollView;
+    String board_num,writer;
     LinearLayoutManager layoutManager_reply, layoutManager;
-    boolean type_mode;
+    SwipeRefreshLayout swipeRefreshLayout;
+    InputMethodManager imm;
+    int page = 1, limit = 5, total;
+    boolean type_mode, scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,9 @@ public class FreeBoard_read extends AppCompatActivity {
 
         // View 세팅
         setFindView();
+
+        // 키보드 설정
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         // 로딩창
         progressDialog = new ProgressDialog(FreeBoard_read.this);
@@ -79,10 +88,11 @@ public class FreeBoard_read extends AppCompatActivity {
         freeRead_reply_adapter = new FreeRead_reply_adapter(FreeBoard_read.this, freeRead_reply_num, freeRead_reply_content);
         freeRead_reply_rv.setAdapter(freeRead_reply_adapter);
 
+
         // 선택한 게시판 정보 가져오기
         Intent intent = getIntent();
-        String board_num = intent.getStringExtra("board_num");
-        Log.e(TAG, "내용 : board_num : " + board_num);
+        board_num = intent.getStringExtra("board_number");
+        writer = intent.getStringExtra("writer");
         getFreeRead(board_num);
 
         // 댓글 작성
@@ -114,9 +124,62 @@ public class FreeBoard_read extends AppCompatActivity {
             }
         });
 
-        progressDialog.dismiss();
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )
+                {
+                    progressDialog.show();
+                    progressDialog.setMessage("Loading...");
+                    page++;
+                    getScroll(board_num);
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
     }
 
+    private void getScroll(String board_num) {
+        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+        Call<DTO_board> call = retrofitInterface.getFreeScroll(page,board_num);
+        Log.e(TAG, "내용 : page : " + page);
+        call.enqueue(new Callback<DTO_board>() {
+            @Override
+            public void onResponse(Call<DTO_board> call, Response<DTO_board> response) {
+//                if(response.body().isSuccess() && response.body() != null ){
+                    // 댓글 리사이클러뷰 설정
+//                    if(response.body().getFree_reply() != null)
+                        for (int i = 0; i < response.body().getFree_reply().size(); i++) {
+
+                            freeRead_reply_adapter.add_item(new FreeRead_reply(
+                                    response.body().getFree_reply().get(i).getReply_writer(),
+                                    response.body().getFree_reply().get(i).getReply_content(),
+                                    response.body().getFree_reply().get(i).getReply_date(),
+                                    response.body().getFree_reply().get(i).getBoard_number(),
+                                    response.body().getFree_reply().get(i).getReply_index(),
+                                    response.body().getFree_reply().get(i).getReply_answer())
+                            );
+//                            Log.e(TAG, "내용 : writer"+ response.body().getFree_reply().get(i).getReply_writer());
+//                            Log.e(TAG, "내용 : content"+ response.body().getFree_reply().get(i).getReply_content());
+//                            Log.e(TAG, "내용 : date"+ response.body().getFree_reply().get(i).getReply_date());
+//                            Log.e(TAG, "내용 : number"+ response.body().getFree_reply().get(i).getBoard_number());
+//                            Log.e(TAG, "내용 : index"+ response.body().getFree_reply().get(i).getReply_index());
+//                            Log.e(TAG, "내용 : answer)"+ response.body().getFree_reply().get(i).getReply_answer());
+
+                            freeRead_reply_adapter.notifyItemInserted(i + (page-1)*6);
+                        }
+//                    }
+//                }
+            }
+
+            @Override
+            public void onFailure(Call<DTO_board> call, Throwable t) {
+
+            }
+        });
+
+    }
 
 
     //==========================================
@@ -134,7 +197,7 @@ public class FreeBoard_read extends AppCompatActivity {
 
         // 유효성검사
         if(freeRead_reply_content.getText().toString().isEmpty()){
-            freeRead_reply_content.setError("수정할 내용을 입력해주세요");
+            freeRead_reply_content.setError("내용을 입력해주세요");
             freeRead_reply_content.requestFocus();
             progressDialog.dismiss();
             return;
@@ -162,6 +225,7 @@ public class FreeBoard_read extends AppCompatActivity {
         freeRead_reply_adapter.endMode();
         Log.e(TAG, "내용 : type_mode : "  + type_mode);
         progressDialog.dismiss();
+        imm.hideSoftInputFromWindow(freeRead_reply_content.getWindowToken(), 0);
     }
 
     // 수정, 삭제 선택
@@ -186,8 +250,6 @@ public class FreeBoard_read extends AppCompatActivity {
         });
         builder.show();
     }
-
-
 
     // 게시물 삭제
     private void delete_board(String board_number) {
@@ -280,12 +342,15 @@ public class FreeBoard_read extends AppCompatActivity {
             @Override
             public void onResponse(Call<DTO_free_reply> call, Response<DTO_free_reply> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                        freeRead_reply_adapter.add_item(new FreeRead_reply(writer,content,Date,response.body().getReply_index()));
-                        freeRead_reply_adapter.notifyItemInserted(freeRead_reply_adapter.getItemCount());
+                        freeRead_reply_adapter.upload_item(new FreeRead_reply(writer,content,Date,response.body().getReply_index()));
+                        freeRead_reply_adapter.notifyItemInserted(0);
                 }
-                // 댓글 수 업로드
-                freeRead_reply_num.setText("댓글 " +freeRead_reply_adapter.getItemCount()+"개");
+                total = response.body().getTotal();
+
+                 //댓글 수 업로드
+                freeRead_reply_num.setText("댓글 " + (total+1)+"개");
                 progressDialog.dismiss();
+                imm.hideSoftInputFromWindow(freeRead_reply_content.getWindowToken(), 0);
             }
 
             @Override
@@ -293,8 +358,9 @@ public class FreeBoard_read extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+
         // 마지막 작성 아이탬으로 이동
-        nestedScrollView.scrollTo(0,sc_point.getBottom());
+        nestedScrollView.scrollTo(0,freeRead_reply_num.getTop());
     }
     // View 세팅
     // ==========================================================================
@@ -307,6 +373,7 @@ public class FreeBoard_read extends AppCompatActivity {
         freeRead_reply_commit = findViewById(R.id.freeRead_reply_commit);
         freeRead_reply_content = findViewById(R.id.freeRead_reply_comment);
         nestedScrollView = findViewById(R.id.sc_reply);
+//        swipeRefreshLayout = findViewById(R.id.freeRead_refresh);
 
         sc_point = findViewById(R.id.sc_point);
         freeRead_menu = findViewById(R.id.freeRead_menu);
@@ -316,7 +383,7 @@ public class FreeBoard_read extends AppCompatActivity {
     private void getFreeRead(String board_num) {
 
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<DTO_board> call = retrofitInterface.getFreeRead(board_num);
+        Call<DTO_board> call = retrofitInterface.getFreeRead(board_num,writer);
         call.enqueue(new Callback<DTO_board>() {
             @Override
             public void onResponse(@NonNull Call<DTO_board> call, @NonNull Response<DTO_board> response) {
@@ -332,24 +399,27 @@ public class FreeBoard_read extends AppCompatActivity {
                         freeRead_menu.setVisibility(View.INVISIBLE);
                     }
 
-                    // 게시글 설정
-                    freeRead_title.setText(response.body().getTitle());
-                    freeRead_writer.setText(response.body().getWriter());
-                    try { freeRead_date.setText(DateConverter.resultDateToString(response.body().getDate(),"yyyy-MM-dd a h:mm"));}
-                    catch (ParseException e) { e.printStackTrace();}
-                    freeRead_content.setText(response.body().getContent());
+                        // 게시글 설정
+                        freeRead_title.setText(response.body().getTitle());
+                        freeRead_writer.setText(response.body().getWriter());
+                        try {
+                            freeRead_date.setText(DateConverter.resultDateToString(response.body().getDate(), "yyyy-MM-dd a h:mm"));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        freeRead_content.setText(response.body().getContent());
 
-                    // 이미지 리사이클러뷰 설정
-                    for (int i = 0; i < response.body().getImages_uri().size(); i++){
-                        String image_Uri = response.body().getImages_uri().get(i).getImage_uri();
-                        freeRead_adapter.add_item(new FreeRead_image(image_Uri));
-                        freeRead_adapter.notifyItemInserted(i);
-                    }
+                        // 이미지 리사이클러뷰 설정
+                        for (int i = 0; i < response.body().getImages_uri().size(); i++) {
+                            String image_Uri = response.body().getImages_uri().get(i).getImage_uri();
+                            freeRead_adapter.add_item(new FreeRead_image(image_Uri));
+                            freeRead_adapter.notifyItemInserted(i);
+                        }
+
                     // 댓글 리사이클러뷰 설정
                     if(response.body().getFree_reply() != null) {
-                        freeRead_reply_num.setText("댓글 " + response.body().get_reply_size() + "개");
+                        freeRead_reply_num.setText("댓글 " + response.body().getTotal_reply() + "개");
                         for (int i = 0; i < response.body().getFree_reply().size(); i++) {
-
                             freeRead_reply_adapter.add_item(new FreeRead_reply(
                                     response.body().getFree_reply().get(i).getReply_writer(),
                                     response.body().getFree_reply().get(i).getReply_content(),
@@ -357,8 +427,8 @@ public class FreeBoard_read extends AppCompatActivity {
                                     response.body().getFree_reply().get(i).getBoard_number(),
                                     response.body().getFree_reply().get(i).getReply_index(),
                                     response.body().getFree_reply().get(i).getReply_answer()
-
                                     ));
+                            Log.e(TAG, "내용 : board_number*** : " + response.body().getFree_reply().get(i).getBoard_number());
                             freeRead_reply_adapter.notifyItemInserted(i);
                         }
                     }

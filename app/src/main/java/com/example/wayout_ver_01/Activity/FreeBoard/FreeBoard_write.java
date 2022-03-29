@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01.Activity;
+package com.example.wayout_ver_01.Activity.FreeBoard;
 
 import androidx.annotation.NonNull;
 
@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wayout_ver_01.RecyclerView.FreeWrite_Adapter;
-import com.example.wayout_ver_01.RecyclerView.ItemTouchHelperCallback;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.FreeWrite_Adapter;
+import com.example.wayout_ver_01.RecyclerView.FreeBoard.ItemTouchHelperCallback;
 import com.example.wayout_ver_01.Class.DateConverter;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.R;
@@ -131,7 +131,7 @@ public class FreeBoard_write extends AppCompatActivity {
                 items = freeWrite_adapter.getItems();
                 ArrayList<MultipartBody.Part> files = new ArrayList<>();
 
-
+                // bitmap 을 File 로 바꿔서 저장
                 if(items != null) {
                     for (int i = 0; i < items.size(); i++){
                         Log.e(TAG, "내용 : bitmapToFile : " + items.get(i));

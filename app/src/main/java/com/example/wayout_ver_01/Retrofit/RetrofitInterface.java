@@ -112,11 +112,12 @@ public interface RetrofitInterface {
     Call<DTO_board> writeFreeBoard(
             @Part("writer") RequestBody writer,
             @Part("title") RequestBody title,
-            @Part("content")RequestBody content,
+            @Part("content") RequestBody content,
             @Part("date") RequestBody date,
             @Part("imgNum") int imgNum,
             @Part ArrayList<MultipartBody.Part> files
     );
+
     @FormUrlEncoded
     @POST("writeFreeReply.php")
     Call<DTO_free_reply> writeFreeReply(
@@ -127,12 +128,23 @@ public interface RetrofitInterface {
     );
 
     @GET("getFreeBoard.php")
-    Call<ArrayList<DTO_board>> getFreeBoard();
+    Call<ArrayList<DTO_board>> getFreeBoard(
+            @Query("page") int page,
+            @Query("limit") int limit
+    );
+
+    @FormUrlEncoded
+    @POST("getFreeRead.php")
+    Call<DTO_board> getFreeScroll (
+            @Field("page") int page,
+            @Field("board_num") String board_num
+    );
 
     @FormUrlEncoded
     @POST("getFreeRead.php")
     Call<DTO_board> getFreeRead(
-            @Field("board_num") String board_num
+            @Field("board_num") String board_num,
+            @Field("writer") String writer
     );
 
     @FormUrlEncoded
@@ -145,6 +157,12 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("deleteFreeReply.php")
     Call<DTO_free_reply> deleteFreeReply(
+            @Field("reply_index") String reply_index
+    );
+
+    @FormUrlEncoded
+    @POST("deleteFreeComment.php")
+    Call<DTO_free_reply> deleteFreeComment(
             @Field("reply_index") String reply_index
     );
 
@@ -163,17 +181,36 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded
+    @POST("updateFreeComment.php")
+    Call<DTO_free_reply> updateFreeComment(
+            @Field("reply_index") String reply_index,
+            @Field("reply_content") String reply_content,
+            @Field("reply_date") String reply_date
+    );
+
+    @FormUrlEncoded
     @POST("getFreeComment.php")
     Call<ArrayList<DTO_free_reply>> getFreeComment(
             @Field("reply_index") String reply_index
     );
 
     @FormUrlEncoded
-    @POST("updateFreeComment.php")
-    Call<DTO_free_reply> updateFreeComment(
+    @POST("getFreeComment.php")
+    Call<ArrayList<DTO_free_reply>> getFreeCommentScroll(
+            @Field("reply_index") String reply_index,
+            @Field("page") int page
+    );
+
+
+
+    @FormUrlEncoded
+    @POST("writeFreeComment.php")
+    Call<DTO_free_reply> writeFreeComment(
             @Field("reply_index") String reply_index,
             @Field("reply_writer") String reply_writer,
             @Field("reply_content") String reply_content,
             @Field("reply_date") String reply_date
     );
+
+
 }
