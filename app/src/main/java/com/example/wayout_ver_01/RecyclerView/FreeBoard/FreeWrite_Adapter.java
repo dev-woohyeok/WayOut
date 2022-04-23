@@ -71,7 +71,7 @@ public class FreeWrite_Adapter extends RecyclerView.Adapter<FreeWrite_Adapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUri = items.get(position).getImageUri();
+        String imageUri = items.get(holder.getAdapterPosition()).getImageUri();
 
         Log.e(TAG, "내용 : onBindViewHolder : " + imageUri);
         Glide.with(context)
@@ -85,7 +85,7 @@ public class FreeWrite_Adapter extends RecyclerView.Adapter<FreeWrite_Adapter.Vi
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         holder.freeWrite_img.setImageBitmap(resource);
 //                        bitmaps.add(resource);
-                        items.get(position).setBitmap(resource);
+                        items.get(holder.getAdapterPosition()).setBitmap(resource);
                         Log.e(TAG, "내용 : bitmap : " + resource);
                         Log.e(TAG, "내용 : bitmaps : " +  bitmaps);
                     }

@@ -60,7 +60,7 @@ public class FreeBoard_reply extends AppCompatActivity {
         // 어뎁터 설정
         LinearLayoutManager layoutManager = new LinearLayoutManager(FreeBoard_reply.this, LinearLayoutManager.VERTICAL, false);
         freeComment_rv.setLayoutManager(layoutManager);
-        freeComment_adapter = new FreeComment_adapter(FreeBoard_reply.this,freeComment_et_content);
+        freeComment_adapter = new FreeComment_adapter(FreeBoard_reply.this,freeComment_et_content, imm);
         freeComment_rv.setAdapter(freeComment_adapter);
 
         // 서버에서 답글 가져오기
@@ -185,12 +185,12 @@ public class FreeBoard_reply extends AppCompatActivity {
         }
 
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<DTO_free_reply> call = retrofitInterface.writeFreeComment(reply_index, PreferenceManager.getString(getApplicationContext(),"autoId"), freeComment_et_content.getText().toString(), writeDate);
+        Call<DTO_free_reply> call = retrofitInterface.writeFreeComment(reply_index, PreferenceManager.getString(getApplicationContext(),"autoNick"), freeComment_et_content.getText().toString(), writeDate);
         call.enqueue(new Callback<DTO_free_reply>() {
             @Override
             public void onResponse(Call<DTO_free_reply> call, Response<DTO_free_reply> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    freeComment_adapter.addItem(new FreeRead_reply(PreferenceManager.getString(getApplicationContext(),"autoId"), freeComment_et_content.getText().toString(), writeDate, reply_index));
+                    freeComment_adapter.addItem(new FreeRead_reply(PreferenceManager.getString(getApplicationContext(),"autoNick"), freeComment_et_content.getText().toString(), writeDate, reply_index));
                     freeComment_adapter.notifyItemInserted(freeComment_adapter.getItemCount());
                 }
                 freeComment_et_content.setText("");
@@ -268,5 +268,6 @@ public class FreeBoard_reply extends AppCompatActivity {
         freeComment_rv = findViewById(R.id.freeRead_comment_rv);
         freeComment_number = findViewById(R.id.freeRead_comment_number);
         freeReply_scroll = findViewById(R.id.freeReply_scroll);
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }
 }

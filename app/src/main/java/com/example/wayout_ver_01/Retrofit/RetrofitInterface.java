@@ -108,6 +108,17 @@ public interface RetrofitInterface {
     );
 
     @Multipart
+    @POST("updateGalleryBoard.php")
+    Call<DTO_gallery> updateGalleryBoard(
+            @Part("board_number") RequestBody board_number,
+            @Part("cafe") RequestBody cafe,
+            @Part("theme") RequestBody theme,
+            @Part("content") RequestBody content,
+            @Part("writer") RequestBody writer,
+            @Part ArrayList<MultipartBody.Part> files
+    );
+
+    @Multipart
     @POST("writeFreeboard.php")
     Call<DTO_board> writeFreeBoard(
             @Part("writer") RequestBody writer,
@@ -115,6 +126,16 @@ public interface RetrofitInterface {
             @Part("content") RequestBody content,
             @Part("date") RequestBody date,
             @Part("imgNum") int imgNum,
+            @Part ArrayList<MultipartBody.Part> files
+    );
+
+    @Multipart
+    @POST("writeGalleryBoard.php")
+    Call<DTO_gallery> writeGalleryBoard(
+            @Part("cafe") RequestBody cafe,
+            @Part("theme") RequestBody theme,
+            @Part("writer") RequestBody writer,
+            @Part("content") RequestBody content,
             @Part ArrayList<MultipartBody.Part> files
     );
 
@@ -127,6 +148,14 @@ public interface RetrofitInterface {
             @Field("board_number") String board_number
     );
 
+    @FormUrlEncoded
+    @POST("writerGalleryComment.php")
+    Call<DTO_comment> writerGalleryComment(
+            @Field("writer") String writer,
+            @Field("content") String content,
+            @Field("board_number") String board_number
+    );
+
     @GET("getFreeBoard.php")
     Call<ArrayList<DTO_board>> getFreeBoard(
             @Query("page") int page,
@@ -134,10 +163,52 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded
+    @POST("getGalleryBoard.php")
+    Call<ArrayList<DTO_gallery>> getGalleryBoard(
+            @Field("page") int page,
+            @Field("limit") int limit,
+            @Field("writer") String writer
+    );
+
+
+    @GET("getFreeBoard.php")
+    Call<ArrayList<DTO_board>> getFreeSearch(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query("category") String category,
+            @Query("search_con") String search_con
+    );
+
+    @FormUrlEncoded
+    @POST("getGalleryBoard.php")
+    Call<ArrayList<DTO_gallery>> getGallerySearch(
+            @Field("page") int page,
+            @Field("limit") int limit,
+            @Field("category") String category,
+            @Field("search_con") String search_con,
+            @Field("writer") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getGalleryRead.php")
+    Call<DTO_gallery> getGalleryRead(
+            @Field("page") int page,
+            @Field("user_id") String user_id,
+            @Field("board_number") String board_number
+    );
+
+    @FormUrlEncoded
     @POST("getFreeRead.php")
     Call<DTO_board> getFreeScroll (
             @Field("page") int page,
             @Field("board_num") String board_num
+    );
+
+    @FormUrlEncoded
+    @POST("writeGalleryLike.php")
+    Call<DTO_gallery> writeGalleryLike(
+      @Field("user_id") String user_id,
+      @Field("board_number") String board_number
     );
 
     @FormUrlEncoded
@@ -155,9 +226,23 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded
+    @POST("deleteGalleryRead.php")
+    Call<DTO_gallery> deleteGallery(
+            @Field("board_number") String board_number,
+            @Field("writer") String writer
+    );
+
+    @FormUrlEncoded
     @POST("deleteFreeReply.php")
     Call<DTO_free_reply> deleteFreeReply(
             @Field("reply_index") String reply_index
+    );
+
+    @FormUrlEncoded
+    @POST("deleteGalleryLike.php")
+    Call<DTO_gallery> deleteGalleryLike(
+            @Field("user_id") String user_id,
+            @Field("board_number") String board_number
     );
 
     @FormUrlEncoded

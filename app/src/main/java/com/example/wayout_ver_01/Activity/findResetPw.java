@@ -63,7 +63,7 @@ public class findResetPw extends AppCompatActivity {
                             if(status)
                             {
                                 Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(findResetPw.this,MainActivity.class);
+                                Intent intent = new Intent(findResetPw.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }

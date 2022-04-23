@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/borderlinetop"
         android:ems="10"
-        android:hint="제목 (300자)"
+        android:hint="내용 (300자)"
         android:inputType="textMultiLine"
         android:paddingLeft="10dp"
         android:minLines="11"

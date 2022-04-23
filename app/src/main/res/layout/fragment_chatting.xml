@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.FragmentChatting">
 
-
-
     <TextView
         android:id="@+id/textView16"
         android:layout_width="411dp"

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
     NestedScrollView sc;
     Context context;
     TextView reply_num;
+    InputMethodManager imm;
     EditText reply_content;
     boolean updateMode;
     public final String TAG = this.getClass().getSimpleName();
@@ -44,10 +46,12 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
     int itemPos;
     int total;
 
-    public FreeRead_reply_adapter(Context context, TextView reply_num, EditText reply_content) {
+    public FreeRead_reply_adapter(Context context, TextView reply_num, EditText reply_content, InputMethodManager imm, int total) {
         this.context = context;
         this.reply_num = reply_num;
         this.reply_content = reply_content;
+        this.imm = imm;
+        this.total = total;
     }
 
     public String getReplyIndex () {
@@ -64,6 +68,9 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
     public void replyUpdate(int pos, String content) {
         items.get(pos).setContent_reply(content);
         notifyItemChanged(pos);
+    }
+    public void clearList() {
+        items.clear();
     }
 
     public void add_item (FreeRead_reply item)
@@ -106,7 +113,7 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
         else {
             holder.reply_ToReply.setText("답글 달기"); }
         // 본인 수정 설정
-        if(!item.getWriter_reply().equals(PreferenceManager.getString(context,"autoId"))) {
+        if(!item.getWriter_reply().equals(PreferenceManager.getString(context,"autoNick"))) {
             holder.reply_menu.setVisibility(View.INVISIBLE); }
 
     }
@@ -135,7 +142,9 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
                 @Override
                 public void onClick(View v) {
                     // 댓글 수정 삭제 기능 ( 클릭한 댓글의 index )
-                    setMenu(adapter.items.get(getAdapterPosition()).getReply_index(), adapter);
+                    String index = adapter.items.get(getAdapterPosition()).getReply_index();
+                    Log.e("Comment click event", "내용 : index : " + index);
+                    setMenu(index, adapter);
                 }
             });
 
@@ -188,6 +197,8 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
                 @Override
                 public void onResponse(Call<DTO_free_reply> call, Response<DTO_free_reply> response) {
                     if ( response.isSuccessful() && response.body() != null ) {
+                        adapter.reply_content.requestFocus();
+                        adapter.imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                         adapter.reply_content.setText(response.body().getReply_content());
                         adapter.replyIndex = index;
                         adapter.itemPos = getAdapterPosition();
@@ -204,9 +215,6 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
         }
 
         public void delete_reply(String index, FreeRead_reply_adapter adapter){
-            adapter.items.remove(getAdapterPosition());
-            adapter.notifyItemRemoved(getAdapterPosition());
-
 
             RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
             Call<DTO_free_reply> call = retrofitInterface.deleteFreeReply(index);
@@ -214,8 +222,12 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
                 @Override
                 public void onResponse(Call<DTO_free_reply> call, Response<DTO_free_reply> response) {
                     if(response.isSuccessful()&& response.body() != null){
+                        adapter.items.remove(getAdapterPosition());
+                        adapter.notifyItemRemoved(getAdapterPosition());
                         Log.e("댓글 삭제 성공", "내용 : " + response.body().getMessage());
-                        adapter.reply_num.setText("댓글 " + response+ "개");
+                        adapter.total--;
+                        Log.e("어뎁터 total", "내용 : total : " + adapter.total);
+                        adapter.reply_num.setText("댓글 " + adapter.total+ "개");
                     }
                 }
 

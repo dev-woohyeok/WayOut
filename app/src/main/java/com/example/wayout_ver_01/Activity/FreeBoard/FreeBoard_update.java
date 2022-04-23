@@ -183,7 +183,6 @@ public class FreeBoard_update extends AppCompatActivity {
             freeUpdate_rv.setAdapter(freeUpdate_adapter);
 
             for (int i = 0; i < arrayList.size(); i++){
-
                 freeUpdate_adapter.setItem(arrayList.get(i));
                 freeUpdate_adapter.notifyItemInserted(i);
             }
@@ -297,13 +296,13 @@ public class FreeBoard_update extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//Convert bitmap to byte array
+    //Convert bitmap to byte array
         Bitmap bitmap = getBitmap;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
 
-//write the bytes in file
+    //write the bytes in file
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(f);

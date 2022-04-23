@@ -4,28 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.FreeBoard.FreeBoard_write">
-
+    tools:context=".Activity.Gallery.GalleryBoard_write">
 
     <EditText
-        android:id="@+id/freeWrite_title"
+        android:id="@+id/galleryWrite_cafe"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/borderlinetop"
+        android:ellipsize="start"
         android:ems="10"
-        android:paddingLeft="10dp"
-        android:hint="제목 (30자)"
+        android:hint="카페명 (30자)"
         android:inputType="text"
         android:maxLength="30"
-        android:ellipsize="start"
+        android:maxLines="1"
+        android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
+    <EditText
+        android:id="@+id/galleryWrite_theme"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/borderlinetop"
+        android:ellipsize="start"
+        android:ems="10"
+        android:hint="테마명 (30자)"
+        android:inputType="text"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/galleryWrite_cafe" />
+
     <ImageView
-        android:id="@+id/freeWrite_img"
+        android:id="@+id/galleryWrite_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
@@ -35,25 +53,25 @@
         android:padding="20dp"
         android:src="@drawable/camera"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freeWrite_content" />
+        app:layout_constraintTop_toBottomOf="@+id/galleryWrite_content" />
 
     <EditText
-        android:id="@+id/freeWrite_content"
+        android:id="@+id/galleryWrite_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/borderlinetop"
         android:ems="10"
+        android:layout_marginTop="10dp"
         android:hint="내용 (300자)"
         android:inputType="textMultiLine"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
-        android:minLines="11"
         android:maxLength="300"
+        android:minLines="11"
+        android:paddingLeft="10dp"
         android:scrollHorizontally="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freeWrite_title" />
+        app:layout_constraintTop_toBottomOf="@+id/galleryWrite_theme" />
 
     <TextView
         android:id="@+id/textView16"
@@ -61,24 +79,24 @@
         android:layout_height="50dp"
         android:background="#46C88F8F"
         android:gravity="center"
-        android:text="자유게시판"
+        android:text="갤러리 게시판"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/freeWrite_img_num"
+        android:id="@+id/galleryWrite_img_num"
         android:layout_width="70dp"
         android:layout_height="30dp"
         android:gravity="center"
         android:text="0/3"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/freeWrite_img"
-        app:layout_constraintTop_toBottomOf="@+id/freeWrite_img" />
+        app:layout_constraintStart_toStartOf="@+id/galleryWrite_img"
+        app:layout_constraintTop_toBottomOf="@+id/galleryWrite_img" />
 
     <TextView
-        android:id="@+id/freeWrite_btn"
+        android:id="@+id/galleryWrite_submit"
         android:layout_width="60dp"
         android:layout_height="45dp"
         android:gravity="center"
@@ -90,12 +108,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/freeWrite_rv"
+        android:id="@+id/galleryWrite_rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/freeWrite_img"
-        app:layout_constraintTop_toTopOf="@+id/freeWrite_img" />
-
+        app:layout_constraintStart_toEndOf="@+id/galleryWrite_img"
+        app:layout_constraintTop_toTopOf="@+id/galleryWrite_img" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

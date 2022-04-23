@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.FreeBoard.FreeBoard_read">
+    tools:context=".Activity.Gallery.GalleryBoard_read">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/freeRead_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:id="@+id/galleryRead_swipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +26,7 @@
             android:layout_height="50dp"
             android:background="#46C88F8F"
             android:gravity="center"
-            android:text="자유게시판"
+            android:text="갤러리 게시판"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,22 +34,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/sc_reply"
+            android:id="@+id/galleryRead_scroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@+id/freeRead_reply_comment"
+            app:layout_constraintBottom_toTopOf="@+id/galleryRead_comment_et"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16">
 
-            <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-            <!--            android:id="@+id/freeRead_refresh"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="@+id/freeRead_title" >-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -64,11 +57,19 @@
                     android:layout_marginTop="20dp"
                     android:src="@drawable/comment"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_content" />
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_content" />
 
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/heartwhite"
+                    app:layout_constraintStart_toEndOf="@+id/galleryRead_comment_num"
+                    app:layout_constraintTop_toTopOf="@+id/galleryRead_comment_num" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/freeRead_reply_rv"
+                    android:id="@+id/galleryRead_comment_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -76,13 +77,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_reply_num"
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_comment_num"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:id="@+id/freeRead_date"
+                    android:id="@+id/galleryRead_date"
                     android:layout_width="wrap_content"
                     android:layout_height="21dp"
+                    android:layout_marginEnd="4dp"
                     android:ems="10"
                     android:gravity="end"
                     android:paddingRight="15dp"
@@ -90,26 +92,26 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/freeRead_writer" />
+                    app:layout_constraintEnd_toEndOf="@+id/view"
+                    app:layout_constraintTop_toTopOf="@+id/galleryRead_writer" />
 
                 <TextView
-                    android:id="@+id/freeRead_writer"
+                    android:id="@+id/galleryRead_writer"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:paddingLeft="15dp"
-                    android:text="작성자"
+                    android:paddingLeft="5dp"
+                    android:text="작성자 : "
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_theme" />
 
                 <TextView
-                    android:id="@+id/freeRead_reply_num"
+                    android:id="@+id/galleryRead_comment_num"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:ems="10"
@@ -122,13 +124,27 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
                     app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
+                <TextView
+                    android:id="@+id/galleryRead_like_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="좋아요"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
                 <View
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="#FADFDF"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_content" />
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_content" />
 
                 <View
                     android:id="@+id/view"
@@ -136,11 +152,11 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="12dp"
                     android:background="#FADFDF"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_writer"
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_writer"
                     tools:layout_editor_absoluteX="0dp" />
 
                 <TextView
-                    android:id="@+id/freeRead_content"
+                    android:id="@+id/galleryRead_content"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -153,53 +169,79 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_img_rv" />
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_image_rv" />
 
                 <TextView
-                    android:id="@+id/freeRead_title"
+                    android:id="@+id/galleryRead_cafe"
                     android:layout_width="match_parent"
-                    android:layout_height="51dp"
+                    android:layout_height="30dp"
                     android:ellipsize="end"
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="제목제목제목제목제목제목제목제목제목제목제목"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="카페명 : 111"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
+                <ImageView
+                    android:id="@+id/galleryRead_like_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/heartwhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/galleryRead_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="테마명 : 111"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_cafe" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/freeRead_img_rv"
+                    android:id="@+id/galleryRead_image_rv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.002" />
 
                 <TextView
-                    android:id="@+id/sc_point"
+                    android:id="@+id/galleryRead_point"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/freeRead_reply_rv" />
+                    app:layout_constraintTop_toBottomOf="@+id/galleryRead_comment_rv" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
         </androidx.core.widget.NestedScrollView>
 
 
         <EditText
-            android:id="@+id/freeRead_reply_comment"
+            android:id="@+id/galleryRead_comment_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/borderline"
@@ -212,11 +254,11 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/freeRead_reply_commit"
+            app:layout_constraintEnd_toStartOf="@+id/galleryRead_comment_submit"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/freeRead_reply_commit"
+            android:id="@+id/galleryRead_comment_submit"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@drawable/borderline"
@@ -229,19 +271,18 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/freeRead_reply_comment" />
+            app:layout_constraintTop_toTopOf="@+id/galleryRead_comment_et" />
 
         <ImageView
-            android:id="@+id/freeRead_menu"
+            android:id="@+id/galleryRead_menu"
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:src="@drawable/menu"
-            app:layout_constraintBottom_toTopOf="@+id/sc_reply"
+            app:layout_constraintBottom_toTopOf="@+id/galleryRead_scroll"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

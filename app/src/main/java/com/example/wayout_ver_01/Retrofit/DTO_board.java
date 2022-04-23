@@ -39,13 +39,13 @@ public class DTO_board {
     @Expose
     @SerializedName("page") private int page;
     @Expose
-    @SerializedName("total_reply") private String total_reply;
+    @SerializedName("total_reply") private int total_reply;
 
-    public String getTotal_reply() {
+    public int getTotal_reply() {
         return total_reply;
     }
 
-    public void setTotal_reply(String total_reply) {
+    public void setTotal_reply(int total_reply) {
         this.total_reply = total_reply;
     }
 

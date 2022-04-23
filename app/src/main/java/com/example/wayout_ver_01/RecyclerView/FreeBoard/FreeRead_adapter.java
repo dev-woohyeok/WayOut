@@ -29,6 +29,9 @@ public class FreeRead_adapter extends RecyclerView.Adapter<FreeRead_adapter.view
         items.add(item);
 //        Log.e(TAG, "내용 : items : " + items.get(0).getImage_uri());
     }
+    public void clearItems(){
+        items.clear();
+    }
 
     public ArrayList<FreeRead_image> getItems(){
         return items;

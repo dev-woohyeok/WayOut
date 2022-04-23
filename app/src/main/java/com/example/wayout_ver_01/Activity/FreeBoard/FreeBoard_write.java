@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -161,10 +162,10 @@ public class FreeBoard_write extends AppCompatActivity {
                             freeWrite_adapter.clearBitmaps();
                             progressDialog.dismiss();
                         {
-//
+                            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(freeWrite_title.getWindowToken(), 0);
                             Log.e(TAG, "내용 :  request 성공 , response :" + response.body());
                             finish();
-
                         }
                     }
 

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borderline"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/galleryComment_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="7dp"
+            android:src="@drawable/menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/galleryComment_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:text="작성자 닉네임"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/galleryComment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:text="2022-02-03 오후 12시 12분"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/galleryComment_content"
+            app:layout_constraintTop_toBottomOf="@+id/galleryComment_content" />
+
+        <TextView
+            android:id="@+id/galleryComment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="댓글내용dkdkdkdkdkdkdkdkdkdkdkdkdkdkdkddkdkdkdkdkdkdkdddd"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/galleryComment_writer"
+            app:layout_constraintTop_toBottomOf="@+id/galleryComment_writer"
+            app:layout_constraintWidth_max="375dp" />
+
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/galleryComment_more"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="20dp"-->
+        <!--            android:layout_marginEnd="30dp"-->
+        <!--            android:gravity="center"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/galleryComment_reply_rv"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/galleryComment_reply_rv">-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/galleryComment_more_tv"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="20dp"-->
+        <!--            android:text="더보기"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/galleryComment_more"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/galleryComment_more"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/galleryComment_reply_rv" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/galleryComment_more_iv"-->
+        <!--                android:layout_width="20dp"-->
+        <!--                android:layout_height="10dp"-->
+        <!--                android:src="@drawable/down"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/galleryComment_more_tv"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/galleryComment_reply_rv"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:layout_marginStart="40dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/galleryComment_date" />-->
+
+        <TextView
+            android:id="@+id/galleryComment_write_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center_vertical"
+            android:text="답글 달기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.855"
+            app:layout_constraintStart_toEndOf="@+id/galleryComment_date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.933" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

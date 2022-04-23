@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,11 +36,14 @@ public class FreeComment_adapter extends RecyclerView.Adapter<FreeComment_adapte
     EditText Content;
     int itemPos;
     String comment_index;
+    InputMethodManager imm;
+
 
     boolean setMode;
-    public FreeComment_adapter(Context context, EditText Content) {
+    public FreeComment_adapter(Context context, EditText Content, InputMethodManager imm) {
         this.context = context;
         this.Content = Content;
+        this.imm = imm;
     }
 
     public void addItem(FreeRead_reply item) {
@@ -150,6 +154,7 @@ public class FreeComment_adapter extends RecyclerView.Adapter<FreeComment_adapte
             adapter.Content.setText(adapter.items.get(getAdapterPosition()).getContent_reply());
             adapter.itemPos = getAdapterPosition();
             adapter.comment_index = adapter.items.get(getAdapterPosition()).getReply_index();
+            adapter.imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
         }
 
         public void delete_reply(String index, FreeComment_adapter adapter){
