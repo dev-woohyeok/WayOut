@@ -42,6 +42,15 @@ import retrofit2.Response;
 
 public class FragmentComm_FreeBorad extends Fragment {
 
+    public static FragmentComm_FreeBorad newInstance() {
+
+        Bundle args = new Bundle();
+
+        FragmentComm_FreeBorad fragment = new FragmentComm_FreeBorad();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     RecyclerView recyclerView;
     FreeBoard_adapter freeBoard_adapter;
     private final String TAG = this.getClass().getSimpleName();

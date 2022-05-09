@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Gallery.GalleryBoard_reply">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/galleryReply_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -19,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16">
 
         <TextView
-            android:id="@+id/freeRead_comment_writer"
+            android:id="@+id/galleryReply_writer"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"
@@ -31,33 +39,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
-            android:id="@+id/freeRead_comment_date"
+            android:id="@+id/galleryReply_date"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:text="2022-02-03 오후 12시 12분"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/freeRead_comment_content"
-            app:layout_constraintTop_toBottomOf="@+id/freeRead_comment_content" />
+            app:layout_constraintStart_toStartOf="@+id/galleryReply_content"
+            app:layout_constraintTop_toBottomOf="@+id/galleryReply_content" />
 
         <TextView
-            android:id="@+id/freeRead_comment_number"
-            android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="40dp"
-            android:gravity="end"
-            android:text="답글 111개"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/freeRead_comment_content"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/freeRead_comment_date"
-            app:layout_constraintTop_toTopOf="@+id/freeRead_comment_date" />
-
-        <TextView
-            android:id="@+id/freeRead_comment_content"
+            android:id="@+id/galleryReply_content"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
@@ -69,8 +63,8 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.027"
-            app:layout_constraintStart_toStartOf="@+id/freeRead_comment_writer"
-            app:layout_constraintTop_toBottomOf="@+id/freeRead_comment_writer"
+            app:layout_constraintStart_toStartOf="@+id/galleryReply_writer"
+            app:layout_constraintTop_toBottomOf="@+id/galleryReply_writer"
             app:layout_constraintWidth_max="375dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,25 +82,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/freeReply_scroll"
+        android:id="@+id/galleryReply_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/freeRead_etComment_content"
+        app:layout_constraintBottom_toTopOf="@+id/galleryReply_et_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            >
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/freeRead_comment_rv"
+                android:id="@+id/galleryReply_rv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:nestedScrollingEnabled="false"
-                />
-        </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.Guideline
@@ -117,7 +113,7 @@
         app:layout_constraintGuide_begin="80dp" />
 
     <EditText
-        android:id="@+id/freeRead_etComment_content"
+        android:id="@+id/galleryReply_et_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borderline"
@@ -130,11 +126,11 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/freeRead_comment_commit"
+        app:layout_constraintEnd_toStartOf="@+id/galleryReply_commit"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/freeRead_comment_commit"
+        android:id="@+id/galleryReply_commit"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/borderline"
@@ -147,6 +143,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/freeRead_etComment_content" />
+        app:layout_constraintTop_toTopOf="@+id/galleryReply_et_content" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

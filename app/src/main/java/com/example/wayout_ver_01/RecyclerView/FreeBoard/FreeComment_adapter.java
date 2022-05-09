@@ -178,10 +178,6 @@ public class FreeComment_adapter extends RecyclerView.Adapter<FreeComment_adapte
                      Toast.makeText(itemView.getContext(), "답글 삭제 오류 : " + t, Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
-
     }
-
 }

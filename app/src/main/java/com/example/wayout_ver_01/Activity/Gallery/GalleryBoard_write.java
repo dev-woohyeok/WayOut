@@ -56,7 +56,7 @@ public class GalleryBoard_write extends AppCompatActivity {
     private GalleryWrite_adapter galleryWrite_adapter;
     private ItemTouchHelper itemTouchHelper;
     private boolean mode_update;
-    private String board_number;
+    private String board_number, writer;
     private ArrayList<String> items = new ArrayList<>();
 
 
@@ -80,6 +80,7 @@ public class GalleryBoard_write extends AppCompatActivity {
             galleryWrite_theme.setText(intent.getStringExtra("theme"));
             galleryWrite_content.setText(intent.getStringExtra("content"));
             board_number = intent.getStringExtra("board_number");
+            writer = PreferenceManager.getString(getApplicationContext(), "autoNick");
             items = intent.getStringArrayListExtra("items");
             for(int i = 0;  i< items.size(); i++) {
                 galleryWrite_adapter.addItems(items.get(i));
@@ -266,11 +267,19 @@ public class GalleryBoard_write extends AppCompatActivity {
             @Override
             public void onResponse(Call<DTO_gallery> call, Response<DTO_gallery> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    finish();
-                    progressDialog.dismiss();
+                    Log.e("갤러리 보드작성", "내용 : 뭐냐 이건 에러인가?");
                 }else{
                     Toast.makeText(getApplicationContext(), "업데이트 실패", Toast.LENGTH_SHORT).show();
                 }
+
+                Intent intent = new Intent(GalleryBoard_write.this, GalleryBoard_read.class);
+                intent.putExtra("board_number", board_number);
+                intent.putExtra("writer", writer);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                progressDialog.dismiss();
+
             }
 
             @Override
@@ -322,7 +331,7 @@ public class GalleryBoard_write extends AppCompatActivity {
         if(items != null) {
             for (int i = 0; i < items.size(); i++){
                 File file = bitmapToFile(items.get(i).getBitmap(), "bitmaps" + i);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-date"), file);
+                RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-date"));
                 MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file" + i, i + "", requestFile);
                 files.add(body);
             }

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.wayout_ver_01.Activity.CreateShop.CreateShop_write;
 import com.example.wayout_ver_01.Activity.MainActivity;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.R;
@@ -52,9 +53,17 @@ import retrofit2.Response;
 
 public class FragmentMypage extends Fragment {
 
-    private final String TAG = this.getClass().getSimpleName();
+    public static FragmentMypage newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        FragmentMypage fragment = new FragmentMypage();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-    private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete;
+    private final String TAG = this.getClass().getSimpleName();
+    private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete, myPage_shop;
     private ImageView myPage_reset;
     private CircleImageView myPage_profile;
     private ArrayList<Uri> imageSaveList;
@@ -65,56 +74,32 @@ public class FragmentMypage extends Fragment {
     private String imageUri = "";
     private String imageFilePath;
     private Uri photoUri;
+    private View view;
     String mCurrentPath;
-    ProgressDialog progressDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_mypage, container, false);
+        view = inflater.inflate(R.layout.fragment_mypage, container, false);
 
         String ID = PreferenceManager.getString(view.getContext(), "autoId");
         String PW = PreferenceManager.getString(view.getContext(), "autoPw");
 
-        myPage_logout = view.findViewById(R.id.myPage_logout);
-        myPage_reset = view.findViewById(R.id.myPage_reset);
-        myPage_friend = view.findViewById(R.id.myPage_friend);
-        myPage_theme = view.findViewById(R.id.myPage_theme);
-        myPage_cafe = view.findViewById(R.id.myPage_cafe);
-        myPage_delete = view.findViewById(R.id.myPage_delete);
-        myPage_reset = view.findViewById(R.id.myPage_reset);
-        myPage_profile = view.findViewById(R.id.myPage_profile);
-        myPage_Nick = view.findViewById(R.id.myPage_Nick);
+        // viewBinding
+        setFindView();
 
+        // 매장등록
+        myPage_shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), CreateShop_write.class);
+                startActivity(intent);
+            }
+        });
 
-
-//        Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
-//        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-//        Call<User> call = retrofitInterface.getUserProfile(userIndex);
-//        call.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                if(response.isSuccessful() && response.body() != null)
-//                {
-//                    if(response.body().getUserProfile().length() > 3) {
-//                        Glide.with(getContext())
-//                                .load(response.body().getUserProfile())
-//                                .into(myPage_profile);
-//                    }
-//
-//
-//                    Log.e(TAG, "내용 : 프로필 경로 : "+response.body().getUserProfile() );
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//
-//            }
-//        });
-
-
+        // 로그아웃
         myPage_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +111,7 @@ public class FragmentMypage extends Fragment {
             }
         });
 
+        // 프로필 정보 수정
         myPage_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +122,7 @@ public class FragmentMypage extends Fragment {
             }
         });
 
+        // 프로필 사진 수정
         myPage_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +157,7 @@ public class FragmentMypage extends Fragment {
             }
         });
 
-
+        // 회원 탈퇴 하기
         myPage_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +187,20 @@ public class FragmentMypage extends Fragment {
         });
 
         return view;
+
+        /////
+    }
+
+    private void setFindView() {
+        myPage_logout = view.findViewById(R.id.myPage_logout);
+        myPage_reset = view.findViewById(R.id.myPage_reset);
+        myPage_theme = view.findViewById(R.id.myPage_theme);
+        myPage_cafe = view.findViewById(R.id.myPage_cafe);
+        myPage_delete = view.findViewById(R.id.myPage_delete);
+        myPage_reset = view.findViewById(R.id.myPage_reset);
+        myPage_profile = view.findViewById(R.id.myPage_profile);
+        myPage_Nick = view.findViewById(R.id.myPage_Nick);
+        myPage_shop = view.findViewById(R.id.myPage_Shop);
     }
 
     // 절대 경로 가져오기 !!!!!
@@ -324,11 +325,7 @@ public class FragmentMypage extends Fragment {
         });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e(TAG, "내용 : ===========onSTOP================================");
-    }
+
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -373,9 +370,7 @@ public class FragmentMypage extends Fragment {
         myPage_Nick.setText(Nick);
 
 
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
+
 
         Log.e(TAG, "내용 : ===== onResume ======================");
 
@@ -394,7 +389,7 @@ public class FragmentMypage extends Fragment {
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);
 
-                        progressDialog.dismiss();
+
                         Log.e(TAG, "내용 : 이미지 경로 : " +response.body().getUserProfile());
                 }
             }
@@ -402,10 +397,53 @@ public class FragmentMypage extends Fragment {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, "내용 : onResume 유저 프로필 에러 : "+t );
-                progressDialog.dismiss();
             }
         });
+    }
 
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("Frag2 onStart", "onStart ok2");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("Frag2 onPause", "onPause ok2");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("Frag2 onStop", "onStop ok2");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("Frag2 onDestroyView", "onDestoryView ok2");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("Frag2 onDestroy", "onDestroy ok2");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e("Frag2 onDetach", "onDetach ok2");
     }
 
 

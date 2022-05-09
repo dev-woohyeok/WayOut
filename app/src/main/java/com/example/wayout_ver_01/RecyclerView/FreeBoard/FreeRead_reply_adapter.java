@@ -117,6 +117,7 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
             holder.reply_menu.setVisibility(View.INVISIBLE); }
 
     }
+
     public int getItemPos() {
         return itemPos;
     }
@@ -158,7 +159,7 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
                     intent.putExtra("board_number", adapter.items.get(getAdapterPosition()).getNumber_reply());
                     intent.putExtra("reply_writer", adapter.items.get(getAdapterPosition()).getWriter_reply());
                     intent.putExtra("reply_content", adapter.items.get(getAdapterPosition()).getContent_reply());
-                    intent.putExtra("reply_date", adapter.items.get(getAdapterPosition()).getDate_reply());
+                    intent.putExtra("reply_date", reply_date.getText().toString());
                     ((FreeBoard_read)context).finish();
                     v.getContext().startActivity(intent);
 
@@ -215,7 +216,6 @@ public class FreeRead_reply_adapter extends RecyclerView.Adapter<FreeRead_reply_
         }
 
         public void delete_reply(String index, FreeRead_reply_adapter adapter){
-
             RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
             Call<DTO_free_reply> call = retrofitInterface.deleteFreeReply(index);
             call.enqueue(new Callback<DTO_free_reply>() {

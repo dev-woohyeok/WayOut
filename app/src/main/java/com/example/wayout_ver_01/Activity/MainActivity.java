@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // permission확인 절차
+        // permission 확인 절차
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("test", "=== sms전송을 위한 퍼미션 확인 ===");
             // For device above MarshMallow
@@ -97,12 +97,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Send Your SMS. You don't need Run time permission
             Log.d("test", "=== 퍼미션 필요 없는 버전임 ===");
-        }
-
-        if (PreferenceManager.getBoolean(mContext, "autoLogin")) {
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
-            finish();
         }
 
         Login_Join.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        if (PreferenceManager.getBoolean(mContext, "autoLogin")) {
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     private void selectJoin(String userId, String userPw) {
@@ -176,11 +176,17 @@ public class MainActivity extends AppCompatActivity {
                     if (status) {
                         Intent intent = new Intent(MainActivity.this, Home.class);
                         startActivity(intent);
+
                         //회원정보 저장
                         PreferenceManager.setString(mContext, "autoId", response.body().getUserId());
-                        PreferenceManager.setInt(mContext, "autoIndex", response.body().getUserIndex());
+                        PreferenceManager.setString(mContext, "index", "" + response.body().getUserIndex());
                         PreferenceManager.setString(mContext, "autoNick", "" + response.body().getUserNick());
                         PreferenceManager.setString(mContext, "autoPhone", "" + response.body().getUserPhone());
+
+                        PreferenceManager.setString(mContext, "userId", response.body().getUserId());
+                        PreferenceManager.setString(mContext, "userIndex",""+ response.body().getUserIndex());
+                        PreferenceManager.setString(mContext, "userNick", response.body().getUserNick());
+                        PreferenceManager.setString(mContext, "userPhone", response.body().getUserPhone());
 
 
                         Log.e("Test", "Activity :MainActivity // 로그인 성공 후 // 저장된 ID : " + response.body().getUserId());

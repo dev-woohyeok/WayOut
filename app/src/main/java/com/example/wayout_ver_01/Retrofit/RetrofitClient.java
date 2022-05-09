@@ -14,7 +14,7 @@ public class RetrofitClient {
     // 필요한 변수 선언
 
     // 서버 주소
-    private static final String BASE_URL = "http://13.124.21.159/"; // 주소 뒤에 "/"로 마무리 하기
+    private static final String BASE_URL = "http://3.39.57.242/"; // 주소 뒤에 "/"로 마무리 하기
     private static Retrofit retrofit;
 
     //레트로핏 객체에 데이터를 담아서 보내는 클라이언트 메도스

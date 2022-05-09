@@ -9,6 +9,15 @@ import android.view.ViewGroup;
 import com.example.wayout_ver_01.R;
 
 public class FragmentHome extends Fragment {
+
+    public static FragmentHome newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        FragmentHome fragment = new FragmentHome();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

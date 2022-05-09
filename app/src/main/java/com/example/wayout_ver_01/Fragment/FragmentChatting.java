@@ -16,6 +16,16 @@ import com.example.wayout_ver_01.R;
  * create an instance of this fragment.
  */
 public class FragmentChatting extends Fragment {
+
+    public static FragmentChatting newInstance() {
+
+        Bundle args = new Bundle();
+
+        FragmentChatting fragment = new FragmentChatting();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

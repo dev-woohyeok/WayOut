@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class GalleryBoard_read extends AppCompatActivity {
 
-    private TextView galleryRead_cafe, galleryRead_theme, galleryRead_writer, galleryRead_date, galleryRead_content, galleryRead_comment_num, galleryRead_like_num, galleryRead_comment_submit;
+    private TextView galleryRead_cafe, galleryRead_theme,galleryRead_point, galleryRead_writer, galleryRead_date, galleryRead_content, galleryRead_comment_num, galleryRead_like_num, galleryRead_comment_submit;
     private ImageView galleryRead_menu, galleryRead_like_btn;
     private EditText galleryRead_comment_et;
     private RecyclerView galleryRead_rv, galleryRead_comment_rv;
@@ -52,7 +52,6 @@ public class GalleryBoard_read extends AppCompatActivity {
     private LinearLayoutManager layoutManager, layoutManager_comment;
     private SwipeRefreshLayout galleryRead_swipe;
     private InputMethodManager imm;
-
     private String cafe, theme, content;
 
     // 초기화 신경 쓸 것
@@ -88,8 +87,10 @@ public class GalleryBoard_read extends AppCompatActivity {
         // 댓글 어뎁터 설정, 파라미터 : Context
         layoutManager_comment = new LinearLayoutManager(GalleryBoard_read.this, LinearLayoutManager.VERTICAL, false);
         galleryRead_comment_rv.setLayoutManager(layoutManager_comment);
-        galleryRead_comment_adapter = new GalleryRead_comment_adapter(GalleryBoard_read.this);
+        galleryRead_comment_adapter = new GalleryRead_comment_adapter(GalleryBoard_read.this, galleryRead_comment_num);
         galleryRead_comment_rv.setAdapter(galleryRead_comment_adapter);
+        galleryRead_comment_adapter.setUpdate_content(galleryRead_comment_et);
+        galleryRead_comment_adapter.setImm(imm);
 
         // 게시판 번호 : DB 에서 데이터 요청
         // 작성자 : 수정, 삭제 권한 설정
@@ -120,10 +121,12 @@ public class GalleryBoard_read extends AppCompatActivity {
         galleryRead_comment_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                type_mode = galleryRead_comment_adapter.getMode();
+                Log.e("갤러리 댓글 수정 ", "type_mode : " + type_mode);
                 if (type_mode) {
                     // 댓글 수정
                     update_comment(board_number);
-                    type_mode = false;
+                    galleryRead_comment_adapter.endUpdate();
                 } else {
                     // 댓글 작성
                     submit_comment(board_number);
@@ -139,12 +142,13 @@ public class GalleryBoard_read extends AppCompatActivity {
                 page = 1;
                 type_mode = false;
                 getGalleryRead(board_number);
+                galleryRead_comment_et.setText("");
                 galleryRead_swipe.setRefreshing(false);
                 progressDialog.dismiss();
             }
         });
 
-        // 메뉴 클릭시\
+        // 메뉴 클릭시
         galleryRead_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +157,19 @@ public class GalleryBoard_read extends AppCompatActivity {
         });
 
         // 스크롤 페이징
+        galleryRead_scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    progressDialog.show();
+                    progressDialog.setMessage("Loading...");
+                    page++;
+                    getScroll();
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
 
     }
 
@@ -161,18 +178,62 @@ public class GalleryBoard_read extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
+        swipe = true;
+        page = 1;
+        type_mode = false;
+        getGalleryRead(board_number);
+        progressDialog.dismiss();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // 선택한 게시판 정보 가져오기
 
+        // 선택한 게시판 정보 가져오기
         // 게시판 인덱스에 해당하는 댓글, 게시물 내용 , 대댓글 불러와서 뿌려줌,
         getGalleryRead(board_number);
 
         // progressDialog 종료
         progressDialog.dismiss();
+    }
+
+    private void getScroll() {
+        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+        Call<DTO_gallery> call = retrofitInterface.getGalleryScroll(page, board_number, writer);
+        call.enqueue(new Callback<DTO_gallery>() {
+            @Override
+            public void onResponse(Call<DTO_gallery> call, Response<DTO_gallery> response) {
+
+                // 불러온 댓글이 없을때에는 페이지 넘기지 않기
+                if (response.isSuccessful() && response.body() != null) {
+                    if(response.body().getGallery_comment().size() == 0){
+                        page--;
+                    }
+                    Log.e("댓글 페이징 ", "page : " + page);
+
+                    for (int i = 0; i < response.body().getGallery_comment().size(); i++) {
+                        galleryRead_comment_adapter.add_item(new DTO_comment(
+                                response.body().getGallery_comment().get(i).getWriter(),
+                                response.body().getGallery_comment().get(i).getContent(),
+                                response.body().getGallery_comment().get(i).getDate(),
+                                response.body().getGallery_comment().get(i).getBoard_number(),
+                                response.body().getGallery_comment().get(i).getComment_index(),
+                                response.body().getGallery_comment().get(i).getTotal_comment(),
+                                response.body().getGallery_comment().get(i).getTotal_reply()
+                        ));
+                        galleryRead_comment_adapter.notifyItemInserted(i + (page - 1) * 6);
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DTO_gallery> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void select_menu(String board_number) {
@@ -242,7 +303,7 @@ public class GalleryBoard_read extends AppCompatActivity {
     private void update_board(String board_number) {
         // 이미지 Uri 를 Intent 에 담아서 전달함
         ArrayList<String> arrayList = new ArrayList<>();
-        for(int i=0; i<galleryRead_adpater.getItemCount(); i++){
+        for (int i = 0; i < galleryRead_adpater.getItemCount(); i++) {
             arrayList.add(galleryRead_adpater.getUri(i));
             Log.e("제발 ...", "" + galleryRead_adpater.getUri(i));
         }
@@ -253,11 +314,52 @@ public class GalleryBoard_read extends AppCompatActivity {
         intent.putExtra("cafe", cafe);
         intent.putExtra("theme", theme);
         intent.putExtra("content", galleryRead_content.getText().toString());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+
     }
 
     private void update_comment(String board_number) {
 
+        progressDialog = new ProgressDialog(GalleryBoard_read.this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+
+        // 레트로핏 통신
+        String setWriter = PreferenceManager.getString(getApplicationContext(), "autoNick");
+        String setContent = galleryRead_comment_et.getText().toString();
+        String setIndex = galleryRead_comment_adapter.getIndex();
+
+        // 유효성 검사
+        if (galleryRead_comment_et.getText().toString().isEmpty()) {
+            galleryRead_comment_et.setError("내용을 입력해주세요");
+            galleryRead_comment_et.requestFocus();
+            progressDialog.dismiss();
+            return;
+        }
+
+        RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+        Call<DTO_comment> call = retrofitInterface.updateGalleryComment(setWriter, setContent, setIndex);
+        call.enqueue(new Callback<DTO_comment>() {
+            @Override
+            public void onResponse(Call<DTO_comment> call, Response<DTO_comment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    galleryRead_comment_adapter.updateItem(galleryRead_comment_adapter.getPos(), setContent);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DTO_comment> call, Throwable t) {
+                Log.e("댓글 수정 실패시", "내용 : 댓글 수정 에러 : " + t);
+            }
+        });
+
+        // 작성 초기화
+        galleryRead_comment_et.setText("");
+        galleryRead_comment_adapter.endUpdate();
+        progressDialog.dismiss();
+        imm.hideSoftInputFromWindow(galleryRead_comment_et.getWindowToken(), 0);
 
     }
 
@@ -274,27 +376,34 @@ public class GalleryBoard_read extends AppCompatActivity {
         String writer = PreferenceManager.getString(getApplicationContext(), "autoNick");
         String content = galleryRead_comment_et.getText().toString();
 
-        // 작성 초기화
-        galleryRead_comment_et.setText("");
-
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<DTO_comment> call = retrofitInterface.writerGalleryComment(writer, content, board_number);
         call.enqueue(new Callback<DTO_comment>() {
             @Override
             public void onResponse(Call<DTO_comment> call, Response<DTO_comment> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    total_comment++;
-                    galleryRead_comment_num.setText("댓글 " + total_comment);
-                    // 작성자, 내용 , 작성일, 작성 글 번호, 작성 댓글 번호
-                    galleryRead_comment_adapter.submit_item(new DTO_comment(
-                            writer,
-                            content,
-                            response.body().getDate(),
-                            board_number,
-                            response.body().getComment_index()
-                    ));
-                    galleryRead_comment_adapter.notifyItemInserted(0);
 
+                    galleryRead_comment_adapter.total_comment(total_comment);
+                    // 총댓글 갯수
+                    galleryRead_comment_num.setText("댓글 " + response.body().getTotal_comment());
+                    // 작성자, 내용 , 작성일, 작성 글 번호, 작성 댓글 번호
+                    // 다음페이지로 넘어가는 경우 , 댓글을 처음 작성하는 경우를 제외하고 댓글을 리사이클러뷰에 추가한다.
+                    if(galleryRead_comment_adapter.getItemCount() % 6 != 0 || galleryRead_comment_adapter.getItemCount() == 0) {
+                        galleryRead_comment_adapter.add_item(new DTO_comment(
+                                writer,
+                                content,
+                                response.body().getDate(),
+                                board_number,
+                                response.body().getComment_index()
+                        ));
+//                        galleryRead_scroll.fullScroll(View.FOCUS_DOWN);
+                    }
+                    galleryRead_comment_adapter.notifyItemInserted(galleryRead_comment_adapter.getItemCount());
+
+
+
+                    // 작성 초기화
+                    galleryRead_comment_et.setText("");
                     // 입력후 키보드 내리기
                     imm.hideSoftInputFromWindow(galleryRead_comment_et.getWindowToken(), 0);
                 }
@@ -368,8 +477,10 @@ public class GalleryBoard_read extends AppCompatActivity {
         galleryRead_swipe = findViewById(R.id.galleryRead_swipe);
         galleryRead_scroll = findViewById(R.id.galleryRead_scroll);
 
+
         // 키보드 설정
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
     }
 
     private void getGalleryRead(String board_number) {
@@ -388,7 +499,6 @@ public class GalleryBoard_read extends AppCompatActivity {
         }
 
         String user_id = PreferenceManager.getString(getApplicationContext(), "autoNick");
-
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<DTO_gallery> call = retrofitInterface.getGalleryRead(page, user_id, board_number);
         call.enqueue(new Callback<DTO_gallery>() {
@@ -432,34 +542,39 @@ public class GalleryBoard_read extends AppCompatActivity {
                     // 댓글과 좋아요 갯수 세팅
                     galleryRead_like_num.setText("좋아요 " + total_like);
                     galleryRead_comment_num.setText("댓글 " + total_comment);
+                    galleryRead_comment_adapter.total_comment(total_comment);
 
                     // 이미지 리사이클러뷰 설정
-                    for (int i = 0; i < response.body().getImages_uri().size(); i++) {
-                        String image_uri = response.body().getImages_uri().get(i).getImage_uri();
-                        galleryRead_adpater.addItem(new DTO_gallery(image_uri));
-                        galleryRead_adpater.notifyItemInserted(i);
+                    if (galleryRead_adpater.getItemCount() == 0) {
+                        for (int i = 0; i < response.body().getImages_uri().size(); i++) {
+                            String image_uri = response.body().getImages_uri().get(i).getImage_uri();
+                            galleryRead_adpater.addItem(new DTO_gallery(image_uri));
+                            galleryRead_adpater.notifyItemInserted(i);
+                        }
                     }
 
                     // 댓글 리사이클러뷰 설정
                     // 작성자, 내용, 작성일자, 게시판번호, 댓글 번호, 총 댓글수 , 총 답글 수
+
                     if (response.body().getGallery_comment() != null) {
                         ArrayList<DTO_comment> items = new ArrayList<>();
                         items = response.body().getGallery_comment();
 
-//                        Log.e("받아온거 확인 ", "내용 : " + items.get(0));
+//                      // 처음 댓글 작성시에는 무조건 추가
+                        if (galleryRead_comment_adapter.getItemCount() == 0) {
+                            for (int i = 0; i < response.body().getGallery_comment().size(); i++) {
+                                galleryRead_comment_adapter.add_item(new DTO_comment(
+                                        response.body().getGallery_comment().get(i).getWriter(),
+                                        response.body().getGallery_comment().get(i).getContent(),
+                                        response.body().getGallery_comment().get(i).getDate(),
+                                        response.body().getGallery_comment().get(i).getBoard_number(),
+                                        response.body().getGallery_comment().get(i).getComment_index(),
+                                        response.body().getGallery_comment().get(i).getTotal_comment(),
+                                        response.body().getGallery_comment().get(i).getTotal_reply()
+                                ));
+                                galleryRead_comment_adapter.notifyItemInserted(i);
+                            }
 
-                        for (int i = 0; i < response.body().getGallery_comment().size(); i++) {
-                            galleryRead_comment_adapter.add_item(new DTO_comment(
-                                    response.body().getGallery_comment().get(i).getWriter(),
-                                    response.body().getGallery_comment().get(i).getContent(),
-                                    response.body().getGallery_comment().get(i).getDate(),
-                                    response.body().getGallery_comment().get(i).getBoard_number(),
-                                    response.body().getGallery_comment().get(i).getComment_index(),
-                                    response.body().getGallery_comment().get(i).getTotal_comment(),
-                                    response.body().getGallery_comment().get(i).getTotal_reply()
-                            ));
-
-                            galleryRead_comment_adapter.notifyItemInserted(i);
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 댓글 데이터 확인: " + items.get(0).getWriter());
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 : " + response.body().getGallery_comment().get(i).getContent());
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 : " + response.body().getGallery_comment().get(i).getDate());
@@ -467,8 +582,22 @@ public class GalleryBoard_read extends AppCompatActivity {
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 : " + response.body().getGallery_comment().get(i).getComment_index());
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 : " + response.body().getGallery_comment().get(i).getTotal_reply());
 //                            Log.e("댓글 리사이클러뷰 로그", "내용 : " + response.body().getGallery_comment().get(i).getTotal_comment());
+                        }else{
+                            // 댓글 초기화시 새로운 데이터 덮어씌우기
+                            for (int i = 0; i < response.body().getGallery_comment().size(); i++) {
+                                galleryRead_comment_adapter.change_item(i, new DTO_comment(
+                                        response.body().getGallery_comment().get(i).getWriter(),
+                                        response.body().getGallery_comment().get(i).getContent(),
+                                        response.body().getGallery_comment().get(i).getDate(),
+                                        response.body().getGallery_comment().get(i).getBoard_number(),
+                                        response.body().getGallery_comment().get(i).getComment_index(),
+                                        response.body().getGallery_comment().get(i).getTotal_comment(),
+                                        response.body().getGallery_comment().get(i).getTotal_reply()
+                                ));
+                            }
                         }
                     }
+
 
                 } else {
                     Log.e("Gallery_Read 레트로핏 실패 ", "담겨온 데이터가 없거나, 에러 발생");

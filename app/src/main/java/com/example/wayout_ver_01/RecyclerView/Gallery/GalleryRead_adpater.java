@@ -56,8 +56,7 @@ public class GalleryRead_adpater extends RecyclerView.Adapter<GalleryRead_adpate
         // 이미지 세팅
         Glide.with(context)
                 .load(item.getImageUri())
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+
                 .fitCenter()
                 .into(holder.galleryRead_image);
     }

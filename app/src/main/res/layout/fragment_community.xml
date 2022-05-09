@@ -50,8 +50,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/community_containers"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/comm_viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -61,7 +61,7 @@
         tools:layout_editor_absoluteX="0dp">
 
 
-    </FrameLayout>
+    </androidx.viewpager2.widget.ViewPager2>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

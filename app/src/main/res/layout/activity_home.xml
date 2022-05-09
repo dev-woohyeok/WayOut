@@ -8,12 +8,14 @@
     tools:context=".Activity.Home">
 
 
-    <FrameLayout
-        android:id="@+id/containers"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/bottom_ViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    </FrameLayout>
+    </androidx.viewpager2.widget.ViewPager2>
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

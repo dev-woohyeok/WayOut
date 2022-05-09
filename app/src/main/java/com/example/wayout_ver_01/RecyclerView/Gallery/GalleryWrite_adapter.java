@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adapter.viewHolder> implements ItemTouchHelperListener {
     ArrayList<DTO_gallery> items = new ArrayList<>();
+    ArrayList<String> images = new ArrayList<>();
     TextView tv_imageNumber;
     Context context;
 
@@ -48,6 +49,20 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
 
     public void addItems(String item){
         items.add(new DTO_gallery(item));
+    }
+
+    public ArrayList<String> getImages() {
+        images.clear();
+        for(int i =0; i < items.size(); i++) {
+            images.add(items.get(i).getImageUri());
+        }
+
+        return images;
+    }
+
+    public void clearImages() {
+        items.clear();
+        notifyDataSetChanged();
     }
 
 //    public void setUriList(ArrayList<String> uriList){
@@ -73,21 +88,19 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        DTO_gallery item = items.get(holder.getAdapterPosition());
+        DTO_gallery item = items.get(position);
         String imageUri = item.getImageUri();
 
         Glide.with(context)
                 // 비트맵으로 불러오기
                 .asBitmap()
                 .load(imageUri)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         // 다 비트맵으로 전환해서 저장한다.
                         holder.galleryWrite_img.setImageBitmap(resource);
-                        items.get(holder.getAdapterPosition()).setBitmap(resource);
+                        items.get(position).setBitmap(resource);
                     }
 
                     @Override
@@ -129,7 +142,7 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
             galleryWrite_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
+                    int pos = getBindingAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
                         adapter.items.remove(pos);
                         adapter.tv_imageNumber.setText(adapter.getItemCount()+ "/3");

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="250dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/itemTheme_xBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:elevation="100dp"
+                android:background="#CEF6F6F6"
+                android:src="@drawable/x_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/itemTheme_image"
+                android:layout_width="163dp"
+                android:layout_height="189dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/heartblack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="165dp"
+                android:layout_height="40dp"
+                android:background="#CEF6F6F6"
+                app:layout_constraintBottom_toBottomOf="@+id/itemTheme_image"
+                app:layout_constraintStart_toStartOf="@+id/itemTheme_image" />
+
+            <TextView
+                android:id="@+id/itemTheme_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제한시간 : 60분"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/itemTheme_grade"
+                app:layout_constraintTop_toBottomOf="@+id/itemTheme_grade" />
+
+            <TextView
+                android:id="@+id/itemTheme_difficult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="난이도 : Normal"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/itemTheme_grade"
+                app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/itemTheme_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="고시텔"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/itemTheme_cafe"
+                app:layout_constraintStart_toStartOf="@+id/itemTheme_cafe" />
+
+            <TextView
+                android:id="@+id/itemTheme_cafe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="싸인이스케이브 신림대점"
+                android:textColor="#5E4D4D"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/itemTheme_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로맨스"
+                android:textColor="#5E4D4D"
+                android:textSize="9sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/itemTheme_name"
+                app:layout_constraintStart_toEndOf="@+id/itemTheme_name" />
+
+            <TextView
+                android:id="@+id/itemTheme_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="평점 : 4.5"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/itemTheme_image"
+                app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

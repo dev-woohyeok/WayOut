@@ -40,6 +40,15 @@ import retrofit2.Response;
 
 public class FragmentComm_GalleryBorad extends Fragment {
 
+    public static FragmentComm_GalleryBorad newInstance() {
+
+        Bundle args = new Bundle();
+
+        FragmentComm_GalleryBorad fragment = new FragmentComm_GalleryBorad();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private ImageView like, galleryBoard_reset, galleryBoard_search_btn;
     private EditText galleryBoard_search;
     private TextView galleryBoard_tv_spinner;
@@ -111,6 +120,7 @@ public class FragmentComm_GalleryBorad extends Fragment {
                 search_con = galleryBoard_search.getText().toString();
 
                 //  검색 후 초기화 작업
+                //  검색 페이지, 리셋버튼 보여주기, 페이징 초기화해서 맨위로 포커시 옮기기, 검색 상태
                 page = 1;
                 galleryBoard_reset.setVisibility(View.VISIBLE);
                 galleryBoard_rv.requestFocus();

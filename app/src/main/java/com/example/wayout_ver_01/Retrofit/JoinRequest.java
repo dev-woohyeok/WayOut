@@ -15,7 +15,7 @@ public class JoinRequest {
 
     @Expose
     @SerializedName("userIndex")
-    private Integer userIndex;
+    private int userIndex;
 
     @Expose
     @SerializedName("userNick")
@@ -49,11 +49,11 @@ public class JoinRequest {
         this.userPw = userPw;
     }
 
-    public Integer getUserIndex() {
+    public int getUserIndex() {
         return userIndex;
     }
 
-    public void setUserIndex(Integer userIndex) {
+    public void setUserIndex(int userIndex) {
         this.userIndex = userIndex;
     }
 

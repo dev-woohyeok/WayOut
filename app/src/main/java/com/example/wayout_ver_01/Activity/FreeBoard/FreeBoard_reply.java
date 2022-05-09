@@ -194,7 +194,7 @@ public class FreeBoard_reply extends AppCompatActivity {
                     freeComment_adapter.notifyItemInserted(freeComment_adapter.getItemCount());
                 }
                 freeComment_et_content.setText("");
-                freeComment_rv.scrollToPosition(freeComment_adapter.getItemCount() -1);
+//                freeComment_rv.scrollToPosition(freeComment_adapter.getItemCount() -1);
             }
 
             @Override
@@ -204,10 +204,8 @@ public class FreeBoard_reply extends AppCompatActivity {
         });
         imm.hideSoftInputFromWindow(freeComment_et_content.getWindowToken(), 0);
         // 마지막 작성 아이탬으로 이동
-        freeReply_scroll.scrollTo(0,freeComment_rv.getBottom());
+//        freeReply_scroll.scrollTo(0,freeComment_rv.getBottom());
     }
-
-
 
     @Override
     public void onBackPressed() {

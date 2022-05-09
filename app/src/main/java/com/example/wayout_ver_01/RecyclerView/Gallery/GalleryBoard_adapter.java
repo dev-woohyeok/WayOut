@@ -59,8 +59,6 @@ public class GalleryBoard_adapter extends RecyclerView.Adapter<GalleryBoard_adap
         // 이미지
         Glide.with(context)
                 .load(item.getImage())
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .fitCenter()
                 .into(holder.itemGallery_image);
 

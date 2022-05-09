@@ -10,7 +10,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" /> <!-- 문자 전송 할 수 있는 권한 -->
     <uses-permission android:name="android.permission.SEND_SMS" /> <!-- 문자를 읽을 수 있는 권한 -->
     <uses-permission android:name="android.permission.READ_SMS" /> <!-- 유저 단말기 정보를 가져 오기 위한 권한 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 인터넷 연결 상태 확인 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -23,25 +24,41 @@
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.Gallery.GalleryBoard_reply"
+            android:name=".Activity.CreateShop.Search_shop"
             android:exported="false" />
         <activity
-            android:name=".Activity.Gallery.GalleryBoard_read"
+            android:name=".Activity.CreateShop.CreateShop_address"
             android:exported="false" />
+        <activity
+            android:name=".Activity.CreateShop.CreateTheme_write"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.CreateShop.CreateShop_write"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.Gallery.GalleryBoard_reply"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.Gallery.GalleryBoard_read"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.Gallery.GalleryBoard_write"
             android:exported="false" />
         <activity
             android:name=".Activity.FreeBoard.FreeBoard_reply"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.FreeBoard.FreeBoard_update"
             android:exported="false" />
         <activity
             android:name=".Activity.FreeBoard.FreeBoard_read"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.FreeBoard.FreeBoard_write"
             android:exported="false" />

@@ -56,8 +56,6 @@ public class FreeRead_adapter extends RecyclerView.Adapter<FreeRead_adapter.view
 //        Log.e(TAG, "내용 : item_uri : " + item.getImage_uri());
         Glide.with(context)
                 .load(item.getImage_uri())
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.image_uri);
     }
 

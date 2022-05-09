@@ -181,7 +181,7 @@ public class FreeBoard_read extends AppCompatActivity {
 //                            Log.e(TAG, "내용 : index"+ response.body().getFree_reply().get(i).getReply_index());
 //                            Log.e(TAG, "내용 : answer)"+ response.body().getFree_reply().get(i).getReply_answer());
 
-                    freeRead_reply_adapter.notifyItemInserted(i + (page - 1) * 6);
+                    freeRead_reply_adapter.notifyItemInserted(i  + (page - 1) * 6);
                 }
 //                    }
 //                }
@@ -376,8 +376,8 @@ public class FreeBoard_read extends AppCompatActivity {
             }
         });
 
-        // 마지막 작성 아이탬으로 이동
-        nestedScrollView.scrollTo(0, freeRead_reply_num.getTop());
+//        // 마지막 작성 아이탬으로 이동
+//        nestedScrollView.scrollTo(0, freeRead_reply_num.getTop());
     }
 
     // View 세팅
@@ -392,7 +392,7 @@ public class FreeBoard_read extends AppCompatActivity {
         freeRead_reply_commit = findViewById(R.id.freeRead_reply_commit);
         freeRead_reply_content = findViewById(R.id.freeRead_reply_comment);
         nestedScrollView = findViewById(R.id.sc_reply);
-        sc_point = findViewById(R.id.sc_point);
+
         freeRead_menu = findViewById(R.id.freeRead_menu);
     }
 
@@ -424,7 +424,7 @@ public class FreeBoard_read extends AppCompatActivity {
                     }
 
                     // 게시글 설정
-                    freeRead_title.setText(response.body().getTitle());
+                    freeRead_title.setText( response.body().getTitle());
                     freeRead_writer.setText(response.body().getWriter());
                     freeRead_content.setText(response.body().getContent());
                     try {
