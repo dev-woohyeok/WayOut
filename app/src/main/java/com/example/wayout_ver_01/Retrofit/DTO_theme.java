@@ -14,30 +14,144 @@ public class DTO_theme {
     // 평점, 장르, 카페명, 게시판 번호
     // 테마소개, 이미지들
     @Expose
-    @SerializedName("index")private String index;
+    @SerializedName("index")
+    private String index;
     @Expose
-    @SerializedName("name") private String name;
+    @SerializedName("message")
+    private String message;
     @Expose
-    @SerializedName("difficult") private String difficult;
+    @SerializedName("name")
+    private String name;
     @Expose
-    @SerializedName("limit") private String limit;
+    @SerializedName("difficult")
+    private String difficult;
     @Expose
-    @SerializedName("grade") private int grade;
+    @SerializedName("diff")
+    private String diff;
     @Expose
-    @SerializedName("genre") private String genre;
+    @SerializedName("image_uri")
+    private ArrayList<DTO_image> image_uri;
     @Expose
-    @SerializedName("cafe") private String cafe;
+    @SerializedName("limit")
+    private String limit;
     @Expose
-    @SerializedName("board_number") private String board_number;
+    @SerializedName("grade")
+    private int grade;
     @Expose
-    @SerializedName("info") private String info;
+    @SerializedName("genre")
+    private String genre;
     @Expose
-    @SerializedName("images") private ArrayList<String> images;
+    @SerializedName("cafe")
+    private String cafe;
     @Expose
-    @SerializedName("image") private String image;
+    @SerializedName("board_number")
+    private String board_number;
+    @Expose
+    @SerializedName("info")
+    private String info;
+    @Expose
+    @SerializedName("images")
+    private ArrayList<String> images;
+    @Expose
+    @SerializedName("image")
+    private String image;
+    @Expose
+    @SerializedName("isChecked")
+    private int isChecked;
+    @Expose
+    @SerializedName("user_index")
+    private String user_index;
+
+    @Expose
+    @SerializedName("reviews")
+    private ArrayList<DTO_review> reviews;
+
+    @Expose
+    @SerializedName("rate")
+    private float rate;
 
     private Bitmap bitmap;
     private File file;
+
+
+    public DTO_theme(String name, String difficult, String limit, String genre, String cafe, String info, ArrayList<String> images) {
+        this.name = name;
+        this.difficult = difficult;
+        this.limit = limit;
+        this.genre = genre;
+        this.cafe = cafe;
+        this.info = info;
+        this.images = images;
+    }
+
+
+
+    public DTO_theme(String index, String name, String difficult, String limit, String genre, String cafe, String image, float rate) {
+        this.index = index;
+        this.name = name;
+        this.difficult = difficult;
+        this.limit = limit;
+        this.genre = genre;
+        this.cafe = cafe;
+        this.image = image;
+        this.rate = rate;
+    }
+
+    public ArrayList<DTO_image> getImage_uri() {
+        return image_uri;
+    }
+
+    public void setImage_uri(ArrayList<DTO_image> image_uri) {
+        this.image_uri = image_uri;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    public String getUser_index() {
+        return user_index;
+    }
+
+    public void setUser_index(String user_index) {
+        this.user_index = user_index;
+    }
+
+    public int getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(int isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    public ArrayList<DTO_review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<DTO_review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public String getDiff() {
+        return diff;
+    }
+
+    public void setDiff(String diff) {
+        this.diff = diff;
+    }
 
     public String getImage() {
         return image;
@@ -69,26 +183,6 @@ public class DTO_theme {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
-    }
-
-    public DTO_theme(String name, String difficult, String limit, String genre, String cafe, String info, ArrayList<String> images) {
-        this.name = name;
-        this.difficult = difficult;
-        this.limit = limit;
-        this.genre = genre;
-        this.cafe = cafe;
-        this.info = info;
-        this.images = images;
-    }
-
-    public DTO_theme(String index, String name, String difficult, String limit, String genre, String cafe, String image) {
-        this.index = index;
-        this.name = name;
-        this.difficult = difficult;
-        this.limit = limit;
-        this.genre = genre;
-        this.cafe = cafe;
-        this.image = image;
     }
 
     public String getBoard_number() {

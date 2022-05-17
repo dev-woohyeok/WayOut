@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:text="4.5"
+                android:text="0.0"
                 android:textColor="#000000"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -74,6 +74,7 @@
                 android:padding="2dp"
                 android:layout_marginEnd="2dp"
                 android:src="@drawable/locationpin"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/item_searchShop_distance"
                 app:layout_constraintEnd_toStartOf="@+id/item_searchShop_distance"
                 app:layout_constraintTop_toTopOf="@+id/item_searchShop_distance" />
@@ -98,6 +99,7 @@
                 android:textColor="#000000"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/item_searchShop_grade"
                 app:layout_constraintTop_toTopOf="@+id/textView6" />
 

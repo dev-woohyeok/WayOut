@@ -3,6 +3,8 @@
     package="com.example.wayout_ver_01">
     <!-- 권한 추가 -->
     <!-- 카메라 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 내 위치 지도 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 외부 저장소 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 인터넷 -->
@@ -23,6 +25,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Activity.MyPage.MyLikeTheme"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MyPage.MyManage"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Search.SearchTheme_read"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.Search.SearchCafe_update"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.Search.SearchCafe_add_theme"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.MyPage.MyShop"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MyPage.MyLikeCafe"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="ztfhsqjefk" />
+
+        <activity
+            android:name=".Activity.Search.SearchCafe_read"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.CreateShop.Search_shop"
             android:exported="false" />

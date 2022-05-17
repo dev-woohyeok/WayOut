@@ -69,6 +69,12 @@ public class FragmentComm_FreeBorad extends Fragment {
     int page = 1, limit = 8;
 
     @Override
+    public void onStop() {
+        super.onStop();
+        page = 1;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

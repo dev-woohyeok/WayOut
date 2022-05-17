@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Search.SearchCafe_read">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/Cafe_read_Scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#46C88F8F"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:id="@+id/Cafe_Read_Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#46C88F8F"
+                    android:gravity="center"
+                    android:text="카페 이름"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/Cafe_Read_Menu"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/menu"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/Cafe_Read_Toolbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/Cafe_Read_Image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/basic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Cafe_Read_Toolbar" />
+
+                <!--        이미지 추가 정보 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:background="@drawable/image_gradient"
+                    app:layout_constraintBottom_toBottomOf="@+id/Cafe_Read_Image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.willy.ratingbar.BaseRatingBar
+                        android:id="@+id/Cafe_Read_Grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/white"
+                        android:backgroundTintMode="add"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srb_clearRatingEnabled="false"
+                        app:srb_clickable="false"
+                        app:srb_isIndicator="false"
+                        app:srb_minimumStars="0.5"
+                        app:srb_numStars="5"
+                        app:srb_rating="0.0"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="20dp"
+                        app:srb_starPadding="3dp"
+                        app:srb_starWidth="20dp"
+                        app:srb_stepSize="0.5" />
+
+                    <TextView
+                        android:id="@+id/Cafe_Read_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="셜록홈즈 노원점"
+                        android:textSize="20sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="2dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="@+id/Cafe_Read_Grade"
+                        app:layout_constraintTop_toBottomOf="@+id/Cafe_Read_Grade" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/locationpin"
+                        app:tint="@color/white"
+                        app:layout_constraintStart_toStartOf="@+id/Cafe_Read_name"
+                        app:layout_constraintTop_toBottomOf="@+id/Cafe_Read_name" />
+
+                    <TextView
+                        android:id="@+id/cafe_read_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text=""
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Cafe_Read_Image">
+
+                    <ImageView
+                        android:id="@+id/Cafe_read_like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/heartwhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView222"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="소개"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/borderlinetop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView222"
+                        app:layout_constraintTop_toBottomOf="@+id/Cafe_read_info">
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="영업시간"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="휴무일"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/textView24"
+                            app:layout_constraintStart_toStartOf="@+id/textView24"
+                            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="위치"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/textView26"
+                            app:layout_constraintStart_toStartOf="@+id/textView26"
+                            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+                        <TextView
+                            android:id="@+id/Cafe_read_open"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:text="오전 09:00"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/textView24"
+                            app:layout_constraintTop_toTopOf="@+id/textView24" />
+
+                        <TextView
+                            android:id="@+id/Cafe_read_holiday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="연중 무휴"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/Cafe_read_open"
+                            app:layout_constraintTop_toTopOf="@+id/textView26" />
+
+                        <TextView
+                            android:id="@+id/Cafe_read_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="30dp"
+                            android:text="서울특별시 사당로20나길 62-9"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/Cafe_read_holiday"
+                            app:layout_constraintTop_toTopOf="@+id/textView19" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="~"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/Cafe_read_close"
+                            app:layout_constraintStart_toEndOf="@+id/Cafe_read_open"
+                            app:layout_constraintTop_toTopOf="@+id/Cafe_read_open" />
+
+                        <TextView
+                            android:id="@+id/Cafe_read_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:text="오후 10:00"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/Cafe_read_open"
+                            app:layout_constraintTop_toTopOf="@+id/Cafe_read_open" />
+
+                        <FrameLayout
+                            android:id="@+id/Cafe_read_map"
+                            android:layout_width="0dp"
+                            android:layout_height="130dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/Cafe_read_address" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/Cafe_read_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="소개글 적기 안녕하세요 아무거나 하쿠나 마타타"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView222" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="테마"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/Cafe_read_add_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:padding="10dp"
+                        android:visibility="invisible"
+                        android:text="테마 추가하기"
+                        android:background="@drawable/borderlinetop"
+                        android:backgroundTint="#E4D4D4"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/CafeRead_theme_Rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_margin="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                    <TextView
+                        android:id="@+id/textView33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="리뷰"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/CafeRead_Score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="평점  0.0"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/textView33"
+                        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+                    <com.willy.ratingbar.BaseRatingBar
+                        android:id="@+id/Cafe_Read_Grade2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:backgroundTintMode="add"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintStart_toStartOf="@+id/CafeRead_Score"
+                        app:layout_constraintTop_toBottomOf="@+id/CafeRead_Score"
+                        app:srb_clearRatingEnabled="false"
+                        app:srb_clickable="false"
+                        app:srb_isIndicator="false"
+                        app:srb_minimumStars="0.5"
+                        app:srb_numStars="5"
+                        app:srb_rating="0.0"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="20dp"
+                        app:srb_starPadding="3dp"
+                        app:srb_starWidth="20dp"
+                        app:srb_stepSize="0.5" />
+
+                    <TextView
+                        android:id="@+id/Cafe_read_write_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/borderlinetop"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="리뷰 쓰기"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/Cafe_Read_Grade2" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Cafe_read_reviewRv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/Cafe_read_write_review"
+                        app:layout_constraintStart_toStartOf="@+id/Cafe_read_write_review"
+                        app:layout_constraintTop_toBottomOf="@+id/Cafe_read_write_review" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

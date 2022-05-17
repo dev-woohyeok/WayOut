@@ -70,6 +70,12 @@ public class FragmentComm_GalleryBorad extends Fragment {
     private int page = 1, limit = 8;
 
     @Override
+    public void onStop() {
+        super.onStop();
+        page = 1;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comm__gallery_borad, container, false);

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/item_dialog_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#E4D4D4"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="리뷰 쓰기"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/item_dialog_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_title"
+                app:srb_clearRatingEnabled="false"
+                app:srb_clickable="true"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0.5"
+                app:srb_numStars="5"
+                app:srb_rating="0"
+                app:srb_scrollable="true"
+                app:srb_starHeight="30dp"
+                app:srb_starPadding="3dp"
+                app:srb_starWidth="30dp"
+                app:srb_stepSize="0.5" />
+
+            <EditText
+                android:id="@+id/item_dialog_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:minLines="4"
+                android:maxLines="4"
+                android:maxLength="50"
+                android:background="@drawable/borderlinetop"
+                android:hint="이 매장의 어떤점이 맘에 드셧나요?\n분위기나 서비스가 궁금해요!"
+                android:padding="10dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_grade"
+                app:layout_goneMarginStart="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearLayoutCompat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/item_dialog_content"
+                app:layout_constraintStart_toStartOf="@+id/item_dialog_content"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_content">
+
+
+                <TextView
+                    android:id="@+id/item_dialog_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderlinetop"
+
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="아 니 오"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/textView23"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/item_dialog_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderlinetop"
+                    android:backgroundTint="#E4D4D4"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="확 인"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="334dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

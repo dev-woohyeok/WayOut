@@ -60,7 +60,7 @@ public class CreateTheme_write extends AppCompatActivity {
     private ActivityCreateThemeWriteBinding binding;
     public static Activity CreateShop;
     // 매장 작성에서 가져온 데이터들, shop_index = 매장 index
-    private String shop_name, shop_address, shop_more, shop_info, shop_open, shop_close, shop_holiday, shop_index;
+    private String shop_name, shop_address, shop_more, shop_info, shop_open, shop_close, shop_holiday, shop_index, theme_writer;
     private ArrayList<String> shop_images = new ArrayList<>();
     // 테마 정보 데이터들
     private ArrayList<DTO_theme> themes = new ArrayList<>();
@@ -83,7 +83,6 @@ public class CreateTheme_write extends AppCompatActivity {
     // 키보드 설정
     private InputMethodManager imm;
     private CreateShop_write my;
-    private boolean end_serve = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,7 @@ public class CreateTheme_write extends AppCompatActivity {
         // adapter 설정
         setAdapter();
 
-        // 테마 작성 버튼 처리
+        // 테마 작성 버튼 레이아웃 up & down
         binding.createThemeAddTheme.setVisibility(View.GONE);
         binding.createThemeWriteTheme.setOnClickListener(v -> {
             AddTheme();
@@ -117,17 +116,9 @@ public class CreateTheme_write extends AppCompatActivity {
             if (getCurrentFocus() != null) {
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
-
-            // 로딩
-            ProgressDialog progressDialog = new ProgressDialog(CreateTheme_write.this);
-            progressDialog.setMessage("Loading...");
-            progressDialog.show();
-
             // 서버 DB 에 매장 정보를 저장 ->  저장된 매장정보 index 를 받아옴
             // createCafe 보낸 후 -> CreateTheme 로 데이터 다시 보냄
             createCafe();
-
-
         });
 
         // 테마를 테마 어뎁터에 추가
@@ -165,7 +156,6 @@ public class CreateTheme_write extends AppCompatActivity {
         // 난이도 선택
         binding.createThemeDifficult.setOnSwitchListener((position, tabText) -> {
             theme_difficult = tabText;
-
 
 //            Log.e("테마 난이도 선택", "난이도 : " + tabText);
         });
@@ -215,7 +205,7 @@ public class CreateTheme_write extends AppCompatActivity {
 
     private void createTheme() {
         themes = theme_adapter.getItems();
-
+        String user_index = PreferenceManager.getString(getApplicationContext(),"userIndex");
         // 등록된 테마수 만큼 서버에 테마를 하나씩 업로드
         for (int i = 0; i < themes.size(); i++) {
             RequestBody name = RequestBody.create(themes.get(i).getName(), MediaType.parse("text/plain"));
@@ -225,15 +215,7 @@ public class CreateTheme_write extends AppCompatActivity {
             RequestBody info = RequestBody.create(themes.get(i).getInfo(), MediaType.parse("text/plain"));
             RequestBody cafe = RequestBody.create(shop_name, MediaType.parse("text/plain"));
             RequestBody index = RequestBody.create(shop_index, MediaType.parse("text/plain"));
-
-            Log.e("테마 정보 맞음?", "이름" + themes.get(i).getName());
-            Log.e("테마 정보 맞음?", "난이도" + themes.get(i).getDifficult());
-            Log.e("테마 정보 맞음?", "제한시간" + themes.get(i).getLimit());
-            Log.e("테마 정보 맞음?", "장르" + themes.get(i).getGenre());
-            Log.e("테마 정보 맞음?", themes.get(i).getInfo());
-            Log.e("테마 정보 맞음?", themes.get(i).getCafe());
-            Log.e("테마 정보 맞음?", shop_index);
-            Log.e("테마 정보 맞음?", "이미지" + themes.get(i).getImages().get(0));
+            RequestBody user = RequestBody.create(user_index, MediaType.parse("text/plain"));
 
             // 절대경로를 파일로 만들어서 서버에 올린다. -> DTO 테마에 어떤 이미지가 있는지 선택된거 다 들어있음
             ArrayList<String> items = themes.get(i).getImages();
@@ -249,7 +231,7 @@ public class CreateTheme_write extends AppCompatActivity {
 
             // 레트로핏 - 이름, 난이도, 제한시간, 소개, 매장이름, 매장 번호
             RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-            Call<DTO_theme> call = retrofitInterface.writeTheme(files, name, diff, limit, genre, info, cafe, index);
+            Call<DTO_theme> call = retrofitInterface.writeTheme(files, name, diff, limit, genre, info, cafe, index, user);
             call.enqueue(new Callback<DTO_theme>() {
                 @Override
                 public void onResponse(Call<DTO_theme> call, Response<DTO_theme> response) {
@@ -265,7 +247,6 @@ public class CreateTheme_write extends AppCompatActivity {
             });
         }
 
-        end_serve = false;
         Intent intent = new Intent(CreateTheme_write.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
@@ -277,7 +258,7 @@ public class CreateTheme_write extends AppCompatActivity {
         // 데이터 세팅
         // shop_name, 매장 사진 (이미지 uri), shop_address, shop_more (주소, 상세 정보)
         // shop_info , shop_open,close (open, close) ,shop_holiday 휴무일, shop_writer 매장 주인
-        String owner = PreferenceManager.getString(getApplicationContext(), "index");
+        String owner = PreferenceManager.getString(getApplicationContext(), "userIndex");
         RequestBody body_name = RequestBody.create(shop_name, MediaType.parse("text/plain"));
         RequestBody body_address = RequestBody.create(shop_address, MediaType.parse("text/plain"));
         RequestBody body_more = RequestBody.create(shop_more, MediaType.parse("text/plain"));
@@ -316,8 +297,6 @@ public class CreateTheme_write extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void write_theme() {
@@ -325,8 +304,23 @@ public class CreateTheme_write extends AppCompatActivity {
         // 테마 이미지를 이미지 어뎁터에서 받아온다. -> 그리고 초기화함 저거 받아오는거 해야댐
         theme_name = binding.createThemeName.getText().toString();
         theme_images = createTheme_img_adapter.getImages();
+
+        if(theme_name.isEmpty()){
+            binding.createThemeName.setError("테마명을 입력해주세요");
+            binding.createThemeName.requestFocus();
+            return;
+        }
+
+        /* 주의점 : 테마 어뎁터는 맨위에, 테마 이미지 어뎁터가 유효성 확인하는 어뎁터 */
+        if(createTheme_img_adapter.getItemCount() < 1){
+            Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
+            binding.createThemeImg.requestFocus();
+            return;
+        }
+
         DTO_theme item = new DTO_theme(theme_name, theme_difficult, theme_limit, theme_genre, shop_name, theme_info, theme_images);
         theme_adapter.addItem(item);
+
 
         // 테마 등록 닫기
         writeTheme = false;
@@ -341,7 +335,6 @@ public class CreateTheme_write extends AppCompatActivity {
         binding.createThemeGenre.setText("장르");
         binding.createThemeLimit.setText("제한시간");
         binding.createThemeInfo.setText("");
-
 
         imm.hideSoftInputFromWindow(binding.createThemeMakeTheme.getWindowToken(), 0);
 
@@ -424,7 +417,6 @@ public class CreateTheme_write extends AppCompatActivity {
     }
 
     private void setAdapter() {
-
 
         // 키보드 설정
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

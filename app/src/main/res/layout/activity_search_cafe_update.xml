@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CreateShop.CreateShop_write">
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#46C88F8F"
+        android:gravity="center"
+        android:text="매장 수정"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/cafe_update_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cafe_update_submit"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="수정"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cafe_update_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="12dp"
+                android:clickable="false"
+                android:text="매장 이름"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/cafe_update_name"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_name" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="사진"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_name" />
+
+
+            <EditText
+                android:id="@+id/cafe_update_name"
+                android:focusable="true"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/borderlinetop"
+                android:ellipsize="start"
+                android:ems="10"
+                android:hint="매장 이름 (30자)"
+                android:inputType="text"
+                android:maxLength="30"
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/cafe_update_address_more"
+                android:layout_width="0dp"
+                android:focusable="true"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderlinetop"
+                android:ellipsize="start"
+                android:ems="10"
+                android:hint="상세 정보(ex. 1층, 101호)"
+                android:inputType="text"
+                android:maxLength="30"
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/cafe_update_name"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_name"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_address" />
+
+            <EditText
+                android:id="@+id/cafe_update_holiday"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/borderlinetop"
+                android:ellipsize="start"
+                android:ems="10"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:hint="ex) 연중 무휴 , 매주 월요일"
+                android:inputType="text"
+                android:maxLength="25"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="@+id/cafe_update_name"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_name"
+                app:layout_constraintTop_toBottomOf="@+id/createShop_time3" />
+
+            <EditText
+                android:id="@+id/cafe_update_info"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderlinetop"
+                android:ellipsize="start"
+                android:ems="10"
+                android:focusable="true"
+                android:gravity="left|top"
+                android:hint=" 매장에 대해 알려주세요 "
+                android:inputType="textMultiLine"
+                android:maxLength="200"
+                android:padding="15dp"
+                android:scrollHorizontally="false"
+                app:layout_constraintEnd_toEndOf="@+id/cafe_update_address_more"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_address_more"
+                app:layout_constraintTop_toBottomOf="@+id/createShop_" />
+
+            <TextView
+                android:id="@+id/textview111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="/200"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cafe_update_info"
+                app:layout_constraintEnd_toEndOf="@+id/cafe_update_info" />
+
+            <TextView
+                android:id="@+id/cafe_update_info_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="0"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textview111"
+                app:layout_constraintTop_toTopOf="@+id/textview111" />
+
+            <ImageView
+                android:id="@+id/cafe_update_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderline"
+                android:gravity="center"
+                android:padding="20dp"
+                android:src="@drawable/camera"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_name"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/cafe_update_img_num"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="0/3"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_img"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_img" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cafe_update_image_rv"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cafe_update_img_num"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cafe_update_img"
+                app:layout_constraintTop_toTopOf="@+id/cafe_update_img" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="매장 주소"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_img_num" />
+
+            <TextView
+                android:id="@+id/createShop_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="매장 소개"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_address_more" />
+
+            <TextView
+                android:id="@+id/cafe_update_address"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderlinetop"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:text="주소 검색"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toEndOf="@+id/cafe_update_name"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_img_num"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/createShop_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="영업 시간"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/createShop_"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_info" />
+
+            <TextView
+                android:id="@+id/createShop_time3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="휴무일"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/createShop_"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_open" />
+
+            <TextView
+                android:id="@+id/createShop_time4"
+                android:layout_width="9dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_holiday"
+                app:layout_constraintTop_toBottomOf="@+id/cafe_update_holiday" />
+
+            <TextView
+                android:id="@+id/createShop_time2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="50dp"
+                android:text="~"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/cafe_update_open"
+                app:layout_constraintTop_toTopOf="@+id/cafe_update_open" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cafe_update_close"
+                android:layout_width="170dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/borderlinetop"
+                app:layout_constraintStart_toEndOf="@+id/createShop_time2"
+                app:layout_constraintTop_toTopOf="@+id/cafe_update_open">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/clock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#6E6A6A" />
+
+                <TextView
+                    android:id="@+id/cafe_update_close_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="마감 시간"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cafe_update_open"
+                android:layout_width="170dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borderlinetop"
+                app:layout_constraintStart_toStartOf="@+id/cafe_update_info"
+                app:layout_constraintTop_toBottomOf="@+id/createShop_time">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/clock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#6E6A6A" />
+
+                <TextView
+                    android:id="@+id/cafe_update_open_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="오픈 시간"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

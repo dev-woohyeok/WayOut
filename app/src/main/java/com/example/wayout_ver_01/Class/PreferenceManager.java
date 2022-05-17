@@ -124,6 +124,8 @@ public class PreferenceManager {
         }
 
 
+
+
         /**
          * int 값 로드
          *

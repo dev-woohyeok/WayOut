@@ -2,15 +2,24 @@ package com.example.wayout_ver_01.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.Fragment.FragmentChatting;
 import com.example.wayout_ver_01.Fragment.FragmentCommunity;
 import com.example.wayout_ver_01.Fragment.FragmentHome;
@@ -37,6 +46,7 @@ public class Home extends AppCompatActivity {
     ViewPager2 viewPager;
     VP_adapter vp_adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,21 +59,21 @@ public class Home extends AppCompatActivity {
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home_tab:
+                switch (item.getItemId()) {
+//                    case R.id.home_tab:
+//                        viewPager.setCurrentItem(0);
+//                        return true;
+                    case R.id.search_tab:
                         viewPager.setCurrentItem(0);
                         return true;
-                    case R.id.search_tab:
+                    case R.id.community_tab:
                         viewPager.setCurrentItem(1);
                         return true;
-                    case R.id.community_tab:
+                    case R.id.chat_tab:
                         viewPager.setCurrentItem(2);
                         return true;
-                    case R.id.chat_tab:
-                        viewPager.setCurrentItem(3);
-                        return true;
                     case R.id.myPage_tab:
-                        viewPager.setCurrentItem(4);
+                        viewPager.setCurrentItem(3);
                         return true;
                 }
                 return false;
@@ -72,10 +82,13 @@ public class Home extends AppCompatActivity {
         //
     }
 
+
+
+
     private void createViewPager() {
         viewPager = findViewById(R.id.bottom_ViewPager);
         vp_adapter = new VP_adapter(this);
-        vp_adapter.addItem(fragmentHome);
+//        vp_adapter.addItem(fragmentHome);
         vp_adapter.addItem(fragmentSearch);
         vp_adapter.addItem(fragmentCommunity);
         vp_adapter.addItem(fragmentChatting);
@@ -85,15 +98,15 @@ public class Home extends AppCompatActivity {
     }
 
     private void createFragment() {
-        fragmentHome = FragmentHome.newInstance();
-        fragmentSearch =  FragmentSearch.newInstance("");
+//        fragmentHome = FragmentHome.newInstance();
+        fragmentSearch = FragmentSearch.newInstance("");
         fragmentCommunity = FragmentCommunity.newInstance();
         fragmentChatting = FragmentChatting.newInstance();
         fragmentMypage = FragmentMypage.newInstance();
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         finish();
     }
 

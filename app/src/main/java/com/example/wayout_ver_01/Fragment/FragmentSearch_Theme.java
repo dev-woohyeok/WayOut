@@ -1,12 +1,16 @@
 package com.example.wayout_ver_01.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -35,6 +39,7 @@ public class FragmentSearch_Theme extends Fragment {
     private SearchTheme_adpater adpater;
     private int page = 1;
     private int size = 8;
+    private boolean isChecked;
 
     public static FragmentSearch_Theme newInstance(String content) {
         FragmentSearch_Theme fragment = new FragmentSearch_Theme();
@@ -45,11 +50,18 @@ public class FragmentSearch_Theme extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.e("theme", "onAttach");
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
              str = getArguments().getString("검색어");
              Log.e("Theme" ,"content : " + str );
+             Log.e("Theme" ,"onCreate" );
         }
     }
 
@@ -57,7 +69,40 @@ public class FragmentSearch_Theme extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e("resume" ,"content : " + str );
-        getData();
+
+        if(!str.isEmpty()){
+            if(!isChecked) {
+//                adpater.clearItem();
+                isChecked = true;
+                Log.e("itemsClear", "아이템 클리어?");
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("Theme" ,"onStart" );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        page = 1;
+        Log.e("cafe_theme, 73", "onStop 호출");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("Theme" ,"onPause" );
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        Log.e("Theme" ,"onDestroyView" );
     }
 
     @Override
@@ -68,26 +113,25 @@ public class FragmentSearch_Theme extends Fragment {
         Log.e("Theme_Frag_onCV", "검색어 값 : " + str);
         View view = binding.getRoot();
 
+
         // 어뎁터 세팅
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(),2,LinearLayoutManager.VERTICAL,false);
         binding.searchThemeRv.setLayoutManager(gridLayoutManager);
         adpater = new SearchTheme_adpater(requireContext());
+        adpater.setHasStableIds(true);
         binding.searchThemeRv.setAdapter(adpater);
 
-//        binding.searchThemeSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page = 1;
-//                str = "";
-//                getData();
-//                binding.searchThemeSwipe.setRefreshing(false);
-//            }
-//        });
+        RecyclerView.ItemAnimator animator = binding.searchThemeRv.getItemAnimator();
+        if(animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator)animator).setSupportsChangeAnimations(false);
+        }
 
-        binding.searchThemeScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        // 스크롤 페이징징
+       binding.searchThemeScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollX == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    Log.e("스크롤", "스크롤");
                     if(page == 1){
                         page = 2;
                     }
@@ -95,6 +139,8 @@ public class FragmentSearch_Theme extends Fragment {
                 }
             }
         });
+
+        getData();
 
         return view;
     }
@@ -107,8 +153,9 @@ public class FragmentSearch_Theme extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<DTO_theme>> call, Response<ArrayList<DTO_theme>> response) {
                 if(response.body() != null &  response.isSuccessful()){
-                    for(int i = 0; i < response.body().size(); i++ ){
+                    page++;
 
+                    for(int i = 0; i < response.body().size(); i++ ){
                         adpater.scrollItem(new DTO_theme(
                                 response.body().get(i).getIndex(),
                                 response.body().get(i).getName(),
@@ -116,7 +163,8 @@ public class FragmentSearch_Theme extends Fragment {
                                 response.body().get(i).getLimit(),
                                 response.body().get(i).getGenre(),
                                 response.body().get(i).getCafe(),
-                                response.body().get(i).getImage()
+                                response.body().get(i).getImage(),
+                                response.body().get(i).getRate()
                         ));
                         adpater.notifyItemInserted((page - 1) * size + i);
                     }
@@ -133,11 +181,10 @@ public class FragmentSearch_Theme extends Fragment {
     }
 
     private void getData() {
-        if(page == 1){
-            adpater.clearItem();
-        }
 
-        Log.e("Theme, getData()", "검색어 : " + str);
+
+        Log.e("Theme 179", "page : " + page );
+        Log.e("Theme 180", "검색어 : " + str);
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<ArrayList<DTO_theme>> call = retrofitInterface.getSearchTheme(page, size, str);
         call.enqueue(new Callback<ArrayList<DTO_theme>>() {
@@ -153,7 +200,8 @@ public class FragmentSearch_Theme extends Fragment {
                                     response.body().get(i).getLimit(),
                                     response.body().get(i).getGenre(),
                                     response.body().get(i).getCafe(),
-                                    response.body().get(i).getImage()
+                                    response.body().get(i).getImage(),
+                                    response.body().get(i).getRate()
                             ));
                         }
                     }
@@ -169,9 +217,5 @@ public class FragmentSearch_Theme extends Fragment {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+
 }

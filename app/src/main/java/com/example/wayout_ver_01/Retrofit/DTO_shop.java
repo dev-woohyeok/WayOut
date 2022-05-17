@@ -10,13 +10,16 @@ public class DTO_shop {
     private String name;
     @Expose
     @SerializedName("images")
-    private ArrayList<String> images;
+    private ArrayList<DTO_image> images;
     @Expose
     @SerializedName("address")
     private String address;
     @Expose
     @SerializedName("index")
     private String index;
+    @Expose
+    @SerializedName("writer")
+    private String writer;
     @Expose
     @SerializedName("more")
     private String more_address;
@@ -33,7 +36,7 @@ public class DTO_shop {
     @SerializedName("holiday")
     private String holiday;
     @Expose
-    @SerializedName("theme")
+    @SerializedName("themes")
     private ArrayList<DTO_theme> themes;
     @Expose
     @SerializedName("cafe_index")
@@ -41,11 +44,53 @@ public class DTO_shop {
     @Expose
     @SerializedName("image")
     private String image;
-
-    public DTO_shop(String name, String index, String image) {
+    @Expose
+    @SerializedName("total")
+    private float total;
+    @Expose
+    @SerializedName("reviews")
+    private ArrayList<DTO_review> reviews;
+    @Expose
+    @SerializedName("isChecked")
+    private int isChecked;
+    public DTO_shop(String name, String index, String image , String address, float rate) {
         this.name = name;
         this.index = index;
         this.image = image;
+        this.address = address;
+        this.total = rate;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
+    public ArrayList<DTO_review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<DTO_review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public int getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(int isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     public String getIndex() {
@@ -64,11 +109,11 @@ public class DTO_shop {
         this.name = name;
     }
 
-    public ArrayList<String> getImages() {
+    public ArrayList<DTO_image> getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<String> images) {
+    public void setImages(ArrayList<DTO_image> images) {
         this.images = images;
     }
 

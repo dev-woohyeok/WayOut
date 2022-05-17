@@ -3,7 +3,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
+        maven{ url 'https://naver.jfrog.io/artifactory/maven/' }
+        jcenter()
     }
 }
 rootProject.name = "WayOut_ver_0.1"

@@ -70,17 +70,21 @@ public class MainActivity extends AppCompatActivity {
         requirePermission();
 
         // 마시멜로우 버전 이후라면 권한을 요청해라
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED  )
             {
                 Log.e(TAG, "내용 : 권한 설정 완료");
             }
             else
             {
-                String [] permission = {Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                ActivityCompat.requestPermissions(this, permission ,1);
+                String[] permission = {Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ,Manifest.permission.ACCESS_FINE_LOCATION
+                ,Manifest.permission.ACCESS_COARSE_LOCATION};
+                ActivityCompat.requestPermissions(this, permission, 1);
             }
         }
 
@@ -179,12 +183,12 @@ public class MainActivity extends AppCompatActivity {
 
                         //회원정보 저장
                         PreferenceManager.setString(mContext, "autoId", response.body().getUserId());
-                        PreferenceManager.setString(mContext, "index", "" + response.body().getUserIndex());
+                        PreferenceManager.setInt(mContext, "유저인덱스", response.body().getUserIndex());
                         PreferenceManager.setString(mContext, "autoNick", "" + response.body().getUserNick());
                         PreferenceManager.setString(mContext, "autoPhone", "" + response.body().getUserPhone());
 
                         PreferenceManager.setString(mContext, "userId", response.body().getUserId());
-                        PreferenceManager.setString(mContext, "userIndex",""+ response.body().getUserIndex());
+                        PreferenceManager.setString(mContext, "userIndex", "" + response.body().getUserIndex());
                         PreferenceManager.setString(mContext, "userNick", response.body().getUserNick());
                         PreferenceManager.setString(mContext, "userPhone", response.body().getUserPhone());
 
@@ -218,24 +222,19 @@ public class MainActivity extends AppCompatActivity {
         return hasPermission;
     }
 
-    private void requirePermission()
-    {
+    private void requirePermission() {
         // 마쉬멜로우 버전보다 버전이 높은지 확인
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // 어떤 권한을 가져올지
             String[] Permission = {Manifest.permission.RECEIVE_SMS};
             Log.e(TAG, "내용 : ");
             // 현재 권한을 상태 가져온다.
-            int PermissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
+            int PermissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS);
             // 현재 권한이 없으면, 권한 요청 한다.
-            if(PermissionCheck == PackageManager.PERMISSION_DENIED)
-            {
-                ActivityCompat.requestPermissions(this, Permission,1);
+            if (PermissionCheck == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(this, Permission, 1);
             }
-        }
-        else
-        {
+        } else {
             Log.e(TAG, "내용 : 퍼미션 권한 필요없는 버전");
         }
     }

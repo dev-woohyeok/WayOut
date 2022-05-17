@@ -363,9 +363,8 @@
                     android:id="@+id/createTheme_name"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/borderlinetop"
                     android:ellipsize="start"
                     android:ems="10"
@@ -374,7 +373,7 @@
                     android:maxLength="30"
                     android:paddingLeft="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <ImageView

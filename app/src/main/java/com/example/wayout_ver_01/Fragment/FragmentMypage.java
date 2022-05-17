@@ -28,12 +28,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.wayout_ver_01.Activity.CreateShop.CreateShop_write;
 import com.example.wayout_ver_01.Activity.MainActivity;
+import com.example.wayout_ver_01.Activity.MyPage.MyLikeCafe;
+import com.example.wayout_ver_01.Activity.MyPage.MyLikeTheme;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 import com.example.wayout_ver_01.Retrofit.User;
 import com.example.wayout_ver_01.Activity.UserReset;
+import com.example.wayout_ver_01.databinding.FragmentMypageBinding;
+import com.example.wayout_ver_01.databinding.FragmentSearchCafeBinding;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,17 +57,19 @@ import retrofit2.Response;
 
 public class FragmentMypage extends Fragment {
 
+
+
+
     public static FragmentMypage newInstance() {
         
         Bundle args = new Bundle();
-        
         FragmentMypage fragment = new FragmentMypage();
         fragment.setArguments(args);
         return fragment;
     }
 
     private final String TAG = this.getClass().getSimpleName();
-    private TextView myPage_logout, myPage_Nick, myPage_friend, myPage_theme, myPage_cafe, myPage_delete, myPage_shop;
+    private TextView myPage_logout, myPage_Nick, mypage_follower, myPage_theme, myPage_cafe, myPage_delete, myPage_shop;
     private ImageView myPage_reset;
     private CircleImageView myPage_profile;
     private ArrayList<Uri> imageSaveList;
@@ -75,6 +81,8 @@ public class FragmentMypage extends Fragment {
     private String imageFilePath;
     private Uri photoUri;
     private View view;
+    private FragmentMypageBinding bind;
+    private int myIndex;
     String mCurrentPath;
 
 
@@ -82,13 +90,30 @@ public class FragmentMypage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_mypage, container, false);
+
+        bind = FragmentMypageBinding.inflate(inflater,container,false);
+        view = bind.getRoot();
+
 
         String ID = PreferenceManager.getString(view.getContext(), "autoId");
         String PW = PreferenceManager.getString(view.getContext(), "autoPw");
+        myIndex =  PreferenceManager.getInt(requireContext(), "유저인덱스");
 
         // viewBinding
         setFindView();
+
+        /*  관심 매장 */
+        bind.myPageCafe.setOnClickListener((v -> {
+            Intent intent = new Intent(view.getContext(), MyLikeCafe.class);
+            startActivity(intent);
+        }));
+
+        /* 관심 테마 */
+        bind.myPageTheme.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), MyLikeTheme.class);
+            startActivity(intent);
+        });
+
 
         // 매장등록
         myPage_shop.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +174,7 @@ public class FragmentMypage extends Fragment {
                             startActivityForResult(intent, GALLEY_CODE);
                             break;
                         case "프로필 사진 삭제":
-                            deleteUserProfile(PreferenceManager.getInt(getContext(),"autoIndex"));
+                            deleteUserProfile(myIndex);
                             break;
                     }
                 });
@@ -161,7 +186,6 @@ public class FragmentMypage extends Fragment {
         myPage_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer userIndex = PreferenceManager.getInt(view.getContext(), "autoIndex");
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("회원 탈퇴");
@@ -171,7 +195,7 @@ public class FragmentMypage extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.e("Test", "Activity : myPage // 회원탈퇴 확인");
-                                userDelete(userIndex);
+                                userDelete(myIndex);
                             }
                         });
                 builder.setNegativeButton("아니요",
@@ -270,13 +294,12 @@ public class FragmentMypage extends Fragment {
             Log.e(TAG, "내용 : MultipartBody.Part : " + body);
 //            files.add(body);
 //            Log.e(TAG, "내용 : files : " + files);
-            Integer Index = PreferenceManager.getInt(getContext(), "autoIndex");
-            Log.e(TAG, "내용 보낼 유저 인덱스 : " + Index);
+
 
 
             RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
             Log.e(TAG, "내용 retrofitInterface : " + retrofitInterface);
-            Call<User> call = retrofitInterface.userProfile(body, Index);
+            Call<User> call = retrofitInterface.userProfile(body, myIndex);
             Log.e(TAG, "내용 : call : " + call);
             call.enqueue(new Callback<User>() {
                 @Override
@@ -301,7 +324,7 @@ public class FragmentMypage extends Fragment {
         }
     }
 
-    private void deleteUserProfile(Integer userIndex){
+    private void deleteUserProfile(int userIndex){
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<User> call = retrofitInterface.deleteUserProfile(userIndex);
         call.enqueue(new Callback<User>() {
@@ -366,17 +389,16 @@ public class FragmentMypage extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        myIndex =  PreferenceManager.getInt(requireContext(), "유저인덱스");
         String Nick = PreferenceManager.getString(getContext(), "autoNick");
         myPage_Nick.setText(Nick);
 
-
-
-
         Log.e(TAG, "내용 : ===== onResume ======================");
 
-        Integer userIndex = PreferenceManager.getInt(getContext(),"autoIndex");
+
+        Log.e("mypage", "userIndex : " + myIndex);
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<User> call = retrofitInterface.getUserProfile(userIndex);
+        Call<User> call = retrofitInterface.getUserProfile(myIndex);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -406,10 +428,6 @@ public class FragmentMypage extends Fragment {
 
 
 
-
-
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -432,6 +450,7 @@ public class FragmentMypage extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.e("Frag2 onDestroyView", "onDestoryView ok2");
+        bind = null;
     }
 
     @Override
@@ -447,7 +466,7 @@ public class FragmentMypage extends Fragment {
     }
 
 
-    private void userDelete(Integer userIndex) {
+    private void userDelete(int userIndex) {
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<User> call = retrofitInterface.userDelete(userIndex);
         call.enqueue(new Callback<User>() {

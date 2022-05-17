@@ -21,12 +21,14 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.RecyclerView.FreeBoard.ItemTouchHelperListener;
 import com.example.wayout_ver_01.Retrofit.DTO_gallery;
+import com.example.wayout_ver_01.Retrofit.DTO_image;
 
 import java.util.ArrayList;
 
 public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adapter.viewHolder> implements ItemTouchHelperListener {
     ArrayList<DTO_gallery> items = new ArrayList<>();
     ArrayList<String> images = new ArrayList<>();
+    ArrayList<DTO_image> list = new ArrayList<>();
     TextView tv_imageNumber;
     Context context;
 
@@ -47,16 +49,16 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
         this.items = items;
     }
 
-    public void addItems(String item){
+    public void addItems(String item) {
         items.add(new DTO_gallery(item));
+        notifyItemInserted(items.size());
     }
 
     public ArrayList<String> getImages() {
         images.clear();
-        for(int i =0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             images.add(items.get(i).getImageUri());
         }
-
         return images;
     }
 
@@ -65,12 +67,13 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
         notifyDataSetChanged();
     }
 
-//    public void setUriList(ArrayList<String> uriList){
-//        for(int i = 0 ; i < uriList.size(); i++) {
-//            items.add(new DTO_gallery(uriList.get(i)));
-//            Log.e("수정모드 인텐트 uri 확인" ," uri : " +  uriList.get(i));
-//        };
-//    }
+    public void setUriList(ArrayList<String> uriList) {
+        for (int i = 0; i < uriList.size(); i++) {
+            items.add(new DTO_gallery(uriList.get(i)));
+            Log.e("수정모드 인텐트 uri 확인", " uri : " + uriList.get(i));
+        }
+        ;
+    }
 
     public ArrayList<DTO_gallery> getItems() {
         return items;
@@ -90,6 +93,7 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         DTO_gallery item = items.get(position);
         String imageUri = item.getImageUri();
+        tv_imageNumber.setText(items.size()+"/3");
 
         Glide.with(context)
                 // 비트맵으로 불러오기
@@ -143,9 +147,9 @@ public class GalleryWrite_adapter extends RecyclerView.Adapter<GalleryWrite_adap
                 @Override
                 public void onClick(View v) {
                     int pos = getBindingAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION){
+                    if (pos != RecyclerView.NO_POSITION) {
                         adapter.items.remove(pos);
-                        adapter.tv_imageNumber.setText(adapter.getItemCount()+ "/3");
+                        adapter.tv_imageNumber.setText(adapter.getItemCount() + "/3");
                         adapter.notifyItemRemoved(pos);
                     }
                 }

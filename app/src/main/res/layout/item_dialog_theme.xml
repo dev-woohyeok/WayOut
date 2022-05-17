@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="이 테마의 난이도는 어떠셨나요?"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/item_dialog_theme_grade"
+                app:layout_constraintStart_toStartOf="@+id/item_dialog_theme_grade"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_theme_grade" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="탈출에 성공하셨나요?"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_theme_diff" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="이 테마의 솔직한 별점을 남겨주세요"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_theme_title" />
+
+            <TextView
+                android:id="@+id/item_dialog_theme_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#E4D4D4"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="리뷰 쓰기"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <lib.kingja.switchbutton.SwitchMultiButton
+                android:id="@+id/item_dialog_theme_diff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView27"
+                app:selectedColor="#B02E32E4"
+                app:selectedTab="0"
+                app:strokeRadius="5dp"
+                app:strokeWidth="1dp"
+                app:switchTabs="@array/check_difficult"
+                app:textSize="14sp" />
+
+            <lib.kingja.switchbutton.SwitchMultiButton
+                android:id="@+id/item_dialog_theme_success"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="8dp"
+                android:paddingStart="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView28"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/textView28"
+                app:selectedColor="#B4D34A1F"
+                app:selectedTab="0"
+                app:strokeRadius="5dp"
+                app:strokeWidth="1dp"
+                app:switchTabs="@array/check_success"
+                app:textSize="14sp" />
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/item_dialog_theme_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView29"
+                app:layout_constraintStart_toStartOf="@+id/textView29"
+                app:layout_constraintTop_toBottomOf="@+id/textView29"
+                app:srb_clearRatingEnabled="false"
+                app:srb_clickable="true"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0.5"
+                app:srb_numStars="5"
+                app:srb_rating="0"
+                app:srb_scrollable="true"
+                app:srb_starHeight="30dp"
+                app:srb_starPadding="3dp"
+                app:srb_starWidth="30dp"
+                app:srb_stepSize="0.5" />
+
+            <EditText
+                android:id="@+id/item_dialog_theme_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/borderlinetop"
+                android:hint="테마는 재미있으셧나요?\n자유롭게 리뷰를 남겨주세요\n단, 스포일러성 리뷰는 삭제 될 수 있습니다."
+                android:maxLength="50"
+                android:maxLines="4"
+                android:minLines="4"
+                android:padding="10dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_theme_success"
+                app:layout_goneMarginStart="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearLayoutCompat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/item_dialog_theme_content"
+                app:layout_constraintStart_toStartOf="@+id/item_dialog_theme_content"
+                app:layout_constraintTop_toBottomOf="@+id/item_dialog_theme_content">
+
+
+                <TextView
+                    android:id="@+id/item_dialog_theme_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderlinetop"
+
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="아 니 오"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/textView23"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/item_dialog_theme_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderlinetop"
+                    android:backgroundTint="#E4D4D4"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="확 인"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="334dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

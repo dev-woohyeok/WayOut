@@ -53,6 +53,8 @@ public class FragmentCommunity extends Fragment {
         return view;
     }
 
+
+
     private void settingViewPager() {
         // 상단 탭 생성
         TabLayout tabs = view.findViewById(R.id.topTab_community);

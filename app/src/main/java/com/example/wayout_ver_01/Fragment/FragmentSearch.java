@@ -60,15 +60,41 @@ public class FragmentSearch extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
+
         if(str == null){
             str = "";
         }
+
+        CreateFragment();
+        CreateViewPager();
+        settingTablayout();
+
 
         // 검색어 콜백 처리 함수 등록
         launcher = registerForActivityResult(
@@ -80,11 +106,26 @@ public class FragmentSearch extends Fragment {
                             Intent i = result.getData();
                             if(i != null) {
                                 str = i.getStringExtra("검색어");
+                                binding.searchEtContent.setText(str);
+                                binding.searchBtnReset.setVisibility(View.VISIBLE);
+                                CreateFragment();
+                                CreateViewPager();
+                                settingTablayout();
                                 Log.e("FragmentSearch, 80", "str : " + str );
                             }
                         }
                     }
                 });
+
+        binding.searchBtnReset.setOnClickListener((v -> {
+            str = "";
+            // 프래그먼트 와 뷰페이저 없애고 다시 만듬
+            CreateFragment();
+            CreateViewPager();
+            settingTablayout();
+            v.setVisibility(View.INVISIBLE);
+            binding.searchEtContent.setText("");
+        }));
 
         // 검색어 입력 액티비티로 콜백 함수 요청
         binding.searchLayout.setOnClickListener(new OnSingleClickListener() {
@@ -104,35 +145,18 @@ public class FragmentSearch extends Fragment {
                 CreateFragment();
                 CreateViewPager();
                 settingTablayout();
+                binding.searchBtnReset.setVisibility(View.GONE);
+                binding.searchEtContent.setText("");
                 binding.searchSwipe.setRefreshing(false);
             }
         });
 
 
+
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        CreateFragment();
-        CreateViewPager();
-        settingTablayout();
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
 
     private void settingTablayout() {
         tabLayout = view.findViewById(R.id.Search_TabLayout);

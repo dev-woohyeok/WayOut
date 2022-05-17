@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Search.SearchCafe_read">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/theme_read_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#46C88F8F"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:id="@+id/theme_read_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#46C88F8F"
+                    android:gravity="center"
+                    android:text="카페 이름"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/theme_read_menu"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/menu"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/theme_read_toolbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/theme_read_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/basic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/theme_read_toolbar" />
+
+                <!--        이미지 추가 정보 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/image_gradient"
+                    app:layout_constraintBottom_toBottomOf="@+id/theme_read_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.willy.ratingbar.BaseRatingBar
+                        android:id="@+id/theme_read_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/white"
+                        android:backgroundTintMode="add"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srb_clearRatingEnabled="false"
+                        app:srb_clickable="false"
+                        app:srb_isIndicator="false"
+                        app:srb_minimumStars="0.5"
+                        app:srb_numStars="5"
+                        app:srb_rating="0.0"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="20dp"
+                        app:srb_starPadding="3dp"
+                        app:srb_starWidth="20dp"
+                        app:srb_stepSize="0.5" />
+
+                    <TextView
+                        android:id="@+id/theme_read_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="테마 이름"
+                        android:textSize="22sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="2dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="@+id/theme_read_grade"
+                        app:layout_constraintTop_toBottomOf="@+id/theme_read_grade" />
+
+                    <TextView
+                        android:id="@+id/theme_read_genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="장르 이름"
+                        android:textColor="#E3FAC7"
+                        android:textSize="15sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/theme_read_name"
+                        app:layout_constraintStart_toEndOf="@+id/theme_read_name" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="11dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/key_black"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/theme_read_grade"
+                        app:layout_constraintStart_toEndOf="@+id/theme_read_grade"
+                        app:tint="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="10dp "
+                        android:src="@drawable/clock"
+                        app:layout_constraintBottom_toBottomOf="@+id/theme_read_diff"
+                        app:layout_constraintStart_toEndOf="@+id/theme_read_diff"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/theme_read_diff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="난이도"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+                    <TextView
+                        android:id="@+id/theme_read_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="제한 시간"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                        app:layout_constraintStart_toEndOf="@+id/imageView11"
+                        app:layout_constraintTop_toTopOf="@+id/imageView11" />
+
+                    <TextView
+                        android:id="@+id/theme_read_cafe_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="알카트스라 지하감옥 부천점"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/theme_read_name" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/theme_read_image">
+
+                    <ImageView
+                        android:id="@+id/theme_read_like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/heartwhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView222"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="소개"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/theme_read_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="소개글 적기 안녕하세요 아무거나 하쿠나 마타타"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView222" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                    <TextView
+                        android:id="@+id/textView33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="리뷰"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/theme_read_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="평점  0.0"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/textView33"
+                        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+                    <com.willy.ratingbar.BaseRatingBar
+                        android:id="@+id/theme_read_grade2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/white"
+                        android:backgroundTintMode="add"
+                        app:layout_constraintStart_toStartOf="@+id/theme_read_score"
+                        app:layout_constraintTop_toBottomOf="@+id/theme_read_score"
+                        app:srb_clearRatingEnabled="false"
+                        app:srb_clickable="false"
+                        app:srb_isIndicator="false"
+                        app:srb_minimumStars="0.5"
+                        app:srb_numStars="5"
+                        app:srb_rating="0.0"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="20dp"
+                        app:srb_starPadding="3dp"
+                        app:srb_starWidth="20dp"
+                        app:srb_stepSize="0.5" />
+
+                    <TextView
+                        android:id="@+id/theme_read_write_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/borderlinetop"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="리뷰 쓰기"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/theme_read_grade2" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/theme_read_reviewRv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/theme_read_write_review"
+                        app:layout_constraintStart_toStartOf="@+id/theme_read_write_review"
+                        app:layout_constraintTop_toBottomOf="@+id/theme_read_write_review" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

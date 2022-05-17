@@ -12,6 +12,11 @@
         <item>Hard</item>
         <item>Hell</item>
     </string-array>
+
+    <string-array name="check_success">
+        <item>성공</item>
+        <item>실패</item>
+    </string-array>
     
     <string-array name="select_genre">
         <item>추리</item>

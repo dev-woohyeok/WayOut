@@ -1,10 +1,6 @@
 package com.example.wayout_ver_01.Retrofit;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -12,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -32,11 +29,160 @@ public interface RetrofitInterface {
             @Field("userPhone") String userPhone
     );
 
+    @Headers({
+            "X-NCP-APIGW-API-KEY-ID:ztfhsqjefk",
+            "X-NCP-APIGW-API-KEY:MYqVC77uYSv1PNI1pXMutqy27FsmqdbiClMItnqa"
+    })
+    @GET("/map-geocode/v2/geocode")
+    public Call<DTO_address> searchAddress(
+            @Query("query") String query,
+            @Query("coordinate") String start
+    );
+
+    @Headers({
+            "X-NCP-APIGW-API-KEY-ID:ztfhsqjefk",
+            "X-NCP-APIGW-API-KEY:MYqVC77uYSv1PNI1pXMutqy27FsmqdbiClMItnqa"
+    })
+    @GET("/map-direction/v1/driving")
+    public Call<DTO_Direction> searchDirection(
+            @Query("start") String start,
+            @Query("goal") String goal);
+
     @FormUrlEncoded
     @POST("joinSelect.php")
     Call<JoinRequest> selectJoin(
             @Field("userId") String userId,
             @Field("userPw") String userPw
+    );
+
+    @FormUrlEncoded
+    @POST("writeCafeReview.php")
+    Call<ArrayList<DTO_review>> writeCafeReview(
+            @Field("index") String index,
+            @Field("writer") String writer,
+            @Field("content") String content,
+            @Field("rate") float grade,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("writeThemeReview.php")
+    Call<ArrayList<DTO_review>> writeThemeReview(
+            @Field("theme_index") String theme_index,
+            @Field("writer") String writer,
+            @Field("user_index") String user_index,
+            @Field("content") String content,
+            @Field("diff") String diff,
+            @Field("success") String success,
+            @Field("rate") float rate,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getCafeRead.php")
+    Call<DTO_shop> getCafeRead(
+            @Field("index") String index,
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getThemeRead.php")
+    Call<DTO_theme> getThemeRead(
+            @Field("index") String index,
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_index") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getCafeReadReview.php")
+    Call<DTO_review> getCafeReadReview(
+            @Field("index") String index,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+
+    @FormUrlEncoded
+    @POST("getCafeReadScrollReview.php")
+    Call<ArrayList<DTO_review>> getCafeReadReviewScroll(
+            @Field("index") String index,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getThemeReadScrollReview.php")
+    Call<ArrayList<DTO_review>> getThemeReadReviewScroll(
+            @Field("theme_index") String theme_index,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("updateCafeReview.php")
+    Call<DTO_review> updateCafeReview(
+            @Field("cafe_index") String cafe_index,
+            @Field("index") String index,
+            @Field("rate") float rate,
+            @Field("content") String content
+    );
+
+    @FormUrlEncoded
+    @POST("updateThemeReview.php")
+    Call<DTO_review> updateThemeReview(
+            @Field("theme_index") String theme_index,
+            @Field("review_index") String review_index,
+            @Field("rate") float rate,
+            @Field("content") String content,
+            @Field("success") String success,
+            @Field("diff") String diff
+    );
+
+    @FormUrlEncoded
+    @POST("deleteCafeReview.php")
+    Call<DTO_review> deleteCafeReview(
+            @Field("cafe_index") String cafe_index,
+            @Field("index") String index
+    );
+
+    @FormUrlEncoded
+    @POST("deleteThemeReview.php")
+    Call<DTO_review> deleteThemeReview(
+            @Field("theme_index") String theme_index,
+            @Field("review_index") String review_index
+    );
+
+    @FormUrlEncoded
+    @POST("deleteCafe.php")
+    Call<DTO_shop> deleteCafe(
+            @Field("cafe_index") String cafe_index
+    );
+
+    @FormUrlEncoded
+    @POST("deleteTheme.php")
+    Call<DTO_theme> deleteTheme(
+      @Field("theme_index") String theme_index
+    );
+
+    @FormUrlEncoded
+    @POST("writeCafeLike.php")
+    Call<DTO_shop> setLike(
+            @Field("cafe_index") String cafe_index,
+            @Field("user_index") String user_index,
+            @Field("isChecked") int isChecked
+    );
+
+    @FormUrlEncoded
+    @POST("writeThemeLike.php")
+    Call<DTO_shop> setThemeLike(
+            @Field("theme_index") String theme_index,
+            @Field("user_index") String user_index,
+            @Field("isChecked") int isChecked
     );
 
     @FormUrlEncoded
@@ -154,7 +300,8 @@ public interface RetrofitInterface {
             @Part("genre") RequestBody genre,
             @Part("info") RequestBody info,
             @Part("cafe") RequestBody cafe,
-            @Part("index") RequestBody index
+            @Part("index") RequestBody index,
+            @Part("user_index") RequestBody user_index
     );
 
     @Multipart
@@ -168,6 +315,32 @@ public interface RetrofitInterface {
             @Part("close") RequestBody close,
             @Part("holiday") RequestBody holiday,
             @Part("writer") RequestBody writer,
+            @Part ArrayList<MultipartBody.Part> files
+    );
+
+    @Multipart
+    @POST("updateCafe.php")
+    Call<DTO_shop> updateCafe(
+            @Part("name") RequestBody name,
+            @Part("address") RequestBody address,
+            @Part("more") RequestBody address_more,
+            @Part("info") RequestBody info,
+            @Part("open") RequestBody open,
+            @Part("close") RequestBody close,
+            @Part("holiday") RequestBody holiday,
+            @Part("cafe_index") RequestBody cafe_index,
+            @Part ArrayList<MultipartBody.Part> files
+    );
+
+    @Multipart
+    @POST("updateTheme.php")
+    Call<DTO_theme> updateTheme(
+            @Part("name") RequestBody name,
+            @Part("diff") RequestBody diff,
+            @Part("limit") RequestBody limit,
+            @Part("genre") RequestBody genre,
+            @Part("info") RequestBody info,
+            @Part("index") RequestBody index,
             @Part ArrayList<MultipartBody.Part> files
     );
 
@@ -267,7 +440,7 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("getFreeRead.php")
-    Call<DTO_board> getFreeScroll (
+    Call<DTO_board> getFreeScroll(
             @Field("page") int page,
             @Field("board_num") String board_num
     );
@@ -275,8 +448,8 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("writeGalleryLike.php")
     Call<DTO_gallery> writeGalleryLike(
-      @Field("user_id") String user_id,
-      @Field("board_number") String board_number
+            @Field("user_id") String user_id,
+            @Field("board_number") String board_number
     );
 
     @FormUrlEncoded
@@ -370,11 +543,10 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("getGalleryReply.php")
-    Call<ArrayList<DTO_comment>> getGalleryReplyScroll (
+    Call<ArrayList<DTO_comment>> getGalleryReplyScroll(
             @Field("page") int page,
             @Field("index") String index
     );
-
 
 
     @FormUrlEncoded
@@ -404,6 +576,22 @@ public interface RetrofitInterface {
             @Field("page") int page,
             @Field("size") int size,
             @Field("search") String search
+    );
+
+    @FormUrlEncoded
+    @POST("getMyCafeLike.php")
+    Call<ArrayList<DTO_shop>> getMyLikeCafe(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getMyThemeLike.php")
+    Call<ArrayList<DTO_theme>> getMyLikeTheme(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_id") String user_id
     );
 
     @FormUrlEncoded

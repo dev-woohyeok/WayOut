@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/item_cafe_review_writer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="test4"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_cafe_review_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="2020-05-12"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/item_cafe_review_writer"
+                app:layout_constraintTop_toBottomOf="@+id/item_cafe_review_writer" />
+
+            <TextView
+                android:id="@+id/item_cafe_review_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borderlinetop"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="수정"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/item_cafe_review_content"
+                app:layout_constraintEnd_toEndOf="@+id/item_cafe_review_content" />
+
+            <TextView
+                android:id="@+id/item_cafe_review_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borderlinetop"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="삭제"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/item_cafe_review_update"
+                app:layout_constraintEnd_toStartOf="@+id/item_cafe_review_update" />
+
+            <TextView
+                android:id="@+id/item_cafe_review_diff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:visibility="invisible"
+                android:background="@drawable/borderlinetop"
+                android:backgroundTint="#B02E32E4"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:text="난이도"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/item_cafe_review_date"
+                app:layout_constraintStart_toEndOf="@+id/item_cafe_review_writer"
+                app:layout_constraintTop_toTopOf="@+id/item_cafe_review_writer" />
+
+            <ImageView
+                android:id="@+id/item_cafe_review_exit"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                app:layout_goneMarginStart="10dp"
+                android:visibility="invisible"
+                android:src="@drawable/exit"
+                android:padding="3dp"
+                android:background="@drawable/borderlinetop"
+                android:backgroundTint="#B4D34A1F"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/item_cafe_review_diff"
+                app:layout_constraintStart_toEndOf="@+id/item_cafe_review_diff"
+                app:layout_constraintTop_toTopOf="@+id/item_cafe_review_diff"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <com.willy.ratingbar.BaseRatingBar
+                android:id="@+id/item_cafe_review_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srb_clearRatingEnabled="false"
+                app:srb_clickable="false"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0.5"
+                app:srb_numStars="5"
+                app:srb_rating="4.5"
+                app:srb_scrollable="false"
+                app:srb_starHeight="20dp"
+                app:srb_starPadding="3dp"
+                app:srb_starWidth="20dp"
+                app:srb_stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/item_cafe_review_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/borderlinetop"
+                android:padding="10dp"
+                android:text="존잼이였습니다. 공간사용이 참신하고, 카운터 보시는 분이 센스있고 친절하셨습니다."
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_cafe_review_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
