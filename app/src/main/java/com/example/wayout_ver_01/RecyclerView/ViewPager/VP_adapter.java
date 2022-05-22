@@ -17,6 +17,17 @@ public class VP_adapter extends FragmentStateAdapter {
         this.items.add(item);
     }
 
+    public void changeItem(Fragment item,int pos){
+        this.items.set(pos,item);
+        notifyItemChanged(pos);
+    }
+
+    public void clearItem(){
+        int size = items.size();
+        items.clear();
+        notifyItemRangeRemoved(0,size);
+    }
+
     public VP_adapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

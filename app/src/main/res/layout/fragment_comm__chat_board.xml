@@ -1,14 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.FragmentComm_ChatBoard">
+    tools:context=".Fragment.FragmentComm_GalleryBorad">
 
-
-    <TextView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/chatBoard_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="탭3" />
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <EditText
+                android:id="@+id/galleryBoard_search"
+                android:layout_width="290dp"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/borderline"
+                android:gravity="center_vertical"
+                android:hint="검색어를 입력해주세요"
+                android:maxLength="23"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.694"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.022" />
+
+            <TextView
+                android:id="@+id/chatBoard_tv_spinner"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="작성자"
+                app:layout_constraintEnd_toStartOf="@+id/galleryBoard_search"
+                app:layout_constraintTop_toTopOf="@+id/galleryBoard_search" />
+
+            <ImageView
+                android:id="@+id/chatBoard_reset"
+                android:visibility="gone"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:src="@drawable/reset"
+                app:layout_constraintEnd_toEndOf="@+id/galleryBoard_search"
+                app:layout_constraintTop_toTopOf="@+id/galleryBoard_search" />
+
+            <Spinner
+                android:id="@+id/chatBoard_spinner"
+                android:layout_width="34dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="36dp"
+                app:layout_constraintEnd_toStartOf="@+id/galleryBoard_search"
+                app:layout_constraintTop_toTopOf="@+id/chatBoard_tv_spinner" />
+
+            <ImageView
+                android:id="@+id/chatBoard_search_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/search"
+                app:layout_constraintStart_toEndOf="@+id/galleryBoard_search"
+                app:layout_constraintTop_toTopOf="@+id/galleryBoard_search" />
+
+            <Button
+                android:id="@+id/chatBoard_write_btn"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:text="글쓰기"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@+id/chatBoard_search_btn"
+                app:layout_constraintTop_toBottomOf="@+id/chatBoard_search_btn" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/chatBoard_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/chatBoard_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:nestedScrollingEnabled="false" />
+
+                    <ProgressBar
+                        android:id="@+id/chatBoard_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="120dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

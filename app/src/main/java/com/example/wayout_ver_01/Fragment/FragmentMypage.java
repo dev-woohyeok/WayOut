@@ -30,6 +30,7 @@ import com.example.wayout_ver_01.Activity.CreateShop.CreateShop_write;
 import com.example.wayout_ver_01.Activity.MainActivity;
 import com.example.wayout_ver_01.Activity.MyPage.MyLikeCafe;
 import com.example.wayout_ver_01.Activity.MyPage.MyLikeTheme;
+import com.example.wayout_ver_01.Activity.MyPage.MyManage;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
@@ -122,6 +123,12 @@ public class FragmentMypage extends Fragment {
                 Intent intent = new Intent(requireActivity(), CreateShop_write.class);
                 startActivity(intent);
             }
+        });
+
+        /* 매장 관리 */
+        bind.myPageManage.setOnClickListener( v -> {
+            Intent intent = new Intent(requireActivity(), MyManage.class);
+            startActivity(intent);
         });
 
         // 로그아웃

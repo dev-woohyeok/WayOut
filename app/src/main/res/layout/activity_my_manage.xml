@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.FragmentSearch">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/search_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/myLike_manage_swipe"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView16">
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/Search_TabLayout"
+                    android:id="@+id/myLike_manage_Tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/background_light"
@@ -52,7 +52,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/search_ViewPager"
+                android:id="@+id/myLike_manage_vp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -64,5 +64,5 @@
 
             </androidx.viewpager2.widget.ViewPager2>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

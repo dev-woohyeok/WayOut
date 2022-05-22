@@ -601,4 +601,21 @@ public interface RetrofitInterface {
             @Field("size") int size,
             @Field("search") String search
     );
+
+    @FormUrlEncoded
+    @POST("getMyTheme.php")
+    Call<ArrayList<DTO_theme>> getMyTheme(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_index") String user_index
+    );
+
+    @FormUrlEncoded
+    @POST("getMyCafe.php")
+    Call<ArrayList<DTO_shop>> getMyCafe(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_index") String user_index
+    );
+
 }

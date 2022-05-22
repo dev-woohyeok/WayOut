@@ -181,8 +181,6 @@ public class FragmentSearch_Theme extends Fragment {
     }
 
     private void getData() {
-
-
         Log.e("Theme 179", "page : " + page );
         Log.e("Theme 180", "검색어 : " + str);
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);

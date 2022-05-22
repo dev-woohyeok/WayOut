@@ -68,6 +68,9 @@ public class FragmentSearch extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        CreateFragment();
+        CreateViewPager();
+        settingTablayout();
     }
 
     @Override

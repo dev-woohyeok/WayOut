@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WayOut_ver_01"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".Activity.MyPage.MyLikeTheme"
             android:exported="false" />
