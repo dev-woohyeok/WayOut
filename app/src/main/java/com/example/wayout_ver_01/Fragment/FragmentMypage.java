@@ -411,9 +411,6 @@ public class FragmentMypage extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful() && response.body() != null)
                 {
-                    Log.e(TAG, "내용 : onResume 프로필 경로 : "+response.body().getUserProfile() );
-                    Log.e(TAG, "내용 : 이미지 가져오기 성공 ================");
-                    Log.e(TAG, "내용 : 이미지 경로 : " + response.body().getUserProfile());
                         Glide.with(FragmentMypage.this)
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);

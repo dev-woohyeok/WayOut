@@ -15,6 +15,7 @@ public class VP_adapter extends FragmentStateAdapter {
 
     public void addItem(Fragment item){
         this.items.add(item);
+        notifyItemInserted(items.size());
     }
 
     public void changeItem(Fragment item,int pos){

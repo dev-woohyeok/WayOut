@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView32">
+
+        <ImageView
+            android:id="@+id/item_drawer_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/user"
+            android:backgroundTint="#DA3877C3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/item_drawer_star"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/fill_star"
+            app:layout_constraintBottom_toBottomOf="@+id/item_drawer_image"
+            app:layout_constraintEnd_toEndOf="@+id/item_drawer_image" />
+
+        <TextView
+            android:id="@+id/item_drawer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:gravity="right|center"
+            android:text=" 대화 상대 초대"
+            android:textColor="#98CF3E"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/item_drawer_image"
+            app:layout_constraintStart_toEndOf="@+id/item_drawer_image"
+            app:layout_constraintTop_toTopOf="@+id/item_drawer_image" />
+
+        <TextView
+            android:id="@+id/item_drawer_kick"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/category_check"
+            android:gravity="right|center"
+            android:padding="5dp"
+            android:text="내보내기"
+            android:textColor="#0B0B0B"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/item_drawer_name"
+            app:layout_constraintStart_toEndOf="@+id/item_drawer_name"
+            app:layout_constraintTop_toTopOf="@+id/item_drawer_name" />
+
+        <TextView
+            android:id="@+id/item_drawer_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/category_check"
+            android:gravity="right|center"
+            android:padding="5dp"
+            android:text="친구추가"
+            android:textColor="#0B0B0B"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/item_drawer_kick"
+            app:layout_constraintStart_toEndOf="@+id/item_drawer_kick"
+            app:layout_constraintTop_toTopOf="@+id/item_drawer_kick" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

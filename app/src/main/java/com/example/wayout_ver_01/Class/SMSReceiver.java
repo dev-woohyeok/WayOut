@@ -1,4 +1,4 @@
-package com.example.wayout_ver_01;
+package com.example.wayout_ver_01.Class;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

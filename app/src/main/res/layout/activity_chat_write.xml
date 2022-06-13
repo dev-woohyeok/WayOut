@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Chat.ChatWrite">
+
+    <TextView
+        android:id="@+id/chatWrite_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#46C88F8F"
+        android:gravity="center"
+        android:text="인원 구하기 "
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/chatWrite_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/chatWrite_submit"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="등록"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chatWrite_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/chatWrite_toolbar">-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chatWrite_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chatWrite_toolbar">
+
+        <ImageView
+            android:id="@+id/chatWrite_image"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/basic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/camera"
+            app:civ_border_color="#009688"
+            app:civ_border_width="3dp"
+            app:civ_circle_background_color="#009688"
+            app:layout_constraintBottom_toBottomOf="@+id/chatWrite_image"
+            app:layout_constraintEnd_toEndOf="@+id/chatWrite_image" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:clickable="false"
+            android:text="모임 이름"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chatWrite_image" />
+
+        <EditText
+            android:id="@+id/chatWrite_title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/borderlinetop"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="모임 이름 (30자)"
+            android:inputType="text"
+            android:maxLength="30"
+            android:paddingLeft="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="false"
+            android:text="모집 인원"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/chatWrite_title" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="소개/설명"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/chatWrite_max" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/chatWrite_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/borderline"
+            android:gravity="center"
+            android:hint="모집 인원"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#000000"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/chatWrite_title"
+            app:layout_constraintTop_toBottomOf="@+id/textView25"
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="8dp"
+            app:spinner_arrow_show="true"
+            app:spinner_arrow_tint="@color/black"
+            app:spinner_divider_color="#000000"
+            app:spinner_divider_show="false"
+            app:spinner_divider_size="0dp"
+            app:spinner_item_array="@array/select_user"
+            app:spinner_popup_animation="normal"
+            app:spinner_popup_background="#FFFFFF"
+            app:spinner_popup_elevation="14dp"
+            app:spinner_popup_focusable="true" />
+
+        <EditText
+            android:id="@+id/chatWrite_info"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/borderlinetop"
+            android:ellipsize="start"
+            android:ems="10"
+            android:focusable="true"
+            android:gravity="left|top"
+            android:hint=" 어떤 모임인지 알려주세요 "
+            android:inputType="textMultiLine"
+            android:maxLength="200"
+            android:padding="15dp"
+            android:scrollHorizontally="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/chatWrite_max"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+        <TextView
+            android:id="@+id/textview111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="8dp"
+            android:padding="2dp"
+            android:text="/200"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/chatWrite_info"
+            app:layout_constraintEnd_toEndOf="@+id/chatWrite_info"
+            app:layout_goneMarginEnd="10dp" />
+
+        <TextView
+            android:id="@+id/chatWrite_infoo_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textview111"
+            app:layout_constraintTop_toTopOf="@+id/textview111" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </androidx.core.widget.NestedScrollView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

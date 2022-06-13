@@ -21,7 +21,7 @@ import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 import com.example.wayout_ver_01.Retrofit.User;
-import com.example.wayout_ver_01.SMSReceiver;
+import com.example.wayout_ver_01.Class.SMSReceiver;
 
 import java.util.Locale;
 

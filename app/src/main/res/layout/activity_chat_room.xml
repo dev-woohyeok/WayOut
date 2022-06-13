@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Chat.ChatRoom">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/chatRoom_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/ChatRoom_title"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="#46C88F8F"
+                android:gravity="center"
+                android:text="WayOut"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ChatRoom_menu"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/menu"
+                app:layout_constraintBottom_toBottomOf="@+id/ChatRoom_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ChatRoom_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#C3C7E4"
+                app:layout_constraintBottom_toTopOf="@+id/textView30"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ChatRoom_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borderline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <EditText
+                    android:id="@+id/ChatRoom_message_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/borderlinetop"
+                    android:gravity="center_vertical"
+                    android:hint="내용을 입력해주세요"
+                    android:inputType="textMultiLine"
+                    android:maxLength="80"
+                    android:padding="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ChatRoom_send"
+                    app:layout_constraintStart_toEndOf="@+id/ChatRoom_send_img"
+                    app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+                <ImageView
+                    android:id="@+id/ChatRoom_send_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/plus"
+                    android:backgroundTint="@color/teal_700"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+                <TextView
+                    android:id="@+id/ChatRoom_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="입력"
+                    android:textColor="#FABC41"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView30"
+                    app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Drawable 덩어리  -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/borderline"
+                android:gravity="left|center"
+                android:paddingLeft="15dp"
+                android:text="채팅 목록"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/chatRoom_drawer_menu"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:elevation="10dp"
+                android:src="@drawable/menu"
+                app:layout_constraintBottom_toBottomOf="@+id/textView32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView32" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView32">
+
+                <ImageView
+                    android:id="@+id/chatRoom_invite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/plus"
+                    android:backgroundTint="#DA3877C3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/chatRoom_invite_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="right|center"
+                    android:text=" 대화 상대 초대"
+                    android:textColor="#98CF3E"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chatRoom_invite"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/borderline"
+                android:gravity="left|center"
+                android:paddingLeft="15dp"
+                android:text="채팅 목록"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/chatRoom_drawer_out"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="right|center"
+                android:paddingRight="20dp"
+                android:text="나가기"
+                android:textColor="#98CF3E"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/chatRoom_drawer_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="right|center"
+                android:paddingRight="20dp"
+                android:text="삭제하고 나가기"
+                android:visibility="gone"
+                android:textColor="#98CF3E"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatRoom_drawer_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

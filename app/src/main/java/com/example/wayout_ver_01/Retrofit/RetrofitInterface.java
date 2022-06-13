@@ -1,5 +1,9 @@
 package com.example.wayout_ver_01.Retrofit;
 
+import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_chat;
+import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_message;
+import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_room;
+
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
@@ -164,9 +168,23 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded
+    @POST("deleteRoomOut.php")
+    Call<DTO_room> deleteRoomOut(
+            @Field("room_id") String room_id,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("deleteKick.php")
+    Call<DTO_message> deleteKick(
+            @Field("room_id") String room_id,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
     @POST("deleteTheme.php")
     Call<DTO_theme> deleteTheme(
-      @Field("theme_index") String theme_index
+            @Field("theme_index") String theme_index
     );
 
     @FormUrlEncoded
@@ -229,6 +247,12 @@ public interface RetrofitInterface {
             @Part("userIndex") Integer userIndex
     );
 
+    @Multipart
+    @POST("writeImageMessage.php")
+    Call<ArrayList<DTO_message>> writerImageMessage(
+      @Part ArrayList<MultipartBody.Part> files
+    );
+
     @FormUrlEncoded
     @POST("getUserProfile.php")
     Call<User> getUserProfile(
@@ -288,6 +312,16 @@ public interface RetrofitInterface {
             @Part("date") RequestBody date,
             @Part("imgNum") int imgNum,
             @Part ArrayList<MultipartBody.Part> files
+    );
+
+    @Multipart
+    @POST("writeChatBoard.php")
+    Call<DTO_room> writeChatRoom(
+            @Part("name") RequestBody name,
+            @Part("writer") RequestBody writer,
+            @Part("max") RequestBody max,
+            @Part("info") RequestBody info,
+            @Part MultipartBody.Part file
     );
 
     @Multipart
@@ -616,6 +650,89 @@ public interface RetrofitInterface {
             @Field("page") int page,
             @Field("size") int size,
             @Field("user_index") String user_index
+    );
+
+    @FormUrlEncoded
+    @POST("getChatRoom.php")
+    Call<ArrayList<DTO_room>> getChatRoom(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("category") String category,
+            @Field("search") String search
+    );
+
+    @FormUrlEncoded
+    @POST("getRoomJoin.php")
+    Call<DTO_room> getRoomJoin(
+            @Field("room_id") String room_id
+    );
+
+    @FormUrlEncoded
+    @POST("getRefreshJoin.php")
+    Call<ArrayList<DTO_message>> getRefreshJoin(
+            @Field("room_id") String room_id
+    );
+
+    @FormUrlEncoded
+    @POST("getMyChat.php")
+    Call<ArrayList<DTO_room>> getMyChat(
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getMy.php")
+    Call<DTO_message> getMy(
+            @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("writerJoin.php")
+    Call<DTO_room> writerJoin(
+            @Field("user_id") String user_id,
+            @Field("room_id") String room_id
+    );
+
+    @FormUrlEncoded
+    @POST("getMessage.php")
+    Call<ArrayList<DTO_message>> getMessage(
+            @Field("room_id") String room_id,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getRoomData.php")
+    Call<DTO_chat> getRoomData(
+      @Field("room_id") String room_id,
+      @Field("page") int page,
+      @Field("size") int size,
+      @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("getRoomScroll.php")
+    Call<ArrayList<DTO_message>> getRoomScroll(
+            @Field("room_id") String room_id,
+            @Field("page") int page,
+            @Field("size") int size,
+            @Field("last") String last,
+            @Field("last_msg") int last_msg
+    );
+
+    @FormUrlEncoded
+    @POST("getMember.php")
+    Call<ArrayList<DTO_message>> getMember(
+            @Field("room_id") String room_id,
+            @Field("size") int size
+    );
+
+
+    @FormUrlEncoded
+    @POST("deleteRoomAll.php")
+    Call<DTO_room> deleteAll(
+            @Field("room_id") String room_id
     );
 
 }

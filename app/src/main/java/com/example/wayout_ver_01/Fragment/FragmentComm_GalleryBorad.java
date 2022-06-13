@@ -124,7 +124,6 @@ public class FragmentComm_GalleryBorad extends Fragment {
             public void onClick(View v) {
                 // 보낼 내용 세팅
                 search_con = galleryBoard_search.getText().toString();
-
                 //  검색 후 초기화 작업
                 //  검색 페이지, 리셋버튼 보여주기, 페이징 초기화해서 맨위로 포커시 옮기기, 검색 상태
                 page = 1;
@@ -148,7 +147,6 @@ public class FragmentComm_GalleryBorad extends Fragment {
                 scroll = false;
                 search_con = "";
                 galleryBoard_reset.setVisibility(View.GONE);
-
                 // 초기 게시판 가져오기
                 getItems();
             }
@@ -285,9 +283,7 @@ public class FragmentComm_GalleryBorad extends Fragment {
     }
 
     public void getItems() {
-
         String user_id = PreferenceManager.getString(requireContext(), "autoNick");
-
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<ArrayList<DTO_gallery>> call = retrofitInterface.getGalleryBoard(page,limit,user_id);
         call.enqueue(new Callback<ArrayList<DTO_gallery>>() {

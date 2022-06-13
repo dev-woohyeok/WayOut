@@ -12,12 +12,14 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -432,6 +434,27 @@ public class SearchCafe_update extends AppCompatActivity {
         }
 
         return f;
+    }
+    @Override
+    /* 키보드 자동 내리기 세팅 */
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            // 사각형을 만드는 클래스 (Rectangle) 직사각형
+            Rect rect = new Rect();
+            // focus 된 View 의 전체 면적을 가져옴
+            focusView.getGlobalVisibleRect(rect);
+            // 현재 이벤트가 일어난 x, y 좌표를 가져옴
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            // 클릭이벤트가 focusView 범위 안에 일어났는지 확인
+            if (!rect.contains(x, y)) {
+                imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }
