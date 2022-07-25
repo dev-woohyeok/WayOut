@@ -47,6 +47,12 @@ public class ChatJoin extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<DTO_room> call, Response<DTO_room> response) {
                     if (response.body() != null && response.isSuccessful()) {
+                        /* 처음 입장시 입장 메세지 보내기 */
+                        Socket socket = Service_chat.getSocket();
+                        String msg = JsonMaker.makeJson("join", room_id, user_id, user_id + " 님이 입장하셨습니다.", "", "", "io");
+                        Send send = new Send(socket, msg);
+                        send.start();
+
                         Intent intent = new Intent(ChatJoin.this, ChatRoom.class);
                         /* 넘겨줄 데이터
                          * 방고유값 , 방 새로 입장시 */

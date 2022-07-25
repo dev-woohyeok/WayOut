@@ -93,6 +93,7 @@ public class FragmentComm_ChatBoard extends Fragment {
             }
         });
 
+
         return view;
     }
 

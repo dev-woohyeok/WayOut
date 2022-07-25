@@ -1,5 +1,7 @@
 package com.example.wayout_ver_01.Activity.Chat;
 
+import static com.example.wayout_ver_01.Class.JsonMaker.DtoToJson;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_message;
 import com.example.wayout_ver_01.Class.JsonMaker;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_room;
@@ -61,7 +64,6 @@ public class ChatWrite extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
 
     @Override
@@ -163,17 +165,29 @@ public class ChatWrite extends AppCompatActivity {
                         Socket socket = Service_chat.getSocket();
                         String user_id = PreferenceManager.getString(getApplicationContext(),"userId");
                         String room_id = response.body().getRoom_id();
-                        String msg = JsonMaker.makeJson("join",room_id, user_id,user_id + "님이 입장하셧습니다.","","","io",name);
-                        /* 방 생성 => join, in */
-                        Send send = new Send(socket,msg);
+
+                        DTO_message data = new DTO_message("join", room_id, user_id, user_id+"님이 입장하셨습니다.", "", "", "io", 0, name);
+                        String msg = DtoToJson(data);
+                        System.out.println("ChatWrite_172 // 보내는 메시지 : " + msg);
+                        /* Send Thread 로 서버로 보내기 */
+                        Send send = new Send(socket, msg);
                         send.start();
 
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         Log.e("//===========//","================================================");
                         Log.e("","\n"+"[ ChatWrite // user_id " + user_id + " ]");
                         Log.e("","\n"+"[ ChatWrite // room_id " + room_id + " ]");
                         Log.e("","\n"+"[ ChatWrite // msg " + msg + " ]");
                         Log.e("//===========//","================================================");
 
+                        Intent intent = new Intent(ChatWrite.this,ChatRoom.class);
+                        intent.putExtra("room_id", room_id);
+                        intent.putExtra("room_join", true);
+                        startActivity(intent);
                     }
                     finish();
                 }

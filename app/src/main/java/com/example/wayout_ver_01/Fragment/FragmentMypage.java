@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.wayout_ver_01.Activity.Chat.Chat.MyFriend;
 import com.example.wayout_ver_01.Activity.CreateShop.CreateShop_write;
 import com.example.wayout_ver_01.Activity.MainActivity;
 import com.example.wayout_ver_01.Activity.MyPage.MyLikeCafe;
@@ -86,11 +87,9 @@ public class FragmentMypage extends Fragment {
     private int myIndex;
     String mCurrentPath;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         bind = FragmentMypageBinding.inflate(inflater,container,false);
         view = bind.getRoot();
@@ -102,16 +101,50 @@ public class FragmentMypage extends Fragment {
 
         // viewBinding
         setFindView();
+        String user_id = PreferenceManager.getString(requireContext(), "userId");
 
         /*  관심 매장 */
         bind.myPageCafe.setOnClickListener((v -> {
             Intent intent = new Intent(view.getContext(), MyLikeCafe.class);
+            intent.putExtra("user_index", ""+ myIndex);
             startActivity(intent);
         }));
 
         /* 관심 테마 */
         bind.myPageTheme.setOnClickListener(v -> {
             Intent intent = new Intent(view.getContext(), MyLikeTheme.class);
+            intent.putExtra("user_index","" + myIndex);
+            startActivity(intent);
+        });
+
+        /* 팔로우 클릭 */
+        bind.mypageFollowerNum.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), MyFriend.class);
+            intent.putExtra("follow", true);
+            intent.putExtra("user_id", user_id);
+            startActivity(intent);
+        });
+
+        bind.mypageFollower.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), MyFriend.class);
+            intent.putExtra("follow", true);
+            intent.putExtra("user_id", user_id);
+            startActivity(intent);
+        });
+
+
+        /* 팔로잉 클릭 */
+        bind.mypageFollowingNum.setOnClickListener(v ->{
+            Intent intent = new Intent(view.getContext(), MyFriend.class);
+            intent.putExtra("follow", false);
+            intent.putExtra("user_id", user_id);
+            startActivity(intent);
+        });
+
+        bind.mypageFollowingNum.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), MyFriend.class);
+            intent.putExtra("follow", false);
+            intent.putExtra("user_id", user_id);
             startActivity(intent);
         });
 
@@ -404,8 +437,10 @@ public class FragmentMypage extends Fragment {
 
 
         Log.e("mypage", "userIndex : " + myIndex);
+
+        String user_id = PreferenceManager.getString(getContext(),"userId");
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<User> call = retrofitInterface.getUserProfile(myIndex);
+        Call<User> call = retrofitInterface.getUserProfile(myIndex, user_id);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -414,7 +449,8 @@ public class FragmentMypage extends Fragment {
                         Glide.with(FragmentMypage.this)
                                 .load(response.body().getUserProfile())
                                 .into(myPage_profile);
-
+                        bind.mypageFollowingNum.setText(response.body().getFollowing_num());
+                        bind.mypageFollowerNum.setText(response.body().getFollow_num());
 
                         Log.e(TAG, "내용 : 이미지 경로 : " +response.body().getUserProfile());
                 }

@@ -1,6 +1,7 @@
 package com.example.wayout_ver_01.Retrofit;
 
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_chat;
+import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_follow;
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_message;
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_room;
 
@@ -37,6 +38,7 @@ public interface RetrofitInterface {
             "X-NCP-APIGW-API-KEY-ID:ztfhsqjefk",
             "X-NCP-APIGW-API-KEY:MYqVC77uYSv1PNI1pXMutqy27FsmqdbiClMItnqa"
     })
+
     @GET("/map-geocode/v2/geocode")
     public Call<DTO_address> searchAddress(
             @Query("query") String query,
@@ -57,6 +59,20 @@ public interface RetrofitInterface {
     Call<JoinRequest> selectJoin(
             @Field("userId") String userId,
             @Field("userPw") String userPw
+    );
+
+    @FormUrlEncoded
+    @POST("writerFollow.php")
+    Call<DTO_message> writeFollow(
+            @Field("user_id") String user_id,
+            @Field("follower") String follower
+    );
+
+    @FormUrlEncoded
+    @POST("deleteFollow.php")
+    Call<DTO_message> deleteFollow(
+            @Field("user_id") String user_id,
+            @Field("follower") String follower
     );
 
     @FormUrlEncoded
@@ -256,7 +272,8 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("getUserProfile.php")
     Call<User> getUserProfile(
-            @Field("userIndex") Integer userIndex
+            @Field("userIndex") Integer userIndex,
+            @Field("user_id") String user_id
     );
 
     @FormUrlEncoded
@@ -670,7 +687,8 @@ public interface RetrofitInterface {
     @FormUrlEncoded
     @POST("getRefreshJoin.php")
     Call<ArrayList<DTO_message>> getRefreshJoin(
-            @Field("room_id") String room_id
+            @Field("room_id") String room_id,
+            @Field("user_id") String user_id
     );
 
     @FormUrlEncoded
@@ -679,6 +697,13 @@ public interface RetrofitInterface {
             @Field("page") int page,
             @Field("size") int size,
             @Field("user_id") String user_id
+    );
+
+    @FormUrlEncoded
+    @POST("writeSingleMsg.php")
+    Call<DTO_room> writeSingleMsg(
+            @Field("user_id") String user_id,
+            @Field("follow_id") String follow_id
     );
 
     @FormUrlEncoded
@@ -735,4 +760,58 @@ public interface RetrofitInterface {
             @Field("room_id") String room_id
     );
 
+    @FormUrlEncoded
+    @POST("getInvite.php")
+    Call<DTO_follow> getInvite(
+            @Field("room_id") String room_id,
+            @Field("user_id") String user_Id,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getFollowRequest.php")
+    Call<DTO_follow> getFollowRequest(
+            @Field("user_id") String user_id,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("updateFollower.php")
+    Call<DTO_follow> updateFollow(
+            @Field("user_id") String user_id,
+            @Field("follow_id") String follow_id
+    );
+
+    @FormUrlEncoded
+    @POST("getFollower.php")
+    Call<DTO_follow> getFollower(
+            @Field("user_id") String user_id,
+            @Field("page")  int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getFollowing.php")
+    Call<DTO_follow> getFollowing(
+            @Field("user_id") String user_id,
+            @Field("page") int page,
+            @Field("size") int size
+    );
+
+    @FormUrlEncoded
+    @POST("getFriendProfile.php")
+    Call<DTO_follow> getFriendProfile(
+        @Field("user_index") String user_index,
+        @Field("user_id") String user_id,
+        @Field("reader") String reader
+    );
+
+    @FormUrlEncoded
+    @POST("getFriendData.php")
+    Call<DTO_room> getfriendData(
+            @Field("user_id") String user_id,
+            @Field("follow_id") String follow_id
+    );
 }

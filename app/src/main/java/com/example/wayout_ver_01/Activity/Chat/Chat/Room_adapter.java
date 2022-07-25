@@ -143,6 +143,12 @@ public class Room_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             } else {
                 VH.item_message.setVisibility(View.GONE);
             }
+            if(item.getImage().equals("nope")){
+                VH.item_message.setVisibility(View.GONE);
+            }else{
+                VH.item_message.setVisibility(View.VISIBLE);
+            }
+
         } else if (holder instanceof Msg_Right_VH) {
             /* 보낸 msg [ 메세지, 작성시간 ]*/
             Msg_Right_VH VH = (Msg_Right_VH) holder;
@@ -169,6 +175,7 @@ public class Room_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             VH.item_name.setText(item.getName());
             VH.item_message.setText(item.getMessage());
             VH.item_member.setText("" + item.getIO());
+            Log.e("room Test1 ",  VH.item_member.getText().toString());
             if (item.getIO() <= 0) {
                 VH.item_member.setVisibility(View.INVISIBLE);
             } else {

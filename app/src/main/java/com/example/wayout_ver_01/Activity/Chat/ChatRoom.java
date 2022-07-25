@@ -1,5 +1,7 @@
 package com.example.wayout_ver_01.Activity.Chat;
 
+import static com.example.wayout_ver_01.Class.JsonMaker.DtoToJson;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 
 import com.example.wayout_ver_01.Activity.Chat.Chat.ChatDrawer_adapter;
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_chat;
+import com.example.wayout_ver_01.Activity.Chat.Chat.Invite;
 import com.example.wayout_ver_01.Activity.FreeBoard.FreeBoard_write;
 import com.example.wayout_ver_01.Class.DateConverter;
 import com.example.wayout_ver_01.Class.JsonMaker;
@@ -43,6 +46,10 @@ import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 import com.example.wayout_ver_01.databinding.ActivityChatRoomBinding;
 import com.google.gson.Gson;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -63,13 +70,15 @@ import retrofit2.Response;
 public class ChatRoom extends AppCompatActivity {
     private Socket socket;
     private ActivityChatRoomBinding bind;
-    private String room_id = null, user_id = null, image = null, room_quit = null, receive, room_title, writer, last;
-    private boolean room_join = false, scroll = false, delete = false;
+    private String room_id = null, user_id = null, image = null, room_quit = null, receive, room_title, writer, last, follow_id = null;
+    private boolean room_join = false, scroll = false, delete = false, alarm = true;
     private InputMethodManager imm;
     private int page = 1, size = 10, member, room_max, IO, join_number, last_msg;
+    private boolean once = true, single = false;
     public static Room_adapter room_adapter;
     private List<Uri> Selected;
     public static ChatDrawer_adapter drawer_adapter;
+    private boolean friend;
 
     @Override
     protected void onDestroy() {
@@ -84,6 +93,7 @@ public class ChatRoom extends AppCompatActivity {
         /* 등록 해제 잊지말고 하기 안하면 중복 에러 발생 */
         socket = null;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(msgReceiver);
+        PreferenceManager.setString(ChatRoom.this,"nowRoom","0");
     }
 
     private BroadcastReceiver msgReceiver = new BroadcastReceiver() {
@@ -116,6 +126,7 @@ public class ChatRoom extends AppCompatActivity {
                 Log.e("", "\n" + "[ ChatRoom,60 :: 맴버 초기화 ]  ");
                 Log.e("//===========//", "================================================");
             }
+
             if (code.equals("join")) {
                 refreshJoin();
             }
@@ -123,6 +134,7 @@ public class ChatRoom extends AppCompatActivity {
             /* 조인인원수 변경시 새로고침 */
             if (code.equals("kick") || code.equals("quit")) {
                 refreshJoin();
+
                 if (name.equals(user_id)) {
                     finish();
                     return;
@@ -142,7 +154,7 @@ public class ChatRoom extends AppCompatActivity {
 
     private void refreshJoin() {
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
-        Call<ArrayList<DTO_message>> call = retrofitInterface.getRefreshJoin(room_id);
+        Call<ArrayList<DTO_message>> call = retrofitInterface.getRefreshJoin(room_id, user_id);
         call.enqueue(new Callback<ArrayList<DTO_message>>() {
             @Override
             public void onResponse(Call<ArrayList<DTO_message>> call, Response<ArrayList<DTO_message>> response) {
@@ -170,18 +182,16 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<DTO_message>> call, Response<ArrayList<DTO_message>> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    room_adapter.setMember(response.body());
+                    if(response.body().size() > 0) {
+                        room_adapter.setMember(response.body());
+                    }
                 }
             }
-
             @Override
             public void onFailure(Call<ArrayList<DTO_message>> call, Throwable t) {
-
             }
         });
-
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +201,6 @@ public class ChatRoom extends AppCompatActivity {
 
         /* 노티 있으면 종료 시키기 */
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        notificationManager.cancel(1);
         notificationManager.cancelAll();
 
         /* Service 에서 연결된 소켓 생성하기 */
@@ -203,19 +212,43 @@ public class ChatRoom extends AppCompatActivity {
         user_id = PreferenceManager.getString(ChatRoom.this, "userId");
         room_id = intent.getStringExtra("room_id");
         room_join = intent.getBooleanExtra("room_join", false);
-        Log.e("//===========//", "================================================");
-        Log.e("", "\n" + "[ ChatRoom, intent 데이터 user_id : " + user_id + "  ]");
-        Log.e("", "\n" + "[ ChatRoom, intent 데이터 room_id : " + room_id + "  ]");
-        Log.e("", "\n" + "[ ChatRoom, intent 데이터 room_join : " + room_join + "  ]");
-        Log.e("//===========//", "================================================");
+        friend = intent.getBooleanExtra("friend", false);
+        follow_id = intent.getStringExtra("follow_id");
+        single = intent.getBooleanExtra("single", false);
 
-        if (room_join) {
-            /* 처음 입장시 입장 메세지 보내기 */
-            Socket socket = Service_chat.getSocket();
-            String msg = JsonMaker.makeJson("join", room_id, user_id, user_id + " 님이 입장하셨습니다.", "", "", "io",room_title);
-            Send send = new Send(socket, msg);
-            send.start();
+        Log.e("test1",user_id);
+        Log.e("test2",room_id);
+        Log.e("test3",""+room_join);
+        Log.e("test4",""+friend);
+
+        /* 채팅 알람 기본 새팅 */
+        alarm = PreferenceManager.getBoolean(ChatRoom.this,"alarm"+room_id);
+        if(alarm){
+            bind.ChatRoomAlarm.setImageResource(R.drawable.no_alarm);
+        }else{
+            bind.ChatRoomAlarm.setImageResource(R.drawable.bell);
         }
+
+        /* 알람 설정하기  */
+        bind.ChatRoomAlarm.setOnClickListener(v -> {
+            if(alarm){
+                bind.ChatRoomAlarm.setImageResource(R.drawable.bell);
+                alarm = false;
+                PreferenceManager.setBoolean(ChatRoom.this,"alarm" + room_id, false);
+            }else{
+                bind.ChatRoomAlarm.setImageResource(R.drawable.no_alarm);
+                alarm = true;
+                PreferenceManager.setBoolean(ChatRoom.this,"alarm" + room_id, true);
+            }
+        });
+
+        /* 친구 초대하러가기 */
+        bind.chatRoomDrawerInvite.setOnClickListener(v -> {
+            Intent intent1 = new Intent(ChatRoom.this, Invite.class);
+            intent1.putExtra("room_id",room_id);
+            intent1.putExtra("room_name",room_title);
+            startActivity(intent1);
+        });
 
         /* 필요한 정보 세팅 및 채팅내용 불러오기 */
         getChatData();
@@ -255,7 +288,15 @@ public class ChatRoom extends AppCompatActivity {
                     send.start();
                     /* 리사이클러뷰 맨 아래로 이동 */
                     bind.ChatRoomRv.scrollToPosition(room_adapter.getItemCount() - 1);
-
+                    if(once){
+                        try {
+                            Thread.sleep(500);
+                            setRefresh();
+                            once = false;
+                        }catch (InterruptedException e){
+                            e.printStackTrace();
+                        }
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -354,12 +395,12 @@ public class ChatRoom extends AppCompatActivity {
             // 보이기
             builder.show();
         });
-
         /* 방 지금 쳐다보는 중 */
         if (!room_join) {
             String msg = JsonMaker.makeCode("in", user_id, room_id);
             Send send = new Send(socket, msg);
             send.start();
+
         }
     }
 
@@ -418,7 +459,6 @@ public class ChatRoom extends AppCompatActivity {
 
                 }
             });
-
         } ;
     }
 
@@ -443,7 +483,10 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onResponse(Call<DTO_room> call, Response<DTO_room> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String msg = JsonMaker.makeJson("delete", room_id, user_id, "", "", "", "io",room_title);
+                    DTO_message data = new DTO_message("delete", room_id, user_id, "방장에게 내보내졌습니다.", "", "", "io", 0, room_title);
+                    String msg = DtoToJson(data);
+                    System.out.println("ChatRoom_241 // 보내는 메시지 : " + msg);
+                    /* Send Thread 로 서버로 보내기 */
                     Send send = new Send(socket, msg);
                     send.start();
                 }
@@ -458,15 +501,23 @@ public class ChatRoom extends AppCompatActivity {
     }
 
     private void delete_reply() {
+
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<DTO_room> call = retrofitInterface.deleteRoomOut(room_id, user_id);
         call.enqueue(new Callback<DTO_room>() {
             @Override
             public void onResponse(Call<DTO_room> call, Response<DTO_room> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String msg = JsonMaker.makeJson("quit", room_id, user_id, user_id + " 님이 나가셨습니다.", "", "", "io",room_title);
+                    DTO_message data = new DTO_message("quit", room_id, user_id, user_id+"님이 나가셨습니다.", "", "", "io", member, room_title);
+                    String msg = DtoToJson(data);
+                    System.out.println("ChatRoom_241 // 보내는 메시지 : " + msg);
+                    /* Send Thread 로 서버로 보내기 */
                     Send send = new Send(socket, msg);
                     send.start();
+
+                    Log.e("//===========//","================================================");
+                    Log.e("","\n"+"[ ChatRoom, 나가기 :  ]");
+                    Log.e("//===========//","================================================");
                 }
                 finish();
             }
@@ -507,8 +558,6 @@ public class ChatRoom extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void getChatData() {
@@ -518,6 +567,8 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onResponse(Call<DTO_chat> call, Response<DTO_chat> response) {
                 if (response.isSuccessful() && response.body() != null) {
+
+
                     room_title = response.body().getRoom_name();
                     writer = response.body().getRoom_writer();
                     room_max = response.body().getRoom_max();
@@ -529,14 +580,26 @@ public class ChatRoom extends AppCompatActivity {
                     room_adapter.setJoin_number(join_number);
                     drawer_adapter.setRoom_id(room_id);
                     drawer_adapter.setRoom_title(room_title);
+                    PreferenceManager.setString(ChatRoom.this,"nowRoom",room_id);
 
-                    if (user_id.equals(writer)) {
+                    if (friend) {
+                        bind.ChatRoomTitle.setText(follow_id);
+                    }
+
+                    if(single){
+                        bind.ChatRoomTitle.setText(writer);
+                        bind.chatRoomInvite.setVisibility(View.GONE);
+                    }
+
+                    /*  방장은 방 쪼개기, 일반 유저는 그냥 나가기기 */
+                   if (user_id.equals(writer)) {
                         bind.chatRoomDrawerOut.setVisibility(View.GONE);
                         bind.chatRoomDrawerDelete.setVisibility(View.VISIBLE);
                     } else {
                         bind.chatRoomDrawerOut.setVisibility(View.VISIBLE);
                         bind.chatRoomDrawerDelete.setVisibility(View.GONE);
                     }
+
 
                     /* 메세지 세팅 */
                     for (DTO_message item : response.body().getMessages()) {
@@ -552,14 +615,17 @@ public class ChatRoom extends AppCompatActivity {
                     bind.ChatRoomRv.scrollToPosition(room_adapter.getItemCount() - 1);
 
 
-                    Log.e("//===========//", "================================================");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData title : " + room_title + " ]");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData writer : " + writer + " ]");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData room_max : " + room_max + " ]");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData image : " + image + " ]");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData join_num : " + join_number + " ]");
-                    Log.e("", "\n" + "[ ChatRoom : getChatData last : " + last + " ]");
-                    Log.e("//===========//", "================================================");
+                    if (room_join) {
+//                        /* 처음 입장시 입장 메세지 보내기 */
+//                        DTO_message data = new DTO_message("join", room_id, user_id, user_id+"님이 입장하셨습니다.", "", "", "io", 0, room_title);
+//                        String msg = DtoToJson(data);
+//                        System.out.println("ChatRoom_241 // 보내는 메시지 : " + msg);
+//                        /* Send Thread 로 서버로 보내기 */
+//                        Send send = new Send(socket, msg);
+//                        send.start();
+                        room_join = false;
+                        PreferenceManager.setBoolean(ChatRoom.this,"alarm" + room_id, false);
+                    }
                 }
             }
 

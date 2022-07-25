@@ -19,6 +19,11 @@ import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 import com.example.wayout_ver_01.databinding.FragmentManageCafeBinding;
 import com.example.wayout_ver_01.databinding.FragmentSearchCafeBinding;
+import com.google.gson.Gson;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 
 import java.util.ArrayList;
 
@@ -76,6 +81,21 @@ public class FragmentManage_Cafe extends Fragment {
 
                 if (response.isSuccessful() && response.body() != null) {
                     for (int i = 0; i < response.body().size(); i++) {
+
+                        // 로그 세팅
+                        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                                .showThreadInfo(false)// (Optional) Whether to show thread info or not. Default true
+                                .methodCount(2)// (Optional) How many method line to show. Default 2
+                                .methodOffset(0)// (Optional) Hides internal method calls up to offset. Default 5
+                                .tag("PRETTY_LOGGER")// (Optional) Global tag for every log. Default PRETTY_LOGGER
+                                .build();
+                        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+
+                        Gson gson = new Gson();
+                        String str = gson.toJson(response.body());
+                        Logger.json(str);
+
+
                         adpater.addItem(new DTO_shop(
                                 response.body().get(i).getName(),
                                 response.body().get(i).getIndex(),

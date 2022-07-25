@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,8 +49,8 @@ public class MyLikeCafe extends AppCompatActivity {
         setContentView(bind.getRoot());
 
         /* 유저 고유값 */
-        user_id = PreferenceManager.getString(getBaseContext(), "userIndex");
-
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_index");
 
         /* 어뎁터 세팅 */
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
@@ -67,8 +68,6 @@ public class MyLikeCafe extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private void getData() {
@@ -84,9 +83,7 @@ public class MyLikeCafe extends AppCompatActivity {
             public void onResponse(Call<ArrayList<DTO_shop>> call, Response<ArrayList<DTO_shop>> response) {
 
                 if (response.isSuccessful() && response.body() != null) {
-                    if(myLike_Cafe_adapter.getItemCount() > 0){
-                        bind.myLikeCafeTv.setVisibility(View.GONE);
-                    }
+
 
                     for (int i = 0; i < response.body().size(); i++) {
                         myLike_Cafe_adapter.addItem(new DTO_shop(
@@ -99,6 +96,12 @@ public class MyLikeCafe extends AppCompatActivity {
                     }
                 }
 
+                if(myLike_Cafe_adapter.getItemCount() > 0){
+                    bind.myLikeCafeTv.setVisibility(View.GONE);
+                    Log.e("//===========//","================================================");
+                    Log.e("","\n"+"[ MyLikeCafe, GetData : "+ myLike_Cafe_adapter.getItemCount() +"  ]");
+                    Log.e("//===========//","================================================");
+                }
             }
 
             @Override

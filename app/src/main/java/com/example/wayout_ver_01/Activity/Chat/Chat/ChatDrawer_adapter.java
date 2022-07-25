@@ -1,5 +1,7 @@
 package com.example.wayout_ver_01.Activity.Chat.Chat;
 
+import static com.example.wayout_ver_01.Class.JsonMaker.DtoToJson;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,13 +34,14 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
     Context context;
     private String room_id;
     private String room_title;
+    private boolean follow = true;
 
     @Override
     public void setStateRestorationPolicy(@NonNull StateRestorationPolicy strategy) {
         super.setStateRestorationPolicy(strategy);
     }
 
-    public void setRoom_title (String room_title){
+    public void setRoom_title(String room_title) {
         this.room_title = room_title;
     }
 
@@ -51,13 +54,13 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
         notifyItemInserted(items.size());
     }
 
-    public void clearItem(){
+    public void clearItem() {
         int size = getItemCount();
         items.clear();
-        notifyItemRangeRemoved(0,size);
+        notifyItemRangeRemoved(0, size);
     }
 
-    public void joinItem(String name, String writer, String image){
+    public void joinItem(String name, String writer, String image) {
         DTO_message item = new DTO_message();
         item.setName(name);
         item.setRoom(writer);
@@ -66,18 +69,18 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
         notifyItemInserted(items.size());
     }
 
-    public void deleteItem(String name, String writer, String image){
-        for(int i = 0; i<items.size(); i++){
-            if(items.get(i).getName().equals(name) && items.get(i).getRoom().equals(writer) && items.get(i).getImage().equals(image)){
+    public void deleteItem(String name, String writer, String image) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(name) && items.get(i).getRoom().equals(writer) && items.get(i).getImage().equals(image)) {
                 items.remove(items.get(i));
                 notifyItemRemoved(i);
             }
         }
     }
 
-    public void setList(ArrayList<DTO_message> list){
+    public void setList(ArrayList<DTO_message> list) {
         this.items = list;
-        notifyItemRangeChanged(0,list.size());
+        notifyItemRangeChanged(0, list.size());
     }
 
     public void setRoom_id(String room_id) {
@@ -95,9 +98,15 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         DTO_message item = items.get(position);
+        /* 현재 클라이언트 유저이름 */
         String user_id = PreferenceManager.getString(context, "userId");
+        /* 해당 조인중인 유저 이름 */
         holder.item_name.setText(item.getName());
         Glide.with(context).load(item.getImage()).circleCrop().into(holder.item_image);
+        String type = item.getType();
+
+
+
 
         /* 방장일때 */
         if (item.getName().equals(item.getRoom())) {
@@ -125,7 +134,18 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
         Log.e("", "\n" + "[ DrawerAdapter join_name : " + item.getName() + " ]");
         Log.e("", "\n" + "[ DrawerAdapter user_image : " + item.getImage() + " ]");
         Log.e("", "\n" + "[ DrawerAdapter writer_Id : " + item.getRoom() + " ]");
+        Log.e("", "\n" + "[ DrawerAdapter item_type : " + item.getType() + " ]");
         Log.e("//===========//", "================================================");
+
+        if (type.equals("follow")) {
+            holder.item_follow.setBackgroundResource(R.drawable.category_check_end);
+            holder.item_follow.setText("팔로잉");
+            items.get(position).setType("nope");
+        } else {
+            holder.item_follow.setBackgroundResource(R.drawable.category_check);
+            holder.item_follow.setText("팔로우");
+            items.get(position).setType("follow");
+        }
     }
 
     @Override
@@ -146,6 +166,18 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
             item_kick = itemView.findViewById(R.id.item_drawer_kick);
             item_image = itemView.findViewById(R.id.item_drawer_image);
 
+            item_follow.setOnClickListener(v -> {
+                int pos = getBindingAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+
+                    if (adapter.items.get(pos).getType().equals("follow")) {
+                        updateFollow(adapter);
+                    } else {
+                        delteFollow(adapter);
+                    }
+
+                }
+            });
 
             item_kick.setOnClickListener(v -> {
                 int pos = getBindingAdapterPosition();
@@ -158,9 +190,12 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
                         @Override
                         public void onResponse(Call<DTO_room> call, Response<DTO_room> response) {
                             if (response.isSuccessful() && response.body() != null) {
-                                String msg = JsonMaker.makeJson("kick",adapter.room_id,item.getName(),item.getName()+" 님을 내보냈습니다.","","","io", item.getRoom_name());
                                 Socket socket = Service_chat.getSocket();
-                                Send send = new Send(socket,msg);
+                                DTO_message data = new DTO_message("kick", adapter.room_id, item.getName(), item.getName()+"님을 내보냈습니다.", "", "", "io", 0, adapter.room_title);
+                                String msg = DtoToJson(data);
+                                System.out.println("ChatRoom_241 // 보내는 메시지 : " + msg);
+                                /* Send Thread 로 서버로 보내기 */
+                                Send send = new Send(socket, msg);
                                 send.start();
                             }
                         }
@@ -173,6 +208,61 @@ public class ChatDrawer_adapter extends RecyclerView.Adapter<ChatDrawer_adapter.
                         }
                     });
 
+                }
+            });
+
+        }
+
+        private void delteFollow(ChatDrawer_adapter adapter) {
+            DTO_message item = adapter.items.get(getBindingAdapterPosition());
+            String user_id = PreferenceManager.getString(adapter.context, "userId");
+            String follower = item.getName();
+
+
+            RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+            Call<DTO_message> call = retrofitInterface.deleteFollow(user_id, follower);
+            call.enqueue(new Callback<DTO_message>() {
+                @Override
+                public void onResponse(Call<DTO_message> call, Response<DTO_message> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        item_follow.setBackgroundResource(R.drawable.category_check);
+                        item_follow.setText("팔로우");
+                        adapter.items.get(getBindingAdapterPosition()).setType("follow");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DTO_message> call, Throwable t) {
+                    Log.e("//===========//", "================================================");
+                    Log.e("", "\n" + "[ Drawer_adapter _ update 에러 : " + t + "  ]");
+                    Log.e("//===========//", "================================================");
+                }
+            });
+        }
+
+        private void updateFollow(ChatDrawer_adapter adapter) {
+            DTO_message item = adapter.items.get(getBindingAdapterPosition());
+            String user_id = PreferenceManager.getString(adapter.context, "userId");
+            String follower = item.getName();
+
+
+            RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+            Call<DTO_message> call = retrofitInterface.writeFollow(user_id, follower);
+            call.enqueue(new Callback<DTO_message>() {
+                @Override
+                public void onResponse(Call<DTO_message> call, Response<DTO_message> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        item_follow.setBackgroundResource(R.drawable.category_check_end);
+                        item_follow.setText("팔로잉");
+                        adapter.items.get(getBindingAdapterPosition()).setType("nope");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DTO_message> call, Throwable t) {
+                    Log.e("//===========//", "================================================");
+                    Log.e("", "\n" + "[ Drawer_adapter _ update 에러 : " + t + "  ]");
+                    Log.e("//===========//", "================================================");
                 }
             });
 

@@ -48,6 +48,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <ImageView
+                android:id="@+id/ChatRoom_alarm"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ChatRoom_menu"
+                app:layout_constraintEnd_toStartOf="@+id/ChatRoom_menu"
+                app:layout_constraintTop_toTopOf="@+id/ChatRoom_menu"
+                app:srcCompat="@drawable/bell" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ChatRoom_rv"
                 android:layout_width="match_parent"
@@ -155,7 +165,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView32" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
+                android:id="@+id/chatRoom_drawer_invite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -242,7 +252,7 @@
                 android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+                app:layout_constraintTop_toBottomOf="@+id/chatRoom_drawer_invite" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -193,5 +193,4 @@ public class PreferenceManager {
             edit.clear();
             edit.commit();
         }
-
 }

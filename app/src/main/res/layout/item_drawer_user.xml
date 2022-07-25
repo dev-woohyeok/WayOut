@@ -69,7 +69,7 @@
             android:background="@drawable/category_check"
             android:gravity="right|center"
             android:padding="5dp"
-            android:text="친구추가"
+            android:text="팔로우"
             android:textColor="#0B0B0B"
             android:textSize="10sp"
             android:textStyle="bold"

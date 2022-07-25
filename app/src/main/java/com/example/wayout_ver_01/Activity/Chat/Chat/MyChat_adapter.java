@@ -19,18 +19,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.wayout_ver_01.Activity.Chat.ChatRoom;
 import com.example.wayout_ver_01.Class.DateConverter;
+import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.function.Predicate;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHolder> {
     Context context;
     ArrayList<DTO_room> items = new ArrayList<>();
     ArrayList<DTO_room> temp = new ArrayList<>();
     private ActivityResultLauncher<Intent> resultLauncher;
+    private static boolean single = false;
 
     public MyChat_adapter(Context context) {
         this.context = context;
@@ -40,14 +47,15 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
     public interface OnItemClickListener {
         void onItemClick(int pos);
     }
+
     private OnItemClickListener onItemClickListener = null;
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
     /* onClickListener Custom  */
 
-    public DTO_room getItem(int pos){
+    public DTO_room getItem(int pos) {
         return items.get(pos);
     }
 
@@ -56,9 +64,9 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
         notifyItemInserted(items.size());
     }
 
-    public void setList(ArrayList<DTO_room> list){
+    public void setList(ArrayList<DTO_room> list) {
         this.items = list;
-        notifyItemRangeChanged(0,list.size());
+        notifyItemRangeChanged(0, list.size());
     }
 
     public void itemsClear() {
@@ -71,17 +79,17 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
         return items;
     }
 
-    public void removeItem(int pos){
+    public void removeItem(int pos) {
         this.items.remove(pos);
         notifyItemRemoved(pos);
     }
 
-    public void addToFirst(DTO_room item){
-        items.add(0,item);
+    public void addToFirst(DTO_room item) {
+        items.add(0, item);
         notifyItemInserted(0);
     }
 
-    public void setCount(int pos, int count){
+    public void setCount(int pos, int count) {
         this.items.get(pos).setRoom_count(count);
         notifyItemChanged(pos);
     }
@@ -100,14 +108,13 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
         holder.item_title.setText(item.getRoom_name());
         holder.item_join.setText(item.getJoin_number() + "");
         holder.item_message.setText(item.getRoom_message());
-        if(item.getType().equals("img")){
+        if (item.getType().equals("img")) {
             holder.item_message.setText("이미지가 전송 되었습니다.");
         }
-
         if (item.getRoom_count() > 0) {
             holder.item_message_count.setVisibility(View.VISIBLE);
             holder.item_message_count.setText("" + item.getRoom_count());
-        }else{
+        } else {
             holder.item_message_count.setVisibility(View.INVISIBLE);
         }
         try {
@@ -117,11 +124,42 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
         }
         Glide.with(context).load(item.getRoom_image()).circleCrop().into(holder.item_image);
 
-        Log.e("//===========//","================================================");
-        Log.e("","\n"+"[ myChat count : "+item.getRoom_count()+"  ]");
-        Log.e("","\n"+"[ myChat last_id : "+item.getLast_id()+"  ]");
-        Log.e("","\n"+"[ myChat position : "+position+"  ]");
-        Log.e("//===========//","================================================");
+        Log.e("//===========//", "================================================");
+        Log.e("", "\n" + "[ myChat count : " + item.getRoom_count() + "  ]");
+        Log.e("", "\n" + "[ myChat last_id : " + item.getLast_id() + "  ]");
+        Log.e("", "\n" + "[ myChat position : " + position + "  ]");
+        Log.e("", "\n" + "[ myChat type : " + item.getRoom_type() + "  ]");
+        Log.e("", "\n" + "[ myChat name : " + item.getRoom_name() + "  ]");
+        Log.e("", "\n" + "[ myChat writer : " + item.getRoom_writer() + "  ]");
+        Log.e("//===========//", "================================================");
+        String user_id = PreferenceManager.getString(context, "userId");
+
+        if (item.getRoom_type().equals("1")) {
+            if (item.getRoom_name().equals(user_id)) {
+                RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
+                Call<DTO_room> call = retrofitInterface.getfriendData(item.getRoom_name(), item.getRoom_writer());
+                call.enqueue(new Callback<DTO_room>() {
+                    @Override
+                    public void onResponse(Call<DTO_room> call, Response<DTO_room> response) {
+                        if(response.isSuccessful() && response.body() != null){
+                            String image = response.body().getRoom_image();
+                            String name = item.getRoom_writer();
+                            if (items.size() != 0) {
+                                items.get(position).setRoom_image(image);
+                                items.get(position).setRoom_name(name);
+                            }
+                            holder.item_title.setText(item.getRoom_writer());
+                            Glide.with(holder.itemView.getContext()).load(image).circleCrop().into(holder.item_image);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<DTO_room> call, Throwable t) {
+                    }
+                });
+            }
+        }
+
     }
 
     @Override
@@ -143,17 +181,20 @@ public class MyChat_adapter extends RecyclerView.Adapter<MyChat_adapter.viewHold
             item_message_count = itemView.findViewById(R.id.item_MyChat_message_number);
             item_image = itemView.findViewById(R.id.item_MyChat_image);
 
-            itemView.setOnClickListener(v ->  {
-                    /* 채팅방 들어갈때 */
-                    int pos = getBindingAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION) {
-                        DTO_room item = myChat_adapter.getItems().get(pos);
-                        Intent intent = new Intent(itemView.getContext(), ChatRoom.class);
-                        intent.putExtra("room_id", item.getRoom_id());
-                        myChat_adapter.getItems().get(pos).setRoom_count(0);
-                        myChat_adapter.notifyItemChanged(pos);
-                        itemView.getContext().startActivity(intent);
+            itemView.setOnClickListener(v -> {
+                /* 채팅방 들어갈때 */
+                int pos = getBindingAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    DTO_room item = myChat_adapter.getItems().get(pos);
+                    Intent intent = new Intent(itemView.getContext(), ChatRoom.class);
+                    intent.putExtra("room_id", item.getRoom_id());
+                    if(single) {
+                        intent.putExtra("friend", true);
                     }
+                    myChat_adapter.getItems().get(pos).setRoom_count(0);
+                    myChat_adapter.notifyItemChanged(pos);
+                    itemView.getContext().startActivity(intent);
+                }
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

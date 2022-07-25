@@ -18,6 +18,12 @@ public class User {
     private String userPw;
 
     @Expose
+    @SerializedName("follow_num") private String follow_num;
+
+    @Expose
+    @SerializedName("following_num") private String following_num;
+
+    @Expose
     @SerializedName("userNick")
     private String userNick;
 
@@ -56,6 +62,26 @@ public class User {
     @Expose
     @SerializedName("userProfile")
     private String userProfile;
+
+    public String getFollow_num() {
+        return follow_num;
+    }
+
+    public void setFollow_num(String follow_num) {
+        this.follow_num = follow_num;
+    }
+
+    public String getFollowing_num() {
+        return following_num;
+    }
+
+    public void setFollowing_num(String following_num) {
+        this.following_num = following_num;
+    }
+
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
+    }
 
     public String getUserProfile() {
         return userProfile;

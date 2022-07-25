@@ -41,7 +41,6 @@ public class MyManage extends AppCompatActivity {
         CreateFragment();
         CreateViewPager();
         settingTablayout();
-
     }
 
     private void CreateFragment() {

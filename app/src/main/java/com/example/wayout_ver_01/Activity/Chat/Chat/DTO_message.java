@@ -40,6 +40,7 @@ public class DTO_message {
         this.type = type;
     }
 
+
     public DTO_message(String code, String room, String name, String message, String image, String date, String type, int member,String room_name) {
         this.code = code;
         this.room = room;
@@ -52,7 +53,7 @@ public class DTO_message {
         this.room_name = room_name;
     }
 
-    public DTO_message(String code, String room, String name, String message, String image, String date, String type, int IO, int member,String room_name) {
+    public DTO_message(String code, String room, String name, String message, String image, String date, String type, int IO, int member, String last_id, String room_name) {
         this.code = code;
         this.room = room;
         this.name = name;
@@ -62,12 +63,14 @@ public class DTO_message {
         this.type = type;
         this.IO = IO;
         this.member = member;
+        this.last_id = last_id;
         this.room_name = room_name;
     }
 
     public DTO_message() {
-
     }
+
+
 
     public String getRoom_name() {
         return room_name;

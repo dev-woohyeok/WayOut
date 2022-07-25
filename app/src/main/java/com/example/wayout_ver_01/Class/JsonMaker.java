@@ -36,10 +36,10 @@ public class JsonMaker {
     };
 
     /* type 1.msg , 2.image, 3.IO */
-    public static String makeJson(String code, String room, String name, String message, String image, String date, String type,String room_name) {
+    public static String makeJson(String code, String room, String name, String message, String image, String date, String type) {
         /* 서버에 보낼 메세지 데이터 Json 생성 */
         Gson gson = new Gson();
-        DTO_message chat = new DTO_message(code, room, name, message, image, date, type, room_name);
+        DTO_message chat = new DTO_message(code,room,name,message,image,date,type);
         String jsonStr = gson.toJson(chat);
         Log.e("//===========//","================================================");
         Log.e("","\n"+"[ JsonMaker makeJson // 변환된 데이터 " + jsonStr + " ]");

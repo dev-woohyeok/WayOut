@@ -30,6 +30,7 @@ import com.example.wayout_ver_01.Activity.Chat.ChatRoom;
 import com.example.wayout_ver_01.Class.PreferenceManager;
 import com.example.wayout_ver_01.Activity.Chat.Chat.MyChat_adapter;
 import com.example.wayout_ver_01.Activity.Chat.Chat.DTO_room;
+import com.example.wayout_ver_01.R;
 import com.example.wayout_ver_01.Retrofit.RetrofitClient;
 import com.example.wayout_ver_01.Retrofit.RetrofitInterface;
 import com.example.wayout_ver_01.databinding.FragmentChatBinding;
@@ -48,7 +49,7 @@ public class FragmentChat extends Fragment {
     MyChat_adapter myChat_adapter;
     FragmentChatBinding bind;
     private int page = 1, size = 8, plus = 0;
-    private boolean isStop = true;
+    private boolean isStop = true, alarm = true;
     private String user_id;
     private ActivityResultLauncher<Intent> launcher;
 
@@ -79,6 +80,8 @@ public class FragmentChat extends Fragment {
             String writer = message.getName();
             String room_id = message.getRoom();
             String code = message.getCode();
+            String type = message.getType();
+            String image = message.getImage();
 
             /* 채팅방 늘어나면 추가 */
             if ("join".equals(code) && writer.equals(user_id)) {
@@ -94,6 +97,17 @@ public class FragmentChat extends Fragment {
                 return;
             }
 
+            if(code.equals("kick") || code.equals("delete")){
+                myChat_adapter.itemsClear();
+                page = 1;
+                getData();
+            }
+            if(image.equals("nope")){
+                myChat_adapter.itemsClear();
+                page = 1;
+                getData();
+            }
+
             /* 받은 문자 위치 옮겨주기 */
             if (!code.equals("in")) {
                 if (!code.equals("out")) {
@@ -105,8 +119,16 @@ public class FragmentChat extends Fragment {
                             if (item.getRoom_id().equals(room_id)) {
                                 list.remove(item);
                                 list.add(0, item);
-                                item.setRoom_message(message.getMessage());
+//                                item.setRoom_message(message.getMessage());
                                 item.setRoom_count(item.getRoom_count() + 1);
+                                if(type.equals("img")) {
+                                    Log.e("//===========//","================================================");
+                                    Log.e("","\n"+"[ FragChat, 채팅 문자 위치 옮겨주기 : type : "+type+" ]");
+                                    Log.e("//===========//","================================================");
+                                    item.setRoom_message("이미지가 전송되었습니다.");
+                                }else{
+                                    item.setRoom_message(message.getMessage());
+                                }
                             }
                         }
                         myChat_adapter.setList(list);
@@ -133,24 +155,29 @@ public class FragmentChat extends Fragment {
                 .getInstance(requireContext())
                 .registerReceiver(msgChatReceiver, new IntentFilter("msgReceive_frag"));
 
-        /* resultLauncher 달기 */
-        launcher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        /* 채팅방에 들어갔다 나오면 이벤트를 받아서 새로고침 */
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent intent = result.getData();
-                            String callback = intent.getStringExtra("callback");
-//                            if (callback == 0) {
-                            // 실행코드
-                            setRefresh();
-//                            }
-                        }
-                    }
-                }
-        );
+        /* 메세지 알람 */
+        alarm = PreferenceManager.getBoolean(requireContext(),"alarm");
+        if(alarm){
+            bind.myChatAlarm.setImageResource(R.drawable.no_alarm);
+        }else{
+            bind.myChatAlarm.setImageResource(R.drawable.bell);
+        }
+
+        /* 알람 키고 끄기 */
+        bind.myChatAlarm.setOnClickListener(v -> {
+            if(alarm){
+
+                bind.myChatAlarm.setImageResource(R.drawable.bell);
+                PreferenceManager.setBoolean(requireContext(),"alarm",false);
+                alarm = false;
+            }else{
+                bind.myChatAlarm.setImageResource(R.drawable.no_alarm);
+                PreferenceManager.setBoolean(requireContext(),"alarm",true);
+                alarm = true;
+            }
+
+        });
+
 
 
         /* 유저 데이터 */
@@ -181,9 +208,7 @@ public class FragmentChat extends Fragment {
                 }
             }
         });
-
         getData();
-
         return view;
     }
 

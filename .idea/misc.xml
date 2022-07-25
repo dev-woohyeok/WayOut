@@ -24,8 +24,8 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/drawable/search_edit.xml" value="0.2635" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/drawable/send_message.xml" value="0.177" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/drawable/text_cursor.xml" value="0.20729166666666668" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_chat_join.xml" value="0.176" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_chat_room.xml" value="0.152" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_chat_join.xml" value="0.1" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_chat_room.xml" value="0.16799999999999998" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_chat_write.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_create_shop_address.xml" value="0.2838541666666667" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_create_shop_write.xml" value="0.152" />
@@ -34,23 +34,29 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_find_id.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_find_pw.xml" value="0.42864583333333334" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_find_reset_pw.xml" value="0.4" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_follow_request.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_free_board_read.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_free_board_write.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_freeboard_reply.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_freeboard_update.xml" value="0.152" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_friend_profile.xml" value="0.11228070175438597" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_gallery_board_read.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_gallery_board_reply.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_gallery_board_update.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_gallery_board_write.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_home.xml" value="0.176" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_invite.xml" value="0.16799999999999998" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_item_drawer_user.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_join_phone.xml" value="0.176" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_join_user.xml" value="0.2" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_like_cafe.xml" value="0.2318840579710145" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_following.xml" value="0.1" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_friend.xml" value="0.2" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_like_cafe.xml" value="0.136" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_like_theme.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_manage.xml" value="0.2203125" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_my_shop.xml" value="0.10364583333333334" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_myfriend.xml" value="0.152" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_profile_reset.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_reset_pw.xml" value="0.4" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_search_cafe_add_theme.xml" value="0.12" />
@@ -59,6 +65,7 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_search_shop.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_search_theme_read.xml" value="0.36164565361645656" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_search_theme_update.xml" value="0.2" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_search_user.xml" value="0.23072916666666668" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_pw.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_reset.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/activity_user_reset_pw.xml" value="0.22864583333333333" />
@@ -70,9 +77,13 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__free_borad.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_comm__gallery_borad.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_community.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_follow.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_following.xml" value="0.18645833333333334" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_friend_follow.xml" value="0.152" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_friend_following.xml" value="0.109375" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_manage__cafe.xml" value="0.264" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_mypage.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_mypage.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search__cafe.xml" value="0.152" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/fragment_search__theme.xml" value="0.176" />
@@ -92,7 +103,9 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_dialog_menu.xml" value="0.25226449275362317" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_dialog_menu_cafe.xml" value="0.25226449275362317" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_dialog_theme.xml" value="0.2864583333333333" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_drawer_user.xml" value="0.4" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_drawer_user.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_follow.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_following.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_free_comment_reply.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_free_read_image.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_free_read_reply.xml" value="0.176" />
@@ -101,9 +114,11 @@
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_gallery_comment.xml" value="0.264" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_galleryboard.xml" value="0.4" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_history.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_invite.xml" value="0.21458333333333332" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_my_shop.xml" value="0.2318840579710145" />
-        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_mychat.xml" value="0.264" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_mychat.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_reply.xml" value="0.22552083333333334" />
+        <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_request.xml" value="0.3183876811594203" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_review_cafe.xml" value="0.536" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_search_shop.xml" value="0.2" />
         <entry key="..\:/AndroidCode/Wayout/app/src/main/res/layout/item_search_theme.xml" value="0.6" />

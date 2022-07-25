@@ -2,18 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.FragmentMypage">
+    tools:context=".Activity.Chat.Friend_profile">
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/friendProfile_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_weight="2.5"
         android:background="#46C88F8F"
         android:gravity="center"
-        android:text="마이페이지"
+        android:text="친구 닉네임"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -21,29 +21,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/myPage_reset"
-        android:layout_width="30dp"
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/pen"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
+        android:background="#D6E6F3"
+        app:layout_constraintBottom_toTopOf="@+id/friendProfile_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_title" />
 
     <TextView
-        android:id="@+id/textView2121"
+        android:id="@+id/textView2112"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#D6E6F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_title" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/myPage_profile"
+        android:id="@+id/friendProfile_image"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="24dp"
@@ -53,12 +52,12 @@
         app:civ_border_color="#000000"
         app:civ_border_width="3dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20">
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_title">
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
-        android:id="@+id/mypage_follower"
+        android:id="@+id/friendProfile_follower"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -68,11 +67,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toEndOf="@+id/myPage_profile"
-        app:layout_constraintTop_toTopOf="@+id/myPage_profile" />
+        app:layout_constraintStart_toEndOf="@+id/friendProfile_image"
+        app:layout_constraintTop_toTopOf="@+id/friendProfile_image" />
 
     <TextView
-        android:id="@+id/mypage_follower_num"
+        android:id="@+id/friendProfile_follower_num"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -81,11 +80,11 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/mypage_follower"
-        app:layout_constraintTop_toBottomOf="@+id/mypage_follower" />
+        app:layout_constraintStart_toStartOf="@+id/friendProfile_follower"
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_follower" />
 
     <TextView
-        android:id="@+id/mypage_following_num"
+        android:id="@+id/friendProfile_following_num"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -93,11 +92,11 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/mypage_following"
-        app:layout_constraintTop_toTopOf="@+id/mypage_follower_num" />
+        app:layout_constraintStart_toStartOf="@+id/friendProfile_following"
+        app:layout_constraintTop_toTopOf="@+id/friendProfile_follower_num" />
 
     <TextView
-        android:id="@+id/mypage_following"
+        android:id="@+id/friendProfile_following"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -108,8 +107,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.65"
-        app:layout_constraintStart_toEndOf="@+id/mypage_follower"
-        app:layout_constraintTop_toTopOf="@+id/mypage_follower" />
+        app:layout_constraintStart_toEndOf="@+id/friendProfile_follower"
+        app:layout_constraintTop_toTopOf="@+id/friendProfile_follower" />
 
 
     <ImageView
@@ -117,13 +116,13 @@
         android:layout_width="30dp"
         android:layout_height="0dp"
         android:src="@drawable/user"
-        app:layout_constraintBottom_toBottomOf="@+id/myPage_Nick"
-        app:layout_constraintStart_toStartOf="@+id/myPage_profile"
-        app:layout_constraintTop_toTopOf="@+id/myPage_Nick"
+        app:layout_constraintBottom_toBottomOf="@+id/friendProfile_name"
+        app:layout_constraintStart_toStartOf="@+id/friendProfile_image"
+        app:layout_constraintTop_toTopOf="@+id/friendProfile_name"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/myPage_Nick"
+        android:id="@+id/friendProfile_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="닉네임"
@@ -133,38 +132,56 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_title" />
 
-    <TextView
-        android:id="@+id/myPage_logout"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/borderline"
-        android:gravity="center"
-        android:text="로그아웃"
-        android:textColor="@color/purple_200"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_image">
+
+
+        <TextView
+            android:id="@+id/friendProfile_btn"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_check"
+            android:gravity="center"
+            android:text="팔로우"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/friendProfile_image" />
+
+        <TextView
+            android:id="@+id/friendProfile_btn_msg"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/category_check"
+            android:gravity="center"
+            android:text="메세지"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/friendProfile_btn"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/myPage_Shop"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/borderlinetop"
-        android:gravity="center|left"
-        android:paddingLeft="10dp"
-        android:text="매장 등록"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_theme" />
-
-    <TextView
-        android:id="@+id/myPage_theme"
+        android:id="@+id/friendProfile_theme"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/borderlinetop"
@@ -174,49 +191,22 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_cafe" />
+        app:layout_constraintTop_toBottomOf="@+id/friendProfile_cafe" />
+
 
     <TextView
-        android:id="@+id/myPage_delete"
+        android:id="@+id/friendProfile_cafe"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@drawable/borderlinetop"
-        android:gravity="center|left"
-        android:paddingLeft="10dp"
-        android:text="회원 탈퇴"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_manage" />
-
-    <TextView
-        android:id="@+id/myPage_cafe"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/borderlinetop"
         android:gravity="center|left"
         android:paddingLeft="10dp"
         android:text="관심 카페"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_logout"
-        app:layout_goneMarginTop="20dp" />
-
-    <TextView
-        android:id="@+id/myPage_manage"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/borderlinetop"
-        android:gravity="center|left"
-        android:paddingLeft="10dp"
-        android:text="매장 관리"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPage_Shop" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

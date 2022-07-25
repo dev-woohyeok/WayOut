@@ -5,6 +5,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,17 +47,13 @@ public class MyLikeTheme extends AppCompatActivity {
         if (page == 1) {
             myLike_Theme_adapter.clearItem();
         }
-        Log.e("함 등짝을 보자", "page : " + page);
-        Log.e("함 등짝을 보자", "page : " + size);
-        Log.e("함 등짝을 보자", "page : " + user_id);
+
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<ArrayList<DTO_theme>> call = retrofitInterface.getMyLikeTheme(page,size,user_id);
         call.enqueue(new Callback<ArrayList<DTO_theme>>() {
             @Override
             public void onResponse(Call<ArrayList<DTO_theme>> call, Response<ArrayList<DTO_theme>> response) {
-
                 for(int i = 0; i < response.body().size(); i++ ){
-
                     myLike_Theme_adapter.addItem(new DTO_theme(
                             response.body().get(i).getIndex(),
                             response.body().get(i).getName(),
@@ -67,6 +64,12 @@ public class MyLikeTheme extends AppCompatActivity {
                             response.body().get(i).getImage(),
                             response.body().get(i).getRate()
                     ));
+                }
+                if(myLike_Theme_adapter.getItemCount() > 0) {
+                    bind.myLikeThemeTv.setVisibility(View.GONE);
+                    Log.e("//===========//", "================================================");
+                    Log.e("", "\n" + "[ MyLikeCafe, GetData : " + myLike_Theme_adapter.getItemCount() + "  ]");
+                    Log.e("//===========//", "================================================");
                 }
             }
 
@@ -84,7 +87,8 @@ public class MyLikeTheme extends AppCompatActivity {
         bind = ActivityMyLikeThemeBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        user_id = PreferenceManager.getString(getApplicationContext(), "userIndex");
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_index");
 
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getBaseContext(),2, GridLayoutManager.VERTICAL, false);
         bind.myLikeThemeRv.setLayoutManager(linearLayoutManager);
@@ -106,13 +110,11 @@ public class MyLikeTheme extends AppCompatActivity {
             page = 2;
         }
 
-
         RetrofitInterface retrofitInterface = RetrofitClient.getApiClint().create(RetrofitInterface.class);
         Call<ArrayList<DTO_theme>> call = retrofitInterface.getMyLikeTheme(page,size,user_id);
         call.enqueue(new Callback<ArrayList<DTO_theme>>() {
             @Override
             public void onResponse(Call<ArrayList<DTO_theme>> call, Response<ArrayList<DTO_theme>> response) {
-
                 for(int i = 0; i < response.body().size(); i++ ){
                     if(response.body().size() > 0){
                         page ++;

@@ -10,6 +10,12 @@ public class DTO_room {
     @SerializedName("room_index")
     private String room_id;
     @Expose
+    @SerializedName("old_msg")
+    private boolean old_msg;
+    @Expose
+    @SerializedName("new_msg")
+    private boolean new_msg;
+    @Expose
     @SerializedName("room_name")
     private String room_name;
     @Expose
@@ -48,7 +54,17 @@ public class DTO_room {
     @Expose
     @SerializedName("type")
     private String type;
+    @Expose
+    @SerializedName("room_type")
+    private String room_type;
 
+    public String getRoom_type() {
+        return room_type;
+    }
+
+    public void setRoom_type(String room_type) {
+        this.room_type = room_type;
+    }
 
     public DTO_room(String room_id, String room_name, String room_writer, String room_date, int room_max, String room_info, String room_image, String user_image, int join_number, ArrayList<String> join_names, String room_message) {
         this.room_id = room_id;
@@ -62,6 +78,14 @@ public class DTO_room {
         this.join_number = join_number;
         this.join_names = join_names;
         this.room_message = room_message;
+    }
+
+    public boolean isOld_msg() {
+        return old_msg;
+    }
+
+    public void setOld_msg(boolean old_msg) {
+        this.old_msg = old_msg;
     }
 
     public String getType() {
@@ -174,5 +198,13 @@ public class DTO_room {
 
     public void setRoom_image(String room_image) {
         this.room_image = room_image;
+    }
+
+    public boolean isNew_msg() {
+        return new_msg;
+    }
+
+    public void setNew_msg(boolean new_msg) {
+        this.new_msg = new_msg;
     }
 }
